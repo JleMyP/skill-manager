@@ -1,0 +1,11 @@
+from .apps import INSTALLED_APPS
+
+
+INSTALLED_APPS += [
+    'corsheaders',
+]
+
+ALLOWED_HOSTS = []
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+CORS_ORIGIN_ALLOW_ALL = True
