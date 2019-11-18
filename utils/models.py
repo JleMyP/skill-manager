@@ -1,6 +1,6 @@
 from django.db import models
 
-__all__ = ['CreatedAtMixin']
+__all__ = ['CreatedAtMixin', 'NameMixin', 'OrderedMixin', 'LikeMixin', 'IconMixin']
 
 
 class MixinBase(models.Model):
@@ -46,3 +46,8 @@ class LikeMixin(MixinBase):
         verbose_name='Лайк', default=False,
     )
 
+
+class IconMixin(MixinBase):
+    icon = models.CharField(
+        verbose_name='Иконка', max_length=15, null=True, blank=True,
+    )

@@ -4,9 +4,9 @@ from rest_framework.status import HTTP_201_CREATED
 from rest_framework_serializer_extensions.views import SerializerExtensionsAPIViewMixin
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from ..serializers.token import CustomTokenObtainSerializer
-from ..serializers.user import ProfileSerializer
-from ..serializers.user import RegistrationSerializer
+from .serializers.token import CustomTokenObtainSerializer
+from .serializers.user import ProfileSerializer
+from .serializers.user import RegistrationSerializer
 from utils.schema import AutoSchemaCustomCreated
 
 __all__ = ['CustomTokenObtainView', 'RegistrationView', 'ProfileView']

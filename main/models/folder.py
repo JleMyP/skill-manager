@@ -1,15 +1,14 @@
 from django.db import models
 
-from utils.models import NameMixin, OrderedMixin, CreatedAtMixin, LikeMixin
+from utils.models import NameMixin, OrderedMixin, CreatedAtMixin, LikeMixin, IconMixin
 
 __all__ = ['Folder']
 
 
-class Folder(NameMixin, OrderedMixin, CreatedAtMixin, LikeMixin):
+class Folder(NameMixin, OrderedMixin, CreatedAtMixin, LikeMixin, IconMixin):
     parent = models.ForeignKey(
-        verbose_name='Батя', to='self', null=True, blank=True,
+        verbose_name='Батя', to='self', on_delete=models.SET_NULL, null=True, blank=True,
     )
-    icon = None
 
     class Meta:
         verbose_name = 'Папка'

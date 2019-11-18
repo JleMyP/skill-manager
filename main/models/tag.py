@@ -1,12 +1,11 @@
-from random import randrange as rnd
 from django.db import models
 
-from utils.models import NameMixin, CreatedAtMixin, OrderedMixin, LikeMixin, ColorField
+from utils.models import NameMixin, CreatedAtMixin, OrderedMixin, LikeMixin, IconMixin, ColorField
  
 __all__ = ['Tag']
 
 
-class Tag(NameMixin, CreatedAtMixin, OrderedMixin, LikeMixin):
+class Tag(NameMixin, CreatedAtMixin, OrderedMixin, LikeMixin, IconMixin):
     FOLDER = 1
     RESOURCE = 2
     SKILL = 4
@@ -14,10 +13,10 @@ class Tag(NameMixin, CreatedAtMixin, OrderedMixin, LikeMixin):
     color = ColorField(
         verbose_name='Цвет',
     )
-    icon = None
     target_type = models.PositiveIntegerField(
         verbose_name='Тип цели', default=FOLDER | RESOURCE | SKILL,
     )
+    additional_info = None
 
     class Meta:
         verbose_name = 'Метка'
@@ -25,15 +24,15 @@ class Tag(NameMixin, CreatedAtMixin, OrderedMixin, LikeMixin):
         default_related_name = 'tags'
 
 
-class TagValue(NameMixin, CreatedAtMixin, OrderedMixin):
+class TagValue(NameMixin, CreatedAtMixin, OrderedMixin, IconMixin):
     """
     пример: метка 'ЯП', значение 'python'
     """
 
     tag = models.ForeignKey(
-        verbose_name='Метка', to='Tag',
+        verbose_name='Метка', to='Tag', on_delete=models.CASCADE,
     )
-    icon = None
+    additional_info = None
 
     class Meta:
         verbose_name = 'Значение метки'

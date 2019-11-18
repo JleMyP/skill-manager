@@ -1,3 +1,5 @@
 from django.contrib import admin
+from reversion.admin import VersionAdmin
 
-# Register your models here.
+from .models import Folder, Progress, Remind, Resource, Skill, Tag, Task
+
