@@ -11,4 +11,6 @@ INSTALLED_APPS = [
     'reversion',
 
     'user.apps.MainConfig',
+    'projects.apps.ProjectsConfig',
+    'main.apps.MainConfig',
 ]

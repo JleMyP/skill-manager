@@ -20,6 +20,7 @@ djangorestframework-serializer-extensions = "^1.0"
 django-autocompletefilter = "^0.0.5"
 django-split-settings = "^1.0"
 djangorestframework = "^3.10"
+Pillow = "^6.2"
 
 
 [tool.poetry.dev-dependencies]

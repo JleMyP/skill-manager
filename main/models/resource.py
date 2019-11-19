@@ -2,7 +2,7 @@ from django.db import models
 
 from utils.models import NameMixin, OrderedMixin, CreatedAtMixin, LikeMixin, IconMixin
 
-__all__ = ['Resource']
+__all__ = ['Resource', 'ResourceType', 'VolumeType']
 
 
 class Resource(NameMixin, OrderedMixin, CreatedAtMixin, LikeMixin, IconMixin):

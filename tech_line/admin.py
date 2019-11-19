@@ -10,13 +10,13 @@ class ElementAdminInline(VersionAdmin, admin.TabularInline):
 
 
 @admin.register(TechLine)
-class TechLineAdmin(VersionAdmin, admin.ModelAdmin):
+class TechLineAdmin(VersionAdmin):
     list_display = ('id', 'name', 'created_at', 'icon')
     search_fields = ('id', 'name')
     inlines = (ElementAdminInline,)
 
 
 @admin.register(TechLineElement)
-class TechLineElementAdmin(VersionAdmin, admin.ModelAdmin):
+class TechLineElementAdmin(VersionAdmin):
     list_display = ('id', 'name', 'created_at', 'order_num', 'tech_line', 'weight')
     search_fields = ('id', 'name', 'tech_line__name')
