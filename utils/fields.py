@@ -28,11 +28,11 @@ class IntFlagField(models.PositiveSmallIntegerField):
     SomeModel.objects.filter(colors__any_bit=SomeModel.COLORS.RED | SomeModel.COLORS.GREEN)
     """
     # TODO:
-    #  доступ к перечислению через <ModelClass>.<FieldName>.enum
+    #  в contribute_to_class можно привязаться к модели и сделать <ModelClass>.<FieldName>_ENUM
     #  свой класс перечисления со свойством all
 
     def __init__(self, enum, enum_name=None, *args, **kwargs):
-        self.enum = enum if isinstance(enum, EnumMeta) else IntFlag(enum_name or 'flag field', enum)
+        self.enum = enum
         super().__init__(*args, **kwargs)
 
     def deconstruct(self):
