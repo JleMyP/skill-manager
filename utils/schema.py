@@ -10,7 +10,7 @@ class AutoSchemaCustomCreated(AutoSchema):
             responses['201'] = responses.pop('200')
         return responses
 
-    # def _map_serializer(self, serializer):  # TODO: установить с гита
-    #     result = super()._map_serializer(serializer)
-    #     result.setdefault('required', [])
-    #     return result
+    def _map_serializer(self, serializer):  # TODO: установить с гита
+        result = super()._map_serializer(serializer)
+        result.setdefault('required', [])
+        return result

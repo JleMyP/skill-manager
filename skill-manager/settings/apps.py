@@ -8,6 +8,7 @@ INSTALLED_APPS = [
 
     'loginas',
     'django_extensions',
+    'django_filters',
     'reversion',
 
     'user.apps.MainConfig',
