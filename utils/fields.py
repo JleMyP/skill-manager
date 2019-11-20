@@ -42,15 +42,15 @@ class IntFlagField(models.PositiveSmallIntegerField):
         return name, path, args, kwargs
 
     def from_db_value(self, value, expression, connection):
-        return self.enum(value)
+        if value is not None:
+            return self.enum(value)
 
     def to_python(self, value):
         value = super().to_python(value)
         if isinstance(value, self.enum):
             return value
-        if value is None:
-            return value
-        return self.enum(value)
+        if value is not None:
+            return self.enum(value)
 
 
 @IntFlagField.register_lookup
