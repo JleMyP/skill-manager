@@ -61,7 +61,3 @@ class IconMixin(models.Model):
 
     class Meta:
         abstract = True
-
-
-class ColorField(models.PositiveIntegerField):
-    pass

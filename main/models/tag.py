@@ -1,20 +1,22 @@
+from enum import IntFlag
+
 from django.db import models
 
-from utils.models import NameMixin, CreatedAtMixin, OrderedMixin, LikeMixin, IconMixin, ColorField
- 
+from utils.fields import ColorField, IntFlagField
+from utils.models import NameMixin, CreatedAtMixin, OrderedMixin, LikeMixin, IconMixin
+
 __all__ = ['Tag']
 
 
 class Tag(NameMixin, CreatedAtMixin, OrderedMixin, LikeMixin, IconMixin):
-    FOLDER = 1
-    RESOURCE = 2
-    SKILL = 4
-    
+    TARGET_TYPE = IntFlag('Tag.TARGET_TYPE', 'FOLDER RESOURCE SKILL')
+    ANY_TARGET = TARGET_TYPE.FOLDER | TARGET_TYPE.RESOURCE | TARGET_TYPE.SKILL
+
     color = ColorField(
         verbose_name='Цвет',
     )
-    target_type = models.PositiveIntegerField(
-        verbose_name='Тип цели', default=FOLDER | RESOURCE | SKILL,
+    target_type = IntFlagField(
+        verbose_name='Тип цели', enum=TARGET_TYPE, default=ANY_TARGET,
     )
     additional_info = None
 
