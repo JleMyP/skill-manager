@@ -1,21 +1,23 @@
 # skill-manager
 
-прообразы - nimbus note и mindly  
+прообразы - nimbus note, mindly, buku  
 
 клиенты:
-- mobile: xamarin [android] / web / kivy / qt
-- desktop: wpf / qt / juce / web / kivy
-- боты: vk, tg, discord
+- mobile: xamarin [android] / flutter / kivy / qt
+- web: bootstrap + forms + jquery / react / расширение
+- desktop gui: wpf / qt / juce / kivy
+- cli (+ offline non-server (sqlite)): commands / gui
+- боты: vk, tg, discord, slack
 
-server:
-- django / flask / fastapi/ aiohttp / go
+сервер:
+- app: django / flask / fastapi / aiohttp / go
 - субд: pg, mongo, tarantool
-- serverless
+- serverless: zappa, ...
 - aws, yandex, heroku, firebase (уведомления)
 
 проекты / project manager  
 клиент-сервер  
-синхронизация  
+локальная база + синхронизация  
 
 графики:
 - изучения
@@ -52,9 +54,10 @@ server:
 - проекты гит / гитлаб (https://developer.github.com/v3/activity/starring/, https://api.github.com/users/JleMyP/starred)
 - карта ума
 - вк закладки (https://vk.com/dev/fave.get)
-- хром закладки
+- хром закладки (json, buku, exported html)
 - ютуб каналы (хрен)
 - степик (https://stepik.org/api/user-courses)
+- интуит
 - html с чем-нить
 - буфер сырых данных для последующего разбора
 
@@ -90,3 +93,15 @@ server:
 - быстрое добавление ресурса
 - мини gui
 - импорт-экспорт
+
+---
+
+вероятная реструктуризация / обновление:
+- папку skill-manager переименовать в conf
+- логические группы (мб выделить в приложения):
+  - метки, папки и все для группировки и навигации
+  - заметки
+  - ресурсы изучения на базе заметок
+  - задачи и их отслеживание
+  - визуализация
+- версионирование с просмотром истории конкретных элементов и последних изменений в целом
