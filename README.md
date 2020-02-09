@@ -51,7 +51,7 @@
 
 импорт-экспорт:
 - файл (свой + общие, типа excel)
-- проекты гит / гитлаб (https://developer.github.com/v3/activity/starring/, https://api.github.com/users/JleMyP/starred)
+- проекты гитхаб / гитлаб (https://developer.github.com/v3/activity/starring/, https://api.github.com/users/JleMyP/starred)
 - карта ума
 - вк закладки (https://vk.com/dev/fave.get)
 - хром закладки (json, buku, exported html)
