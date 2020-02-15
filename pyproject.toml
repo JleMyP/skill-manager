@@ -24,6 +24,7 @@ djangorestframework = "^3.10"
 
 
 django-environ = "^0.4.5"
+requests = "^2.22.0"
 [tool.poetry.dev-dependencies]
 Werkzeug = "^0.15.5"
 ipython = "^7.7"
