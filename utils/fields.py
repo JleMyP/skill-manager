@@ -38,7 +38,10 @@ class IntFlagField(models.PositiveSmallIntegerField):
     def deconstruct(self):
         name, path, args, kwargs = super().deconstruct()
         # TODO: замутить
-        kwargs['enum'] = [flag.name for flag in self.enum]
+        if isinstance(self.enum, list):
+            kwargs['enum'] = self.enum
+        else:
+            kwargs['enum'] = [flag.name for flag in self.enum]
         return name, path, args, kwargs
 
     def from_db_value(self, value, expression, connection):

@@ -11,7 +11,7 @@ INSTALLED_APPS = [
     'django_filters',
     'reversion',
 
-    'user.apps.MainConfig',
-    'projects.apps.ProjectsConfig',
-    'main.apps.MainConfig',
+    'apps.user.apps.UserConfig',
+    'apps.projects.apps.ProjectsConfig',
+    'apps.main.apps.MainConfig',
 ]

@@ -2,4 +2,5 @@ from django.apps import AppConfig
 
 
 class ProjectsConfig(AppConfig):
-    name = 'projects'
+    name = 'apps.projects'
+    verbose_name = 'Проекты'

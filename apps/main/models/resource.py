@@ -31,7 +31,8 @@ class Resource(NameMixin, OrderedMixin, CreatedAtMixin, LikeMixin, IconMixin):
     file = models.FileField(
         verbose_name='Файл', null=True, blank=True,
     )
-    image = models.ImageField(
+    # image = models.ImageField(
+    image = models.TextField(
         verbose_name='Картинка', null=True, blank=True,
     )
 

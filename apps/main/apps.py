@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class MainConfig(AppConfig):
-    name = 'user'
+    name = 'apps.main'
     verbose_name = 'Основное'
