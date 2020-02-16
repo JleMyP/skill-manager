@@ -16,6 +16,6 @@ else:
 AUTH_USER_MODEL = 'user.CustomUser'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'user.auth_backend.CustomAuthBackend',
+    'apps.user.auth_backend.CustomAuthBackend',
 ]
 LOGIN_REDIRECT_URL = '/'
