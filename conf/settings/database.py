@@ -1,6 +1,6 @@
 import os
 
-from .common import BASE_DIR, env
+from .common import env
 
 
 # Database

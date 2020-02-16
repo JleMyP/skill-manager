@@ -14,7 +14,7 @@ class CreatedAtMixin(models.Model):
 
 class NameMixin(models.Model):
     name = models.CharField(
-        verbose_name='Название', max_length=50,
+        verbose_name='Название', max_length=250,
     )
 
     class Meta:

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
-from .models import Folder, Progress, Remind, Resource, ResourceType, VolumeType, Skill, Tag, Task
+from .models import Folder, Progress, Remind, Resource, ResourceType, VolumeType, Skill, Tag, TagValue, Task
 
 
 class FolderInlineAdmin(admin.TabularInline):
@@ -46,4 +46,16 @@ class ResourceTypeAdmin(VersionAdmin):
 @admin.register(VolumeType)
 class VolumeTypeAdmin(VersionAdmin):
     list_display = ('id', 'name', 'created_at', 'order_num')
+    search_fields = ('id', 'name')
+
+
+@admin.register(Tag)
+class TagAdmin(VersionAdmin):
+    list_display = ('id', 'name', 'created_at', 'order_num', 'like')
+    search_fields = ('id', 'name')
+
+
+@admin.register(TagValue)
+class TagValueAdmin(VersionAdmin):
+    list_display = ('id', 'tag', 'name', 'created_at', 'order_num')
     search_fields = ('id', 'name')

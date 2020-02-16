@@ -17,7 +17,7 @@ class Resource(NameMixin,
                LikeMixin,
                IconMixin):
     description = models.TextField(
-        verbose_name='Описание',
+        verbose_name='Описание', null=True, blank=True,
     )
     parent = models.ForeignKey(
         verbose_name='Батя', to='self', on_delete=models.SET_NULL, null=True, blank=True,
@@ -36,7 +36,7 @@ class Resource(NameMixin,
         verbose_name='Ссыль', null=True, blank=True,
     )
     text = models.TextField(
-        verbose_name='Текс', null=True, blank=True,
+        verbose_name='Текст', null=True, blank=True,
     )
     file = models.FileField(
         verbose_name='Файл', null=True, blank=True,
@@ -44,6 +44,12 @@ class Resource(NameMixin,
     # image = models.ImageField(
     image = models.TextField(
         verbose_name='Картинка', null=True, blank=True,
+    )
+    raw_data = models.TextField(
+        verbose_name='Сырые данные', null=True, blank=True,
+    )
+    tag_values = models.ManyToManyField(
+        verbose_name='Метки со значениями', to='TagValue', blank=True,
     )
 
     planned_progress_points = models.FloatField(
@@ -58,12 +64,19 @@ class Resource(NameMixin,
         verbose_name_plural = 'Ресурсы'
         default_related_name = 'resources'
 
+    def __str__(self):
+        return f'({self.type.name}) {self.name}'
+
 
 class ResourceType(NameMixin,
                    OrderedMixin):
     """
     статья, текст, файл, книга, видеокурс, канал, заметка, git, тест, хабр и тд
     """
+    description = models.TextField(
+        verbose_name='Описание', null=True, blank=True,
+    )
+
     class Meta:
         verbose_name = 'Тип ресурса'
         verbose_name_plural = 'Типы ресурсы'

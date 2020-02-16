@@ -11,7 +11,7 @@ from utils.models import (
     IconMixin,
 )
 
-__all__ = ['Tag']
+__all__ = ['Tag', 'TagValue']
 
 
 class Tag(NameMixin,
@@ -23,10 +23,13 @@ class Tag(NameMixin,
     ANY_TARGET = TARGET_TYPE.FOLDER | TARGET_TYPE.RESOURCE | TARGET_TYPE.SKILL
 
     color = ColorField(
-        verbose_name='Цвет',
+        verbose_name='Цвет', null=True, blank=True,
     )
     target_type = IntFlagField(
         verbose_name='Тип цели', enum=TARGET_TYPE, default=ANY_TARGET,
+    )
+    simple = models.BooleanField(
+        verbose_name='Простая (без значений)', default=True,
     )
     additional_info = None
 
@@ -34,6 +37,12 @@ class Tag(NameMixin,
         verbose_name = 'Метка'
         verbose_name_plural = 'Метки'
         default_related_name = 'tags'
+
+    def save(self, *args, **kwargs):
+        # TODO: через self._state зырить
+        super().save(*args, **kwargs)
+        if not self.pk and self.simple:
+            self.values.create(name='simple')
 
 
 class TagValue(NameMixin,
@@ -53,3 +62,8 @@ class TagValue(NameMixin,
         verbose_name = 'Значение метки'
         verbose_name_plural = 'Значения меток'
         default_related_name = 'values'
+
+    def __str__(self):
+        if self.tag.simple:
+            return str(self.tag)
+        return f'{self.tag.name} : {self.name}'
