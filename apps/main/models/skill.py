@@ -1,11 +1,21 @@
 from django.db import models
 
-from utils.models import NameMixin, CreatedAtMixin, OrderedMixin, LikeMixin, IconMixin
+from utils.models import (
+    NameMixin,
+    CreatedAtMixin,
+    OrderedMixin,
+    LikeMixin,
+    IconMixin,
+)
 
 __all__ = ['Skill']
 
 
-class Skill(NameMixin, CreatedAtMixin, OrderedMixin, LikeMixin, IconMixin):
+class Skill(NameMixin,
+            CreatedAtMixin,
+            OrderedMixin,
+            LikeMixin,
+            IconMixin):
     description = models.TextField(
         verbose_name='Описание',
     )

@@ -1,11 +1,21 @@
 from django.db import models
 
-from utils.models import NameMixin, OrderedMixin, CreatedAtMixin, LikeMixin, IconMixin
+from utils.models import (
+    NameMixin,
+    OrderedMixin,
+    CreatedAtMixin,
+    LikeMixin,
+    IconMixin,
+)
 
 __all__ = ['Resource', 'ResourceType', 'VolumeType']
 
 
-class Resource(NameMixin, OrderedMixin, CreatedAtMixin, LikeMixin, IconMixin):
+class Resource(NameMixin,
+               OrderedMixin,
+               CreatedAtMixin,
+               LikeMixin,
+               IconMixin):
     description = models.TextField(
         verbose_name='Описание',
     )
@@ -49,7 +59,8 @@ class Resource(NameMixin, OrderedMixin, CreatedAtMixin, LikeMixin, IconMixin):
         default_related_name = 'resources'
 
 
-class ResourceType(NameMixin, OrderedMixin):
+class ResourceType(NameMixin,
+                   OrderedMixin):
     """
     статья, текст, файл, книга, видеокурс, канал, заметка, git, тест, хабр и тд
     """
@@ -59,7 +70,9 @@ class ResourceType(NameMixin, OrderedMixin):
         default_related_name = 'resource_types'
 
 
-class VolumeType(NameMixin, OrderedMixin, CreatedAtMixin):
+class VolumeType(NameMixin,
+                 OrderedMixin,
+                 CreatedAtMixin):
     """
     видосы, минуты, символы, ...
     """

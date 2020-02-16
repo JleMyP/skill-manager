@@ -1,11 +1,19 @@
 from django.db import models
 
-from utils.models import NameMixin, OrderedMixin, CreatedAtMixin, LikeMixin
+from utils.models import (
+    NameMixin,
+    OrderedMixin,
+    CreatedAtMixin,
+    LikeMixin,
+)
 
 __all__ = ['Task']
 
 
-class Task(NameMixin, OrderedMixin, CreatedAtMixin, LikeMixin):
+class Task(NameMixin,
+           OrderedMixin,
+           CreatedAtMixin,
+           LikeMixin):
     skill = models.ForeignKey(
         verbose_name='ЗУН', to='Skill', on_delete=models.CASCADE, null=True, blank=True,
     )

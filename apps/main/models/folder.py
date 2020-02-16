@@ -1,11 +1,21 @@
 from django.db import models
 
-from utils.models import NameMixin, OrderedMixin, CreatedAtMixin, LikeMixin, IconMixin
+from utils.models import (
+    NameMixin,
+    OrderedMixin,
+    CreatedAtMixin,
+    LikeMixin,
+    IconMixin
+)
 
 __all__ = ['Folder']
 
 
-class Folder(NameMixin, OrderedMixin, CreatedAtMixin, LikeMixin, IconMixin):
+class Folder(NameMixin,
+             OrderedMixin,
+             CreatedAtMixin,
+             LikeMixin,
+             IconMixin):
     parent = models.ForeignKey(
         verbose_name='Батя', to='self', on_delete=models.SET_NULL, null=True, blank=True,
     )

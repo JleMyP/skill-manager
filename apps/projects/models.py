@@ -1,11 +1,21 @@
 from django.db import models
 
-from utils.models import NameMixin, OrderedMixin, CreatedAtMixin, LikeMixin, IconMixin
+from utils.models import (
+    NameMixin,
+    OrderedMixin,
+    CreatedAtMixin,
+    LikeMixin,
+    IconMixin,
+)
 
 __all__ = ['Project', 'ProjectVariant', 'ProjectLink']
 
 
-class Project(NameMixin, OrderedMixin, CreatedAtMixin, IconMixin, LikeMixin):
+class Project(NameMixin,
+              OrderedMixin,
+              CreatedAtMixin,
+              IconMixin,
+              LikeMixin):
     description = models.TextField(
         verbose_name='Описание',
     )
@@ -26,7 +36,10 @@ class Project(NameMixin, OrderedMixin, CreatedAtMixin, IconMixin, LikeMixin):
         default_related_name = 'projects'
 
 
-class ProjectVariant(NameMixin, OrderedMixin, CreatedAtMixin, LikeMixin):
+class ProjectVariant(NameMixin,
+                     OrderedMixin,
+                     CreatedAtMixin,
+                     LikeMixin):
     project = models.ForeignKey(
         verbose_name='Проект', to='Project', on_delete=models.CASCADE,
     )

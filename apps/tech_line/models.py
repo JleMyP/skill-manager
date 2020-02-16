@@ -1,11 +1,18 @@
 from django.db import models
 
-from utils.models import NameMixin, OrderedMixin, IconMixin, CreatedAtMixin
+from utils.models import (
+    NameMixin,
+    OrderedMixin,
+    IconMixin,
+    CreatedAtMixin,
+)
 
 __all__ = ['TechLine', 'TechLineElement']
 
 
-class TechLine(NameMixin, CreatedAtMixin, IconMixin):
+class TechLine(NameMixin,
+               CreatedAtMixin,
+               IconMixin):
     description = models.TextField(
         verbose_name='Описание',
     )
@@ -16,7 +23,9 @@ class TechLine(NameMixin, CreatedAtMixin, IconMixin):
         default_related_name = 'tech_lines'
 
 
-class TechLineElement(NameMixin, CreatedAtMixin, OrderedMixin):
+class TechLineElement(NameMixin,
+                      CreatedAtMixin,
+                      OrderedMixin):
     tech_line = models.ForeignKey(
         verbose_name='Линия технологий', to='TechLine', on_delete=models.CASCADE,
     )
