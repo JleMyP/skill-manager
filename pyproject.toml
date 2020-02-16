@@ -6,7 +6,7 @@ authors = ["Tim <jlemyp96@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-django = "^2.2"
+django = "^3.0.0"
 djangorestframework_simplejwt = "^4.3"
 django-reversion = "^3.0"
 django-filter = "^2.2"
@@ -16,8 +16,8 @@ uritemplate = "^3.0"
 django-loginas = "^0.3.6"
 django-cors-headers = "^3.1"
 django-constance = {version = "^2.4",extras = ["database"]}
-djangorestframework-serializer-extensions = "^1.0"
-django-autocompletefilter = "^0.0.5"
+djangorestframework-serializer-extensions = "^2.0.0"
+django-autocompletefilter = "^0.0.6"
 django-split-settings = "^1.0"
 djangorestframework = "^3.10"
 # Pillow = "^6.2"
@@ -26,9 +26,9 @@ djangorestframework = "^3.10"
 django-environ = "^0.4.5"
 requests = "^2.22.0"
 [tool.poetry.dev-dependencies]
-Werkzeug = "^0.15.5"
+Werkzeug = "^1.0"
 ipython = "^7.7"
 
 [build-system]
-requires = ["poetry>=0.12"]
+requires = ["poetry>=1.0.0"]
 build-backend = "poetry.masonry.api"
