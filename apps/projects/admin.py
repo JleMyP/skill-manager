@@ -17,6 +17,7 @@ class ProjectLinkAdminInline(admin.TabularInline):
 @admin.register(Project)
 class ProjectAdmin(VersionAdmin):
     list_display = ('id', 'name', 'created_at', 'order_num', 'icon', 'like')
+    list_editable = ('order_num',)
     search_fields = ('id', 'name')
     inlines = (ProjectVariantAdminInline,)
     date_hierarchy = 'created_at'
@@ -26,6 +27,7 @@ class ProjectAdmin(VersionAdmin):
 @admin.register(ProjectVariant)
 class ProjectVariantAdmin(VersionAdmin):
     list_display = ('id', 'name', 'project', 'created_at', 'order_num', 'like')
+    list_editable = ('order_num',)
     search_fields = ('id', 'name', 'project__name')
     inlines = (ProjectLinkAdminInline,)
     date_hierarchy = 'created_at'

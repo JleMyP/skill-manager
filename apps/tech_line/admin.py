@@ -21,6 +21,7 @@ class TechLineAdmin(VersionAdmin):
 @admin.register(TechLineElement)
 class TechLineElementAdmin(VersionAdmin):
     list_display = ('id', 'name', 'created_at', 'order_num', 'tech_line', 'weight')
+    list_editable = ('order_num',)
     search_fields = ('id', 'name', 'tech_line__name')
     date_hierarchy = 'created_at'
     actions_on_bottom = True

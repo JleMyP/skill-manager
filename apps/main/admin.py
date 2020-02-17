@@ -27,6 +27,7 @@ class FolderInlineAdmin(admin.TabularInline):
 @admin.register(Folder)
 class FolderAdmin(VersionAdmin):
     list_display = ('id', 'name', 'parent', 'created_at', 'order_num', 'like', 'icon')
+    list_editable = ('order_num',)
     search_fields = ('id', 'name')
     inlines = (FolderInlineAdmin,)
     date_hierarchy = 'created_at'
@@ -70,6 +71,7 @@ class ResourceAdmin(AutocompleteFilterMixin, VersionAdmin):
 class ResourceTypeAdmin(VersionAdmin):
     list_display = ('id', 'name', 'order_num')
     list_display_links = ('id', 'name')
+    list_editable = ('order_num',)
     search_fields = ('id', 'name')
     actions_on_bottom = True
 
@@ -88,6 +90,7 @@ class ImportedResourceAdmin(VersionAdmin):
 class VolumeTypeAdmin(VersionAdmin):
     list_display = ('id', 'name', 'created_at', 'order_num')
     list_display_links = ('id', 'name')
+    list_editable = ('order_num',)
     search_fields = ('id', 'name')
     date_hierarchy = 'created_at'
     actions_on_bottom = True
@@ -98,6 +101,7 @@ class TagAdmin(VersionAdmin):
     list_display = ('id', 'name', 'created_at', 'order_num', 'like')
     list_display_links = ('id', 'name')
     list_filter = ('like',)
+    list_editable = ('order_num', 'like')
     search_fields = ('id', 'name')
     date_hierarchy = 'created_at'
     actions_on_bottom = True
@@ -107,6 +111,7 @@ class TagAdmin(VersionAdmin):
 class TagValueAdmin(VersionAdmin):
     list_display = ('id', 'tag', 'name', 'is_default', 'created_at', 'order_num')
     list_filter = ('is_default',)
+    list_editable = ('order_num',)
     search_fields = ('id', 'name')
     date_hierarchy = 'created_at'
     actions_on_bottom = True
@@ -125,5 +130,6 @@ class TaskAdmin(VersionAdmin):
     list_display = ('id', 'name', 'created_at', 'order_num', 'like', 'skill', 'project',
                     'planned_progress_points', 'difficulty_points', 'completed')
     list_filter = ('completed', 'like')
+    list_editable = ('order_num',)
     date_hierarchy = 'created_at'
     actions_on_bottom = True
