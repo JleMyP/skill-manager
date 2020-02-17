@@ -57,8 +57,7 @@ class TagValue(NameMixin,
     )
 
     def save(self, *args, **kwargs):
-        is_new = not self.pk
-        if is_new:
+        if self._state.adding:
             self.name = self.DEFAULT_NAME
         super().save(*args, **kwargs)
 
