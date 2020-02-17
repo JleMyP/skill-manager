@@ -9,6 +9,7 @@ INSTALLED_APPS = [
     'loginas',
     'django_extensions',
     'django_filters',
+    'autocompletefilter',
     'reversion',
 
     'apps.user',

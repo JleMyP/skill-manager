@@ -1,26 +1,44 @@
 from django.contrib import admin
 from reversion.admin import VersionAdmin
+from autocompletefilter.admin import AutocompleteFilterMixin
+from autocompletefilter.filters import AutocompleteListFilter
 
-from .models import Folder, Progress, Remind, Resource, ResourceType, ImportedResource, VolumeType, Skill, Tag, TagValue, Task
+from .models import (
+    Folder,
+    Progress,
+    Remind,
+    Resource,
+    ResourceType,
+    ImportedResource,
+    VolumeType,
+    Skill,
+    Tag,
+    TagValue,
+    Task,
+)
 
 
 class FolderInlineAdmin(admin.TabularInline):
     model = Folder
-    list_display = ('id', 'parent', 'name', 'created_at', 'order_num', 'like', 'icon')
+    list_display = ('id', 'name', 'parent', 'created_at', 'order_num', 'like', 'icon')
     extra = 0
 
 
 @admin.register(Folder)
 class FolderAdmin(VersionAdmin):
-    list_display = ('id', 'parent', 'name', 'created_at', 'order_num', 'like', 'icon')
+    list_display = ('id', 'name', 'parent', 'created_at', 'order_num', 'like', 'icon')
     search_fields = ('id', 'name')
     inlines = (FolderInlineAdmin,)
+    date_hierarchy = 'created_at'
+    actions_on_bottom = True
 
 
 @admin.register(Progress)
 class ProgressAdmin(VersionAdmin):
     list_display = ('id', 'created_at', 'task', 'resource', 'points', 'comment')
     search_fields = ('id',)
+    date_hierarchy = 'created_at'
+    actions_on_bottom = True
 
 
 @admin.register(Remind)
@@ -28,41 +46,84 @@ class RemindAdmin(VersionAdmin):
     list_display = ('id', 'enabled', 'created_at', 'skill', 'task', 'resource', 'datetime',
                     'interval')
     search_fields = ('id',)
+    date_hierarchy = 'created_at'
+    actions_on_bottom = True
 
 
 @admin.register(Resource)
-class ResourceAdmin(VersionAdmin):
-    list_display = ('id', 'parent', 'name', 'created_at', 'like', 'icon', 'type', 'volume_type',
+class ResourceAdmin(AutocompleteFilterMixin, VersionAdmin):
+    list_display = ('id', 'name', 'parent', 'created_at', 'like', 'icon', 'type', 'volume_type',
                     'volume', 'planned_progress_points', 'difficulty_points')
     search_fields = ('id', 'name')
+    list_display_links = ('id', 'name')
+    list_filter = (
+        'like',
+        ('type', AutocompleteListFilter),
+        ('volume_type', AutocompleteListFilter),
+        ('parent', AutocompleteListFilter),
+    )
+    date_hierarchy = 'created_at'
+    actions_on_bottom = True
 
 
 @admin.register(ResourceType)
 class ResourceTypeAdmin(VersionAdmin):
     list_display = ('id', 'name', 'order_num')
+    list_display_links = ('id', 'name')
     search_fields = ('id', 'name')
-
-
-@admin.register(VolumeType)
-class VolumeTypeAdmin(VersionAdmin):
-    list_display = ('id', 'name', 'created_at', 'order_num')
-    search_fields = ('id', 'name')
-
-
-@admin.register(Tag)
-class TagAdmin(VersionAdmin):
-    list_display = ('id', 'name', 'created_at', 'order_num', 'like')
-    search_fields = ('id', 'name')
-
-
-@admin.register(TagValue)
-class TagValueAdmin(VersionAdmin):
-    list_display = ('id', 'tag', 'name', 'created_at', 'order_num')
-    search_fields = ('id', 'name')
+    actions_on_bottom = True
 
 
 @admin.register(ImportedResource)
 class ImportedResourceAdmin(VersionAdmin):
     list_display = ('id', 'name', 'provider', 'created_at', 'is_ignored', 'resource')
     list_filter = ('provider', 'is_ignored')
+    list_display_links = ('id', 'name')
     search_fields = ('id', 'name')
+    date_hierarchy = 'created_at'
+    actions_on_bottom = True
+
+
+@admin.register(VolumeType)
+class VolumeTypeAdmin(VersionAdmin):
+    list_display = ('id', 'name', 'created_at', 'order_num')
+    list_display_links = ('id', 'name')
+    search_fields = ('id', 'name')
+    date_hierarchy = 'created_at'
+    actions_on_bottom = True
+
+
+@admin.register(Tag)
+class TagAdmin(VersionAdmin):
+    list_display = ('id', 'name', 'created_at', 'order_num', 'like')
+    list_display_links = ('id', 'name')
+    list_filter = ('like',)
+    search_fields = ('id', 'name')
+    date_hierarchy = 'created_at'
+    actions_on_bottom = True
+
+
+@admin.register(TagValue)
+class TagValueAdmin(VersionAdmin):
+    list_display = ('id', 'tag', 'name', 'is_default', 'created_at', 'order_num')
+    list_filter = ('is_default',)
+    search_fields = ('id', 'name')
+    date_hierarchy = 'created_at'
+    actions_on_bottom = True
+
+
+@admin.register(Skill)
+class SkillAdmin(VersionAdmin):
+    list_display = ('id', 'name', 'created_at', 'planned_progress_points', 'difficulty_points')
+    search_fields = ('id', 'name')
+    date_hierarchy = 'created_at'
+    actions_on_bottom = True
+
+
+@admin.register(Task)
+class TaskAdmin(VersionAdmin):
+    list_display = ('id', 'name', 'created_at', 'order_num', 'like', 'skill', 'project',
+                    'planned_progress_points', 'difficulty_points', 'completed')
+    list_filter = ('completed', 'like')
+    date_hierarchy = 'created_at'
+    actions_on_bottom = True

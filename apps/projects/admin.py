@@ -19,6 +19,8 @@ class ProjectAdmin(VersionAdmin):
     list_display = ('id', 'name', 'created_at', 'order_num', 'icon', 'like')
     search_fields = ('id', 'name')
     inlines = (ProjectVariantAdminInline,)
+    date_hierarchy = 'created_at'
+    actions_on_bottom = True
 
 
 @admin.register(ProjectVariant)
@@ -26,9 +28,12 @@ class ProjectVariantAdmin(VersionAdmin):
     list_display = ('id', 'name', 'project', 'created_at', 'order_num', 'like')
     search_fields = ('id', 'name', 'project__name')
     inlines = (ProjectLinkAdminInline,)
+    date_hierarchy = 'created_at'
+    actions_on_bottom = True
 
 
 @admin.register(ProjectLink)
 class ProjectLinkAdmin(VersionAdmin):
     list_display = ('id', 'project_variant', 'url')
     search_fields = ('id', 'project_variant__name', 'url')
+    actions_on_bottom = True
