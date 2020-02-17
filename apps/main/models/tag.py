@@ -26,7 +26,7 @@ class Tag(NameMixin,
         verbose_name='Цвет', null=True, blank=True,
     )
     target_type = IntFlagField(
-        verbose_name='Тип цели', enum=TARGET_TYPE, default=ANY_TARGET,
+        verbose_name='Тип цели', enum=TARGET_TYPE, default=int(ANY_TARGET),
     )
 
     class Meta:
@@ -35,8 +35,9 @@ class Tag(NameMixin,
         default_related_name = 'tags'
 
     def save(self, *args, **kwargs):
+        is_new = self._state.adding
         super().save(*args, **kwargs)
-        if self._state.adding:
+        if is_new:
             self.values.create(is_default=True)
 
 
@@ -57,7 +58,7 @@ class TagValue(NameMixin,
     )
 
     def save(self, *args, **kwargs):
-        if self._state.adding:
+        if self._state.adding and self.is_default:
             self.name = self.DEFAULT_NAME
         super().save(*args, **kwargs)
 
