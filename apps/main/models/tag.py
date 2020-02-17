@@ -28,10 +28,6 @@ class Tag(NameMixin,
     target_type = IntFlagField(
         verbose_name='Тип цели', enum=TARGET_TYPE, default=ANY_TARGET,
     )
-    simple = models.BooleanField(
-        verbose_name='Простая (без значений)', default=True,
-    )
-    additional_info = None
 
     class Meta:
         verbose_name = 'Метка'
@@ -39,10 +35,9 @@ class Tag(NameMixin,
         default_related_name = 'tags'
 
     def save(self, *args, **kwargs):
-        # TODO: через self._state зырить
         super().save(*args, **kwargs)
-        if not self.pk and self.simple:
-            self.values.create(name='simple')
+        if self._state.adding:
+            self.values.create(is_default=True)
 
 
 class TagValue(NameMixin,
@@ -52,11 +47,20 @@ class TagValue(NameMixin,
     """
     пример: метка 'ЯП', значение 'python'
     """
+    DEFAULT_NAME = 'default'
 
     tag = models.ForeignKey(
         verbose_name='Метка', to='Tag', on_delete=models.CASCADE,
     )
-    additional_info = None
+    is_default = models.BooleanField(
+        verbose_name='Значение по умолчанию', default=False,
+    )
+
+    def save(self, *args, **kwargs):
+        is_new = not self.pk
+        if is_new:
+            self.name = self.DEFAULT_NAME
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Значение метки'
@@ -64,6 +68,6 @@ class TagValue(NameMixin,
         default_related_name = 'values'
 
     def __str__(self):
-        if self.tag.simple:
+        if self.is_default:
             return str(self.tag)
         return f'{self.tag.name} : {self.name}'
