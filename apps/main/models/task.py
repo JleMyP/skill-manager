@@ -34,7 +34,7 @@ class Task(NameMixin,
     difficulty_points = models.FloatField(  # complexity?
         verbose_name='Очки сложности', default=0,
     )
-    competed = models.BooleanField(
+    completed = models.BooleanField(
         verbose_name='Завершена', default=False,
     )
 
