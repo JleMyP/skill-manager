@@ -48,6 +48,11 @@ class Resource(NameMixin,
     raw_data = models.TextField(
         verbose_name='Сырые данные', null=True, blank=True,
     )
+    imported_resource = models.OneToOneField(
+        verbose_name='Импортированный ресурс', to='ImportedResource',
+        on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='resource',
+    )
     tag_values = models.ManyToManyField(
         verbose_name='Метки со значениями', to='TagValue', blank=True,
     )
