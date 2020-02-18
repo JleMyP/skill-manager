@@ -1,5 +1,5 @@
 from django.contrib.admin import site
-from django.contrib.auth.admin import UserAdmin, GroupAdmin
+from django.contrib.auth.admin import GroupAdmin, UserAdmin
 from django.contrib.auth.models import Group, Permission
 from reversion.admin import VersionAdmin
 from reversion.models import Revision, Version

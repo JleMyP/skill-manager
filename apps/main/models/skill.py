@@ -1,11 +1,11 @@
 from django.db import models
 
 from utils.models import (
-    NameMixin,
     CreatedAtMixin,
-    OrderedMixin,
-    LikeMixin,
     IconMixin,
+    LikeMixin,
+    NameMixin,
+    OrderedMixin,
 )
 
 __all__ = ['Skill']

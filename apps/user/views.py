@@ -1,13 +1,13 @@
-from rest_framework import permissions, generics
+from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED
 from rest_framework_serializer_extensions.views import SerializerExtensionsAPIViewMixin
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from .serializers.token import CustomTokenObtainSerializer
-from .serializers.user import ProfileSerializer
-from .serializers.user import RegistrationSerializer
 from utils.schema import AutoSchemaCustomCreated
+
+from .serializers.token import CustomTokenObtainSerializer
+from .serializers.user import ProfileSerializer, RegistrationSerializer
 
 __all__ = ['CustomTokenObtainView', 'RegistrationView', 'ProfileView']
 

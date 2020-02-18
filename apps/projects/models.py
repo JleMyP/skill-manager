@@ -1,11 +1,11 @@
 from django.db import models
 
 from utils.models import (
+    CreatedAtMixin,
+    IconMixin,
+    LikeMixin,
     NameMixin,
     OrderedMixin,
-    CreatedAtMixin,
-    LikeMixin,
-    IconMixin,
 )
 
 __all__ = ['Project', 'ProjectVariant', 'ProjectLink']

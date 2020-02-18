@@ -1,5 +1,3 @@
-from enum import IntFlag, EnumMeta
-
 from django.db import models
 from django.db.models import Lookup
 

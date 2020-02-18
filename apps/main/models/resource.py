@@ -1,11 +1,11 @@
 from django.db import models
 
 from utils.models import (
+    CreatedAtMixin,
+    IconMixin,
+    LikeMixin,
     NameMixin,
     OrderedMixin,
-    CreatedAtMixin,
-    LikeMixin,
-    IconMixin,
 )
 
 __all__ = ['Resource', 'ResourceType', 'VolumeType']
@@ -22,7 +22,7 @@ class Resource(NameMixin,
     parent = models.ForeignKey(
         verbose_name='Батя', to='self', on_delete=models.SET_NULL, null=True, blank=True,
     )
-    type = models.ForeignKey(
+    type = models.ForeignKey(  # noqa: VNE003
         verbose_name='Тип ресурса', to='ResourceType', on_delete=models.SET_NULL, null=True,
     )
     volume_type = models.ForeignKey(
@@ -38,7 +38,7 @@ class Resource(NameMixin,
     text = models.TextField(
         verbose_name='Текст', null=True, blank=True,
     )
-    file = models.FileField(
+    file = models.FileField(  # noqa: VNE002
         verbose_name='Файл', null=True, blank=True,
     )
     # image = models.ImageField(

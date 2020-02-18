@@ -1,13 +1,14 @@
-from typing import List
 import re
+from typing import List
 
 import requests
-
 
 API_STARS_URL = 'https://api.github.com/users/{}/starred'
 LINK_REGEXP = re.compile(r'<[^>_]+[?&]page=(\d+)[^>]*>; rel="([^"]+)"')
 
-class GithubApiException(Exception): pass
+
+class GithubApiException(Exception):
+    pass
 
 
 def get_data(user: str) -> List[dict]:

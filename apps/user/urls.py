@@ -17,9 +17,11 @@ Including another URLconf
 from django.urls import re_path
 from rest_framework_simplejwt.views import token_refresh, token_verify
 
-from .views import CustomTokenObtainView
-from .views import ProfileView
-from .views import RegistrationView
+from .views import (
+    CustomTokenObtainView,
+    ProfileView,
+    RegistrationView,
+)
 
 urlpatterns = [
     re_path(r'^api/v1/registration/$', RegistrationView.as_view(), name='registration'),

@@ -8,5 +8,5 @@ router = DefaultRouter()
 router.register('folders', FoldersViewSet)
 
 urlpatterns = [
-  url(r'^api/v1/', include(router.urls)),
+    url(r'^api/v1/', include(router.urls)),
 ]

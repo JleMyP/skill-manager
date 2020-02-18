@@ -1,10 +1,10 @@
 from django.db import models
 
 from utils.models import (
-    NameMixin,
-    OrderedMixin,
     CreatedAtMixin,
     LikeMixin,
+    NameMixin,
+    OrderedMixin,
 )
 
 __all__ = ['Task']
@@ -18,7 +18,8 @@ class Task(NameMixin,
         verbose_name='ЗУН', to='Skill', on_delete=models.CASCADE, null=True, blank=True,
     )
     project = models.ForeignKey(
-        verbose_name='Проект', to='projects.Project', on_delete=models.CASCADE, null=True, blank=True,
+        verbose_name='Проект', to='projects.Project', on_delete=models.CASCADE,
+        null=True, blank=True,
     )
 
     parent = models.ForeignKey(

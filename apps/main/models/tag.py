@@ -4,11 +4,11 @@ from django.db import models
 
 from utils.fields import ColorField, IntFlagField
 from utils.models import (
-    NameMixin,
     CreatedAtMixin,
-    OrderedMixin,
-    LikeMixin,
     IconMixin,
+    LikeMixin,
+    NameMixin,
+    OrderedMixin,
 )
 
 __all__ = ['Tag', 'TagValue']

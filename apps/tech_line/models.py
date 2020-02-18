@@ -1,10 +1,10 @@
 from django.db import models
 
 from utils.models import (
+    CreatedAtMixin,
+    IconMixin,
     NameMixin,
     OrderedMixin,
-    IconMixin,
-    CreatedAtMixin,
 )
 
 __all__ = ['TechLine', 'TechLineElement']

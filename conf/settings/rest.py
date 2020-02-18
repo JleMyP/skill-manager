@@ -1,7 +1,7 @@
 from datetime import timedelta
 
-from .common import SECRET_KEY
 from .apps import INSTALLED_APPS
+from .common import SECRET_KEY
 
 INSTALLED_APPS += [
     'rest_framework',

@@ -1,20 +1,20 @@
-from django.contrib import admin
-from reversion.admin import VersionAdmin
 from autocompletefilter.admin import AutocompleteFilterMixin
 from autocompletefilter.filters import AutocompleteListFilter
+from django.contrib import admin
+from reversion.admin import VersionAdmin
 
 from .models import (
     Folder,
+    ImportedResource,
     Progress,
     Remind,
     Resource,
     ResourceType,
-    ImportedResource,
-    VolumeType,
     Skill,
     Tag,
     TagValue,
     Task,
+    VolumeType,
 )
 
 

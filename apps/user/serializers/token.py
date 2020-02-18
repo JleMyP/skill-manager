@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, PasswordField
+from rest_framework_simplejwt.serializers import PasswordField, TokenObtainPairSerializer
 
 __all__ = ['CustomTokenObtainSerializer']
 
