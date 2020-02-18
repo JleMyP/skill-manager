@@ -20,15 +20,28 @@ djangorestframework-serializer-extensions = "^2.0.0"
 django-autocompletefilter = "^0.0.6"
 django-split-settings = "^1.0"
 djangorestframework = "^3.10"
-# Pillow = "^6.2"
-
-
 django-environ = "^0.4.5"
 requests = "^2.22.0"
 psycopg2-binary = "^2.8.4"
+
 [tool.poetry.dev-dependencies]
 Werkzeug = "^1.0"
 ipython = "^7.7"
+flake8 = "^3.7.9"
+isort = "^4.3.21"
+flake8-isort = "^2.8.0"
+bandit = "^1.6.2"
+flake8-bandit = "^2.1.2"
+pep8-naming = "^0.9.1"
+flake8-variables-names = "^0.0.3"
+flake8-bugbear = "^20.1.4"
+
+[tool.isort]
+line_length = 100
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 3
+skip_glob = "**/migrations/*"
 
 [build-system]
 requires = ["poetry>=1.0.0"]
