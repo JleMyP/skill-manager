@@ -81,7 +81,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 version = "0.4.3"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Code coverage measurement for Python"
 name = "coverage"
 optional = false
@@ -217,8 +217,8 @@ category = "main"
 description = "An extension to the Django web framework that provides version control for model instances."
 name = "django-reversion"
 optional = false
-python-versions = "*"
-version = "3.0.5"
+python-versions = ">=3.6"
+version = "3.0.7"
 
 [package.dependencies]
 django = ">=1.11"
@@ -676,7 +676,7 @@ docs = ["sphinx"]
 test = ["pytest (>=3.6)", "pytest-cov", "pytest-django", "sybil", "zope.component", "twisted", "mock", "django (<2)", "django"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Python Library for Tom's Obvious, Minimal Language"
 name = "toml"
 optional = false
@@ -741,7 +741,7 @@ dev = ["pytest", "coverage", "tox", "sphinx", "pallets-sphinx-themes", "sphinx-i
 watchdog = ["watchdog"]
 
 [metadata]
-content-hash = "40ab0487abddca199379a0ffed3d5b1ab00efab773b93f0ccd52ac47c99c4311"
+content-hash = "b4ff15fd38949326b3fc195cb4180636587653224e1f819a9314a65ece0cf2a7"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -850,8 +850,8 @@ django-picklefield = [
     {file = "django_picklefield-2.1.1-py2.py3-none-any.whl", hash = "sha256:e03cb181b7161af38ad6b573af127e4fe9b7cc2c455b42c1ec43eaad525ade0a"},
 ]
 django-reversion = [
-    {file = "django-reversion-3.0.5.tar.gz", hash = "sha256:1add55bb05311f4acd26683dd71af60729d4f33dfe42c608da8e15e679a32009"},
-    {file = "django_reversion-3.0.5-py2.py3-none-any.whl", hash = "sha256:60efa47f02d8b0451aff1d76e00e5122144b661bd720a099eb44241a081aa254"},
+    {file = "django-reversion-3.0.7.tar.gz", hash = "sha256:72fc53580a6b538f0cfff10f27f42333f67d79c406399289c94ec5a193cfb3e1"},
+    {file = "django_reversion-3.0.7-py3-none-any.whl", hash = "sha256:ecab4703ecc0871dc325c3e100139def84eb153622df3413fbcd9de7d3503c78"},
 ]
 django-split-settings = [
     {file = "django-split-settings-1.0.0.tar.gz", hash = "sha256:f5a5c6431ab00a78959f7930a79faaf488b2fe8a4eddc4297ef8cd593e74868d"},
