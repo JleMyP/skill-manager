@@ -1,24 +1,18 @@
 FROM python:3.7-slim
 
-ENV PYTHONUNBUFFERED 1
-
-RUN pip install poetry \
-  && apt-get update \
-  && apt-get install -y git
-
 WORKDIR /app
 COPY pyproject.toml .
-# COPY poetry.lock .
+COPY poetry.lock .
 
-RUN poetry conf settings.virtualenvs.create false \
-  && poetry install \
-  && apt-get autoremove -y git \
+RUN pip install poetry==1.0.0 \
+  && poetry config virtualenvs.create false \
+  && poetry install --no-dev --no-interaction \
+  && pip uninstall --yes poetry \
   && rm -rf ~/.cache/pypoetry/cache/repositories/pypi/* \
-  && rm -rf ~/.cache/pip \
-  && rm -rf /var/lib/apt/lists/*
+  && rm -rf ~/.cache/pip
 
 COPY . .
 
-
+ENV PYTHONUNBUFFERED 1
 EXPOSE 8000
-CMD ["poetry", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
