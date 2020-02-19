@@ -33,7 +33,7 @@ class Project(NameMixin,
     class Meta:
         verbose_name = 'Проект'
         verbose_name_plural = 'Проекты'
-        default_related_name = 'projects'
+        default_related_name = 'project'
 
 
 class ProjectVariant(NameMixin,

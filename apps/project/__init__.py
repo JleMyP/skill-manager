@@ -2,9 +2,9 @@ from django.apps import AppConfig
 
 
 class ProjectsConfig(AppConfig):
-    name = 'apps.projects'
-    label = 'projects'
+    name = 'apps.project'
+    label = 'project'
     verbose_name = 'Проекты'
 
 
-default_app_config = 'apps.projects.ProjectsConfig'
+default_app_config = 'apps.project.ProjectsConfig'

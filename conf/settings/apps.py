@@ -13,6 +13,6 @@ INSTALLED_APPS = [
     'reversion',
 
     'apps.user',
-    'apps.projects',
+    'apps.project',
     'apps.main',
 ]

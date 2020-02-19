@@ -18,7 +18,7 @@ class Task(NameMixin,
         verbose_name='ЗУН', to='Skill', on_delete=models.CASCADE, null=True, blank=True,
     )
     project = models.ForeignKey(
-        verbose_name='Проект', to='projects.Project', on_delete=models.CASCADE,
+        verbose_name='Проект', to='project.Project', on_delete=models.CASCADE,
         null=True, blank=True,
     )
 
