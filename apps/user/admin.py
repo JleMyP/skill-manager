@@ -10,10 +10,10 @@ from .models import CustomUser
 class VersionedUserAdmin(VersionAdmin, UserAdmin):
     fieldsets = (
         (None, {
-            'fields': ('username', 'password')
+            'fields': ('username', 'password'),
         }),
         ('Персональная информация', {
-            'fields': (('first_name', 'last_name', 'middle_name'), 'email')
+            'fields': (('first_name', 'last_name', 'middle_name'), 'email'),
         }),
         ('Права', {
             'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
@@ -21,7 +21,7 @@ class VersionedUserAdmin(VersionAdmin, UserAdmin):
         }),
         ('Даты', {
             'fields': (('last_login', 'date_joined'),),
-            'classes': ('collapse',)
+            'classes': ('collapse',),
         }),
     )
     list_display = ('username', 'email', 'first_name', 'last_name', 'middle_name',

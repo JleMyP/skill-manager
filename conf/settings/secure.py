@@ -1,5 +1,6 @@
 from .apps import INSTALLED_APPS
 
+
 INSTALLED_APPS += [
     'corsheaders',
 ]

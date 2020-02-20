@@ -3,7 +3,7 @@ from typing import List
 
 import requests
 
-API_STARS_URL = 'https://api.github.com/users/{}/starred'
+API_STARS_URL = 'https://api.github.com/users/{0}/starred'
 LINK_REGEXP = re.compile(r'<[^>_]+[?&]page=(\d+)[^>]*>; rel="([^"]+)"')
 
 
@@ -15,7 +15,7 @@ def get_data(user: str) -> List[dict]:
     data = []
     params = {
         'page': 1,
-        'per_page': 100
+        'per_page': 100,
     }
     headers = {
         'accept': 'application/vnd.github.mercy-preview+json',

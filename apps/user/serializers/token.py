@@ -5,7 +5,7 @@ __all__ = ['CustomTokenObtainSerializer']
 
 
 class CustomTokenObtainSerializer(TokenObtainPairSerializer):
-    """ кастомизация полей для генератора апи """
+    """Кастомизация полей для генератора апи."""
 
     password = PasswordField(write_only=True)
     refresh = serializers.CharField(read_only=True)

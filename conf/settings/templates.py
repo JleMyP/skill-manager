@@ -2,6 +2,7 @@ import os
 
 from .common import BASE_DIR
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

@@ -7,7 +7,7 @@ user_model = get_user_model()
 
 
 class CustomAuthBackend(ModelBackend):
-    """ авторизация по адресу почты """
+    """Авторизация по адресу почты."""
 
     def authenticate(self, request, username=None, password=None, **kwargs):
         try:

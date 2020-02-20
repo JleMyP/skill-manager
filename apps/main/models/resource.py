@@ -75,9 +75,8 @@ class Resource(NameMixin,
 
 class ResourceType(NameMixin,
                    OrderedMixin):
-    """
-    статья, текст, файл, книга, видеокурс, канал, заметка, git, тест, хабр и тд
-    """
+    """Статья, текст, файл, книга, видеокурс, канал, заметка, git, тест, хабр и тд."""
+
     description = models.TextField(
         verbose_name='Описание', null=True, blank=True,
     )
@@ -91,9 +90,8 @@ class ResourceType(NameMixin,
 class VolumeType(NameMixin,
                  OrderedMixin,
                  CreatedAtMixin):
-    """
-    видосы, минуты, символы, ...
-    """
+    """Видосы, минуты, символы, ..."""
+
     class Meta:
         verbose_name = 'Тип объема'
         verbose_name_plural = 'Типы объема'

@@ -25,6 +25,7 @@ class IntFlagField(models.PositiveSmallIntegerField):
     имеющие красный или зеленый. синий - не важно
     SomeModel.objects.filter(colors__any_bit=SomeModel.COLORS.RED | SomeModel.COLORS.GREEN)
     """
+
     # TODO:
     #  в contribute_to_class можно привязаться к модели и сделать <ModelClass>.<FieldName>_ENUM
     #  свой класс перечисления со свойством all
@@ -61,7 +62,7 @@ class HasBitLookup(Lookup):
     def as_sql(self, compiler, connection):
         lhs, lhs_params = self.process_lhs(compiler, connection)
         rhs, rhs_params = self.process_rhs(compiler, connection)
-        return '%s & %s = %s' % (lhs, rhs, rhs), rhs_params + rhs_params
+        return f'{lhs} & {rhs} = {rhs}', rhs_params + rhs_params
 
 
 @IntFlagField.register_lookup
@@ -71,4 +72,4 @@ class AnyBitLookup(Lookup):
     def as_sql(self, compiler, connection):
         lhs, lhs_params = self.process_lhs(compiler, connection)
         rhs, rhs_params = self.process_rhs(compiler, connection)
-        return '%s & %s > 0' % (lhs, rhs), rhs_params + rhs_params
+        return f'{lhs} & {rhs} > 0', rhs_params + rhs_params

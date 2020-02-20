@@ -45,9 +45,8 @@ class TagValue(NameMixin,
                CreatedAtMixin,
                OrderedMixin,
                IconMixin):
-    """
-    пример: метка 'ЯП', значение 'python'
-    """
+    """Пример: метка 'ЯП', значение 'python'."""
+
     DEFAULT_NAME = 'default'
 
     tag = models.ForeignKey(

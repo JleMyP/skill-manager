@@ -10,7 +10,7 @@ __all__ = ['RegistrationSerializer', 'ProfileSerializer']
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
-    """ кастомный юзер и хз че еще """
+    """Кастомный юзер и хз че еще."""
 
     _validator = UniqueValidator(queryset=CustomUser.objects.all())
     email = serializers.EmailField(validators=[_validator], required=False, write_only=True)
