@@ -119,7 +119,11 @@ class TagValueAdmin(VersionAdmin):
 
 @admin.register(Skill)
 class SkillAdmin(VersionAdmin):
-    list_display = ('id', 'name', 'created_at', 'planned_progress_points', 'difficulty_points')
+    list_display = ('id', 'name', 'parent', 'created_at', 'planned_progress_points', 'difficulty_points')
+    list_filter = (
+        ('parent', AutocompleteListFilter),
+    )
+    list_editable = ('planned_progress_points', 'difficulty_points')
     search_fields = ('id', 'name')
     date_hierarchy = 'created_at'
     actions_on_bottom = True

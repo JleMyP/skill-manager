@@ -16,6 +16,10 @@ class Skill(NameMixin,
             OrderedMixin,
             LikeMixin,
             IconMixin):
+    parent = models.ForeignKey(
+        verbose_name='Батька', to='self', on_delete=models.SET_NULL,
+        null=True, blank=True,
+    )
     description = models.TextField(
         verbose_name='Описание',
     )
