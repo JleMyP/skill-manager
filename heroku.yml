@@ -1,0 +1,16 @@
+setup:
+  addons:
+    - plan: heroku-postgresql
+      as: DATABASE
+
+build:
+  docker:
+    web: Dockerfile
+
+release:
+  command:
+    - python manage.py migrate
+  image: web
+
+run:
+  web: python nanage.py runserver 0.0.0.0:$PORT
