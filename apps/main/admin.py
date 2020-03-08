@@ -120,7 +120,8 @@ class TagValueAdmin(VersionAdmin):
 
 @admin.register(Skill)
 class SkillAdmin(AutocompleteFilterMixin, VersionAdmin):
-    list_display = ('id', 'name', 'parent', 'created_at', 'planned_progress_points', 'difficulty_points')
+    list_display = ('id', 'name', 'parent', 'created_at',
+                    'planned_progress_points', 'difficulty_points')
     list_filter = (
         ('parent', AutocompleteListFilter),
     )
@@ -139,6 +140,7 @@ class TaskAdmin(VersionAdmin):
     search_fields = ('id',)
     date_hierarchy = 'created_at'
     actions_on_bottom = True
+
 
 @admin.register(Note)
 class NoteAdmin(AutocompleteFilterMixin, VersionAdmin):
