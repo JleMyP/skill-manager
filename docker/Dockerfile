@@ -4,7 +4,7 @@ WORKDIR /app
 COPY pyproject.toml .
 COPY poetry.lock .
 
-RUN pip install poetry==1.0.0 \
+RUN pip install poetry>=1.0 \
   && poetry config virtualenvs.create false \
   && poetry install --no-dev --no-interaction \
   && pip uninstall --yes poetry \
@@ -14,5 +14,6 @@ RUN pip install poetry==1.0.0 \
 COPY . .
 
 ENV PYTHONUNBUFFERED 1
-EXPOSE 8000
+ARG PORT=8000
+ENV PORT=$PORT
 CMD python manage.py runserver 0.0.0.0:$PORT
