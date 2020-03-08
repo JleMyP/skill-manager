@@ -6,6 +6,7 @@ from reversion.admin import VersionAdmin
 from .models import (
     Folder,
     ImportedResource,
+    Note,
     Progress,
     Remind,
     Resource,
@@ -137,3 +138,19 @@ class TaskAdmin(VersionAdmin):
     list_editable = ('order_num',)
     date_hierarchy = 'created_at'
     actions_on_bottom = True
+
+@admin.register(Note)
+class NoteAdmin(AutocompleteFilterMixin, VersionAdmin):
+    list_display = ('id', 'created_at', 'short_content')
+    list_filter = (
+        ('skills', AutocompleteListFilter),
+        ('resources', AutocompleteListFilter),
+        ('tag_values', AutocompleteListFilter),
+    )
+    search_fields = ('id',)
+    date_hierarchy = 'created_at'
+    actions_on_bottom = True
+
+    def short_content(self, obj):
+        return obj.description[:50]
+    short_content.short_description = 'Короткое содержание'
