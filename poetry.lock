@@ -214,6 +214,17 @@ tests = ["tox"]
 
 [[package]]
 category = "main"
+description = "Seamless polymorphic inheritance for Django models"
+name = "django-polymorphic"
+optional = false
+python-versions = "*"
+version = "2.1.2"
+
+[package.dependencies]
+Django = ">=1.11"
+
+[[package]]
+category = "main"
 description = "An extension to the Django web framework that provides version control for model instances."
 name = "django-reversion"
 optional = false
@@ -741,7 +752,7 @@ dev = ["pytest", "coverage", "tox", "sphinx", "pallets-sphinx-themes", "sphinx-i
 watchdog = ["watchdog"]
 
 [metadata]
-content-hash = "b4ff15fd38949326b3fc195cb4180636587653224e1f819a9314a65ece0cf2a7"
+content-hash = "a5a31aff3b2ab6b79e9690249d98e92e412d8b6f27f86dbf19cf76a38393c449"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -848,6 +859,10 @@ django-loginas = [
 django-picklefield = [
     {file = "django-picklefield-2.1.1.tar.gz", hash = "sha256:67a5e156343e3b032cac2f65565f0faa81635a99c7da74b0f07a0f5db467b646"},
     {file = "django_picklefield-2.1.1-py2.py3-none-any.whl", hash = "sha256:e03cb181b7161af38ad6b573af127e4fe9b7cc2c455b42c1ec43eaad525ade0a"},
+]
+django-polymorphic = [
+    {file = "django-polymorphic-2.1.2.tar.gz", hash = "sha256:6e08a76c91066635ccb7ef3ebbe9a0ad149febae6b30be2579716ec16d3c6461"},
+    {file = "django_polymorphic-2.1.2-py2.py3-none-any.whl", hash = "sha256:0a25058e95e5e99fe0beeabb8f4734effe242d7b5b77dca416fba9fd3062da6a"},
 ]
 django-reversion = [
     {file = "django-reversion-3.0.7.tar.gz", hash = "sha256:72fc53580a6b538f0cfff10f27f42333f67d79c406399289c94ec5a193cfb3e1"},

@@ -1,7 +1,11 @@
+import json
 import re
 from typing import List
 
 import requests
+
+from ..models import ImportedResource
+
 
 API_STARS_URL = 'https://api.github.com/users/{0}/starred'
 LINK_REGEXP = re.compile(r'<[^>_]+[?&]page=(\d+)[^>]*>; rel="([^"]+)"')
@@ -47,3 +51,19 @@ def get_data(user: str) -> List[dict]:
         params['page'] += 1
 
     return data
+
+
+def save_imported_data(data: List[dict]) -> list[ImportedResourceRepo]:
+    imported_resources = []
+
+    for repo in data:
+        ir, c = ImportedResourceRepo.objects.get_or_create(
+            name=repo['full_name'],
+            defaults={
+                'description': repo['description'],
+                'raw_data': json.dumps(repo),
+            }
+        )
+        imported_resources.append(ir)
+
+    return imported_resources

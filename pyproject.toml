@@ -23,6 +23,7 @@ djangorestframework = "^3.10"
 django-environ = "^0.4.5"
 requests = "^2.22.0"
 psycopg2-binary = "^2.8.4"
+django-polymorphic = "^2.1.2"
 
 [tool.poetry.dev-dependencies]
 Werkzeug = "^1.0"

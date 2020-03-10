@@ -1,11 +1,13 @@
 from autocompletefilter.admin import AutocompleteFilterMixin
 from autocompletefilter.filters import AutocompleteListFilter
 from django.contrib import admin
+from polymorphic.admin import PolymorphicParentModelAdmin, PolymorphicChildModelAdmin, PolymorphicChildModelFilter
 from reversion.admin import VersionAdmin
 
 from .models import (
     Folder,
     ImportedResource,
+    ImportedResourceRepo,
     Note,
     Progress,
     Remind,
@@ -78,9 +80,25 @@ class ResourceTypeAdmin(VersionAdmin):
 
 
 @admin.register(ImportedResource)
-class ImportedResourceAdmin(VersionAdmin):
-    list_display = ('id', 'name', 'provider', 'created_at', 'is_ignored', 'resource')
-    list_filter = ('provider', 'is_ignored')
+class ImportedResourceAdmin(VersionAdmin, PolymorphicParentModelAdmin):
+    base_model = ImportedResource
+    child_models = (ImportedResourceRepo,)
+
+    list_display = ('id', 'name', 'created_at', 'is_ignored', 'resource')
+    list_filter = ('is_ignored', PolymorphicChildModelFilter)
+    list_display_links = ('id', 'name')
+    search_fields = ('id', 'name')
+    date_hierarchy = 'created_at'
+    actions_on_bottom = True
+
+
+@admin.register(ImportedResourceRepo)
+class ImportedResourceRepoAdmin(VersionAdmin, PolymorphicChildModelAdmin):
+    base_model = ImportedResourceRepo
+    show_in_index = True
+
+    list_display = ('id', 'name', 'created_at', 'is_ignored', 'resource')
+    list_filter = ('is_ignored',)
     list_display_links = ('id', 'name')
     search_fields = ('id', 'name')
     date_hierarchy = 'created_at'
