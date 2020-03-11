@@ -83,7 +83,7 @@ class ResourceType(NameMixin,
 
     class Meta:
         verbose_name = 'Тип ресурса'
-        verbose_name_plural = 'Типы ресурсы'
+        verbose_name_plural = 'Типы ресурсов'
         default_related_name = 'resource_types'
 
 

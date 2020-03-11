@@ -1,6 +1,7 @@
-import json
-
 from constance import config
+from django.contrib.postgres.fields import JSONField, ArrayField
+
+
 from django.db import models
 from polymorphic.models import PolymorphicModel
 
@@ -13,12 +14,11 @@ from utils.models import (
 __all__ = ['ImportedResource', 'ImportedResourceRepo']
 
 
-
 class ImportedResource(CreatedAtMixin, NameMixin, PolymorphicModel):
     description = models.TextField(
         verbose_name='Описание', null=True, blank=True,
     )
-    raw_data = models.TextField(
+    raw_data = JSONField(
         verbose_name='Сырые данные', null=True, blank=True,
     )
     is_ignored = models.BooleanField(
@@ -26,8 +26,8 @@ class ImportedResource(CreatedAtMixin, NameMixin, PolymorphicModel):
     )
 
     class Meta:
-        verbose_name = 'Импортированный ресурс (git)'
-        verbose_name_plural = 'Импортированные ресурсы (git)'
+        verbose_name = 'Импортированный ресурс'
+        verbose_name_plural = 'Импортированные ресурсы'
         default_related_name = 'imported_resources'
 
     def ignore(self):
@@ -46,13 +46,37 @@ class ImportedResource(CreatedAtMixin, NameMixin, PolymorphicModel):
 
 
 class ImportedResourceRepo(ImportedResource):
-    def create_resource(self):
-        if self.is_ignored or self.resource:
-            return
+    short_name = models.CharField(
+        verbose_name='Короткое название', max_length=255,
+    )
+    url = models.URLField(
+        verbose_name='Ссыль на репу',
+    )
+    homepage = models.URLField(
+        verbose_name='Домашняя страница', null=True, blank=True,
+    )
+    language = models.CharField(
+        verbose_name='Язык', max_length=255, null=True, blank=True,
+    )
+    topics = ArrayField(
+        verbose_name='Топики', base_field=models.CharField(
+            max_length=255), default=list, blank=True,
+    )
+    from_user = models.CharField(
+        verbose_name='Владелец закладки', max_length=255, null=True, blank=True,
+    )
+
+    class Meta:
+        verbose_name = 'Импортированный ресурс (git)'
+        verbose_name_plural = 'Импортированные ресурсы (git)'
+        default_related_name = 'imported_resources'
+
+    def create_resource(self) -> 'Resource':
+        if self.is_ignored or hasattr(self, 'resource'):
+            return self.resource
 
         from . import Resource, ResourceType, TagValue
 
-        raw_data = json.loads(self.raw_data)
         rt_pk = config.GIT_IMPORT_RESOURCE_TYPE
         rt = ResourceType.objects.get(pk=rt_pk)
         res = Resource.objects.create(
@@ -60,7 +84,7 @@ class ImportedResourceRepo(ImportedResource):
             imported_resource=self,
             name=self.name,
             description=self.description,
-            link=raw_data['url'],
+            link=self.url,
         )
 
         tag_pk = config.GIT_IMPORT_TAG
