@@ -1,7 +1,11 @@
 from autocompletefilter.admin import AutocompleteFilterMixin
 from autocompletefilter.filters import AutocompleteListFilter
 from django.contrib import admin
-from polymorphic.admin import PolymorphicParentModelAdmin, PolymorphicChildModelAdmin, PolymorphicChildModelFilter
+from polymorphic.admin import (
+    PolymorphicParentModelAdmin,
+    PolymorphicChildModelAdmin,
+    PolymorphicChildModelFilter,
+)
 from reversion.admin import VersionAdmin
 
 from .models import (
@@ -65,8 +69,11 @@ class ResourceAdmin(AutocompleteFilterMixin, VersionAdmin):
         ('type', AutocompleteListFilter),
         ('volume_type', AutocompleteListFilter),
         ('parent', AutocompleteListFilter),
+        ('tag_values', AutocompleteListFilter),
+        ('tag_values__tag', AutocompleteListFilter),
     )
     date_hierarchy = 'created_at'
+    filter_horizontal = ('tag_values',)
     actions_on_bottom = True
 
 
@@ -77,6 +84,13 @@ class ResourceTypeAdmin(VersionAdmin):
     list_editable = ('order_num',)
     search_fields = ('id', 'name')
     actions_on_bottom = True
+
+
+class ResourceAdminInline(admin.StackedInline):
+    model = Resource
+    extra = 0
+    show_change_link = True
+    classes = ('collapse',)
 
 
 @admin.register(ImportedResource)
@@ -100,9 +114,11 @@ class ImportedResourceRepoAdmin(VersionAdmin, PolymorphicChildModelAdmin):
     list_display = ('id', 'name', 'created_at', 'is_ignored', 'resource')
     list_filter = ('is_ignored',)
     list_display_links = ('id', 'name')
+    readonly_fields = ('id', 'created_at')
     search_fields = ('id', 'name')
     date_hierarchy = 'created_at'
     actions_on_bottom = True
+    inlines = (ResourceAdminInline,)
 
 
 @admin.register(VolumeType)
@@ -115,6 +131,12 @@ class VolumeTypeAdmin(VersionAdmin):
     actions_on_bottom = True
 
 
+class TagValueAdminInline(admin.TabularInline):
+    model = TagValue
+    extra = 1
+    classes = ('collapse',)
+
+
 @admin.register(Tag)
 class TagAdmin(VersionAdmin):
     list_display = ('id', 'name', 'created_at', 'order_num', 'like')
@@ -123,13 +145,17 @@ class TagAdmin(VersionAdmin):
     list_editable = ('order_num', 'like')
     search_fields = ('id', 'name')
     date_hierarchy = 'created_at'
+    inlines = (TagValueAdminInline,)
     actions_on_bottom = True
 
 
 @admin.register(TagValue)
-class TagValueAdmin(VersionAdmin):
+class TagValueAdmin(AutocompleteFilterMixin, VersionAdmin):
     list_display = ('id', 'tag', 'name', 'is_default', 'created_at', 'order_num')
-    list_filter = ('is_default',)
+    list_filter = (
+        'is_default',
+        ('tag', AutocompleteListFilter),
+    )
     list_editable = ('order_num',)
     search_fields = ('id', 'name')
     date_hierarchy = 'created_at'
