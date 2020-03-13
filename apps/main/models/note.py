@@ -1,4 +1,5 @@
 from django.db import models
+from markdownx.models import MarkdownxField
 
 from utils.models import (
     CreatedAtMixin,
@@ -8,7 +9,7 @@ __all__ = ['Note']
 
 
 class Note(CreatedAtMixin):
-    description = models.TextField(
+    description = MarkdownxField(
         verbose_name='Описание',
     )
 

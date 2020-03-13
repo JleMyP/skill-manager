@@ -1,4 +1,5 @@
 from django.db import models
+from markdownx.models import MarkdownxField
 
 from utils.models import CreatedAtMixin
 
@@ -15,7 +16,7 @@ class Progress(CreatedAtMixin):
     points = models.FloatField(
         verbose_name='Очки',
     )
-    comment = models.TextField(
+    comment = MarkdownxField(
         verbose_name='Комментарий', null=True, blank=True,
     )
 

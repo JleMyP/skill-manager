@@ -1,4 +1,5 @@
 from django.db import models
+from markdownx.models import MarkdownxField
 
 from utils.models import (
     CreatedAtMixin,
@@ -20,7 +21,7 @@ class Skill(NameMixin,
         verbose_name='Батька', to='self', on_delete=models.SET_NULL,
         null=True, blank=True,
     )
-    description = models.TextField(
+    description = MarkdownxField(
         verbose_name='Описание',
     )
     folders = models.ManyToManyField(

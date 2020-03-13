@@ -1,4 +1,5 @@
 from django.db import models
+from markdownx.models import MarkdownxField
 
 from utils.models import (
     CreatedAtMixin,
@@ -13,7 +14,7 @@ __all__ = ['TechLine', 'TechLineElement']
 class TechLine(NameMixin,
                CreatedAtMixin,
                IconMixin):
-    description = models.TextField(
+    description = MarkdownxField(
         verbose_name='Описание',
     )
 

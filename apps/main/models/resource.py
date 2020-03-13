@@ -1,4 +1,5 @@
 from django.db import models
+from markdownx.models import MarkdownxField
 
 from utils.models import (
     CreatedAtMixin,
@@ -16,7 +17,7 @@ class Resource(NameMixin,
                CreatedAtMixin,
                LikeMixin,
                IconMixin):
-    description = models.TextField(
+    description = MarkdownxField(
         verbose_name='Описание', null=True, blank=True,
     )
     parent = models.ForeignKey(
@@ -35,7 +36,7 @@ class Resource(NameMixin,
     link = models.URLField(
         verbose_name='Ссыль', null=True, blank=True,
     )
-    text = models.TextField(
+    text = MarkdownxField(
         verbose_name='Текст', null=True, blank=True,
     )
     file = models.FileField(  # noqa: VNE002
@@ -77,7 +78,7 @@ class ResourceType(NameMixin,
                    OrderedMixin):
     """Статья, текст, файл, книга, видеокурс, канал, заметка, git, тест, хабр и тд."""
 
-    description = models.TextField(
+    description = MarkdownxField(
         verbose_name='Описание', null=True, blank=True,
     )
 

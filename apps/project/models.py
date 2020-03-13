@@ -1,4 +1,5 @@
 from django.db import models
+from markdownx.models import MarkdownxField
 
 from utils.models import (
     CreatedAtMixin,
@@ -16,7 +17,7 @@ class Project(NameMixin,
               CreatedAtMixin,
               IconMixin,
               LikeMixin):
-    description = models.TextField(
+    description = MarkdownxField(
         verbose_name='Описание',
     )
 
@@ -43,7 +44,7 @@ class ProjectVariant(NameMixin,
     project = models.ForeignKey(
         verbose_name='Проект', to='Project', on_delete=models.CASCADE,
     )
-    description = models.TextField(
+    description = MarkdownxField(
         verbose_name='Описание',
     )
 

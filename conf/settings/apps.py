@@ -12,6 +12,7 @@ INSTALLED_APPS = [
     'autocompletefilter',
     'reversion',
     'polymorphic',
+    'markdownx',
 
     'apps.user',
     'apps.project',

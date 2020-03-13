@@ -1,4 +1,5 @@
 from django.db import models
+from markdownx.models import MarkdownxField
 
 from utils.models import (
     CreatedAtMixin,
@@ -25,7 +26,7 @@ class Task(NameMixin,
     parent = models.ForeignKey(
         verbose_name='Батя', to='self', on_delete=models.SET_NULL, null=True, blank=True,
     )
-    description = models.TextField(
+    description = MarkdownxField(
         verbose_name='Описание',
     )
 

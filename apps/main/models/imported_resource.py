@@ -71,7 +71,7 @@ class ImportedResourceRepo(ImportedResource):
         verbose_name_plural = 'Импортированные ресурсы (git)'
         default_related_name = 'imported_resources'
 
-    def create_resource(self) -> 'Resource':
+    def create_resource(self):
         if self.is_ignored or hasattr(self, 'resource'):
             return self.resource
 

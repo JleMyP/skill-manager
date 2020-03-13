@@ -13,4 +13,5 @@ include(
     'secure.py',
     'rest.py',
     'constance.py',
+    'markdown.py',
 )

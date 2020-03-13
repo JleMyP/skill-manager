@@ -86,6 +86,16 @@ class ResourceTypeAdmin(VersionAdmin):
     actions_on_bottom = True
 
 
+@admin.register(VolumeType)
+class VolumeTypeAdmin(VersionAdmin):
+    list_display = ('id', 'name', 'created_at', 'order_num')
+    list_display_links = ('id', 'name')
+    list_editable = ('order_num',)
+    search_fields = ('id', 'name')
+    date_hierarchy = 'created_at'
+    actions_on_bottom = True
+
+
 class ResourceAdminInline(admin.StackedInline):
     model = Resource
     extra = 0
@@ -119,16 +129,6 @@ class ImportedResourceRepoAdmin(VersionAdmin, PolymorphicChildModelAdmin):
     date_hierarchy = 'created_at'
     actions_on_bottom = True
     inlines = (ResourceAdminInline,)
-
-
-@admin.register(VolumeType)
-class VolumeTypeAdmin(VersionAdmin):
-    list_display = ('id', 'name', 'created_at', 'order_num')
-    list_display_links = ('id', 'name')
-    list_editable = ('order_num',)
-    search_fields = ('id', 'name')
-    date_hierarchy = 'created_at'
-    actions_on_bottom = True
 
 
 class TagValueAdminInline(admin.TabularInline):
