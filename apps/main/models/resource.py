@@ -23,7 +23,7 @@ class Resource(NameMixin,
     parent = models.ForeignKey(
         verbose_name='Батя', to='self', on_delete=models.SET_NULL, null=True, blank=True,
     )
-    type = models.ForeignKey(  # noqa: VNE003
+    type = models.ForeignKey(  # noqa: VNE003, A003
         verbose_name='Тип ресурса', to='ResourceType', on_delete=models.SET_NULL, null=True,
     )
     volume_type = models.ForeignKey(
