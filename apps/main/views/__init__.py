@@ -1,4 +1,3 @@
-from .folders import *
+from .folders import FoldersViewSet
 
-__all__ = []
-__all__ += folders.__all__
+__all__ = ['FoldersViewSet']

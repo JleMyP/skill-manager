@@ -5,8 +5,12 @@ from typing import List
 import requests
 from constance import config
 
-from ..models import ImportedResourceRepo
-
+from apps.main.models import (
+    ImportedResourceRepo,
+    Resource,
+    ResourceType,
+    TagValue,
+)
 
 __all__ = ['import_data']
 

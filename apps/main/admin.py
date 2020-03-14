@@ -8,7 +8,7 @@ from polymorphic.admin import (
 )
 from reversion.admin import VersionAdmin
 
-from .models import (
+from apps.main.models import (
     Folder,
     ImportedResource,
     ImportedResourceRepo,

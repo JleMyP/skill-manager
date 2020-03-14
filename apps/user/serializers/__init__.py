@@ -1,6 +1,4 @@
-from .token import *
-from .user import *
+from .token import CustomTokenObtainSerializer
+from .user import RegistrationSerializer, ProfileSerializer
 
-__all__ = []
-__all__ += token.__all__
-__all__ += user.__all__
+__all__ = ['CustomTokenObtainSerializer', 'RegistrationSerializer', 'ProfileSerializer']

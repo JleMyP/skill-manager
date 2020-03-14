@@ -6,8 +6,11 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 from utils.schema import AutoSchemaCustomCreated
 
-from .serializers.token import CustomTokenObtainSerializer
-from .serializers.user import ProfileSerializer, RegistrationSerializer
+from apps.user.serializers import (
+    CustomTokenObtainSerializer,
+    ProfileSerializer,
+    RegistrationSerializer,
+)
 
 __all__ = ['CustomTokenObtainView', 'RegistrationView', 'ProfileView']
 

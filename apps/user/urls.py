@@ -1,7 +1,7 @@
 from django.urls import re_path
 from rest_framework_simplejwt.views import token_refresh, token_verify
 
-from .views import (
+from apps.user.views import (
     CustomTokenObtainView,
     ProfileView,
     RegistrationView,

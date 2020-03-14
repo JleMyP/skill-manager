@@ -4,8 +4,8 @@ from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework_serializer_extensions.views import SerializerExtensionsAPIViewMixin
 from reversion.views import RevisionMixin
 
-from ..models import Folder
-from ..serializers.folder import FolderSerializer
+from apps.main.models import Folder
+from apps.main.serializers import FolderSerializer
 
 __all__ = ['FoldersViewSet']
 

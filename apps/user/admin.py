@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group, Permission
 from reversion.admin import VersionAdmin
 from reversion.models import Revision, Version
 
-from .models import CustomUser
+from apps.user.models import CustomUser
 
 
 class VersionedUserAdmin(VersionAdmin, UserAdmin):
