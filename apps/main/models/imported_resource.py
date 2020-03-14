@@ -1,7 +1,4 @@
-from constance import config
 from django.contrib.postgres.fields import JSONField, ArrayField
-
-
 from django.db import models
 from polymorphic.models import PolymorphicModel
 
@@ -9,7 +6,6 @@ from utils.models import (
     CreatedAtMixin,
     NameMixin,
 )
-
 
 __all__ = ['ImportedResource', 'ImportedResourceRepo']
 
@@ -70,27 +66,3 @@ class ImportedResourceRepo(ImportedResource):
         verbose_name = 'Импортированный ресурс (git)'
         verbose_name_plural = 'Импортированные ресурсы (git)'
         default_related_name = 'imported_resources'
-
-    def create_resource(self):
-        if self.is_ignored or hasattr(self, 'resource'):
-            return self.resource
-
-        from . import Resource, ResourceType, TagValue
-
-        rt_pk = config.GIT_IMPORT_RESOURCE_TYPE
-        rt = ResourceType.objects.get(pk=rt_pk)
-        res = Resource.objects.create(
-            type=rt,
-            imported_resource=self,
-            name=self.name,
-            description=self.description,
-            link=self.url,
-        )
-
-        tag_pk = config.GIT_IMPORT_TAG
-        if tag_pk:
-            tag_value = TagValue.objects.get(pk=tag_pk)
-            res.tag_values.add(tag_value)
-
-        # TODO: git tags?
-        return res

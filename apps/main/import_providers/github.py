@@ -1,6 +1,6 @@
 import json
 import re
-from typing import List
+from typing import List, TypedDict, Optional
 
 import requests
 from constance import config
@@ -22,11 +22,26 @@ class GithubApiException(Exception):
     pass
 
 
-def get_data(username: str) -> List[dict]:
+class GithubUserNameNotSpecifiedException(Exception):
+    pass
+
+
+class GitRepo(TypedDict):
+    name: str
+    full_name: str
+    url: str
+    description: str
+    from_user: str
+    homepage: Optional[str]
+    language: Optional[str]
+    topics: List[str]
+
+
+def get_data(username: str, start_page: int = 1, per_page: int = 100) -> List[GitRepo]:
     data = []
     params = {
-        'page': 1,
-        'per_page': 100,
+        'page': start_page,
+        'per_page': per_page,
     }
     headers = {
         'accept': 'application/vnd.github.mercy-preview+json',
@@ -46,7 +61,7 @@ def get_data(username: str) -> List[dict]:
                 'description': repo['description'],
                 'homepage': repo['homepage'],
                 'language': repo['language'],
-                'topics': repo.get('topics'),
+                'topics': repo.get('topics', []),
                 'from_user': username,
             })
 
@@ -61,7 +76,7 @@ def get_data(username: str) -> List[dict]:
     return data
 
 
-def save_imported_data(data: List[dict]) -> List[ImportedResourceRepo]:
+def save_imported_data(data: List[GitRepo]) -> List[ImportedResourceRepo]:
     imported_resources = []
 
     for repo in data:
@@ -73,7 +88,7 @@ def save_imported_data(data: List[dict]) -> List[ImportedResourceRepo]:
                 'url': repo['url'],
                 'homepage': repo['homepage'],
                 'language': repo['language'],
-                'topics': repo['topics'] or [],
+                'topics': repo['topics'],
                 'from_user': repo['from_user'],
                 'raw_data': json.dumps(repo),
             }
@@ -88,8 +103,31 @@ def import_data(username: str = None) -> List[ImportedResourceRepo]:
     if not username:
         username = config.GIT_DEFAULT_USER
     if not username:
-        return  # TODO: raise?
+        raise GithubUserNameNotSpecifiedException
 
     data = get_data(username)
-    imported_resources = save_imported_data(data)
-    return imported_resources
+    repo = save_imported_data(data)
+    return repo
+
+
+def create_resource_from_imported(repo: ImportedResourceRepo) -> Resource:
+    if repo.is_ignored or hasattr(repo, 'resource'):
+        return repo.resource
+
+    rt_pk = config.GIT_IMPORT_RESOURCE_TYPE
+    rt = ResourceType.objects.get(pk=rt_pk)
+    resource = Resource.objects.create(
+        type=rt,
+        imported_resource=repo,
+        name=repo.name,
+        description=repo.description,
+        link=repo.url,
+    )
+
+    tag_pk = config.GIT_IMPORT_TAG
+    if tag_pk:
+        tag_value = TagValue.objects.get(pk=tag_pk)
+        resource.tag_values.add(tag_value)
+
+    # TODO: git tags?
+    return resource
