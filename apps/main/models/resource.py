@@ -39,7 +39,7 @@ class Resource(NameMixin,
     text = MarkdownxField(
         verbose_name='Текст', null=True, blank=True,
     )
-    file = models.FileField(  # noqa: VNE002
+    file = models.FileField(  # noqa: VNE002, A003
         verbose_name='Файл', null=True, blank=True,
     )
     # image = models.ImageField(

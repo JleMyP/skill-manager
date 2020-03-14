@@ -13,7 +13,7 @@ class CustomAuthBackend(ModelBackend):
         try:
             user = user_model.objects.get(email=username)
         except user_model.DoesNotExist:
-            user_model().set_password(password)
+            user_model().set_password(password)  # расчет хеша шоб время ответа выровнять
         else:
             if user.check_password(password) and self.user_can_authenticate(user):
                 return user
