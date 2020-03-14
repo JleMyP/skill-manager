@@ -24,8 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('admin/', include('loginas.urls')),
     path('markdownx/', include('markdownx.urls')),
-    path('openapi', get_schema_view(), name='openapi-schema'),
-    path('api-auth', include('rest_framework.urls'), name='rest-auth'),
+    path('openapi/', get_schema_view(), name='openapi-schema'),
+    path('api-auth/', include('rest_framework.urls'), name='rest-auth'),
     path('', include('apps.user.urls')),
     path('', include('apps.main.urls')),
 ]
