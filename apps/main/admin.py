@@ -103,13 +103,8 @@ class ResourceAdminInline(admin.StackedInline):
     classes = ('collapse',)
 
 
-@admin.register(ImportedResource)
-class ImportedResourceAdmin(VersionAdmin, PolymorphicParentModelAdmin):
-    base_model = ImportedResource
-    child_models = (ImportedResourceRepo,)
-
+class ImportedResourceBaseAdmin(VersionAdmin):
     list_display = ('id', 'name', 'created_at', 'is_ignored', 'resource')
-    list_filter = ('is_ignored', PolymorphicChildModelFilter)
     list_display_links = ('id', 'name')
     readonly_fields = ('id', 'created_at')
     search_fields = ('id', 'name')
@@ -124,11 +119,19 @@ class ImportedResourceAdmin(VersionAdmin, PolymorphicParentModelAdmin):
     def unignore(self, request, queryset):
         queryset.unignore()
     unignore.short_description = 'Разигнорить'
-    
+
+
+@admin.register(ImportedResource)
+class ImportedResourceAdmin(ImportedResourceBaseAdmin,
+                            PolymorphicParentModelAdmin):
+    base_model = ImportedResource
+    child_models = (ImportedResourceRepo,)
+    list_filter = ('is_ignored', PolymorphicChildModelFilter)
 
 
 @admin.register(ImportedResourceRepo)
-class ImportedResourceRepoAdmin(ImportedResourceAdmin):
+class ImportedResourceRepoAdmin(ImportedResourceBaseAdmin,
+                                PolymorphicChildModelAdmin):
     base_model = ImportedResourceRepo
     show_in_index = True
 
