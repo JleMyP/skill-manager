@@ -66,7 +66,7 @@ def get_data(username: str, start_page: int = 1, per_page: int = 100) -> List[Gi
             })
 
         link_header = resp.headers['Link']
-        link_dict = dict([pair[::-1] for pair in LINK_REGEXP.findall(link_header)])
+        link_dict = {rel: page for page, rel in LINK_REGEXP.findall(link_header)}
 
         if 'last' not in link_dict:
             break
