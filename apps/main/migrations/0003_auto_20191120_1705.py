@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='tag',
             name='target_type',
-            field=utils.fields.IntFlagField(default=apps.main.models.tag.Tag.TARGET_TYPE(7), enum=['FOLDER', 'RESOURCE', 'SKILL'], verbose_name='Тип цели'),
+            field=utils.fields.IntFlagField(default=apps.main.models.tag.Tag.TARGET_TYPE(7), enum=['FOLDER', 'RESOURCE', 'SKILL'], enum_name='Tag.TARGET_TYPE', verbose_name='Тип цели'),
         ),
     ]

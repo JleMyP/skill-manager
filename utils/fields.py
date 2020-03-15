@@ -1,3 +1,5 @@
+from enum import IntFlag
+
 from django.db import models
 from django.db.models import Lookup
 
@@ -29,18 +31,28 @@ class IntFlagField(models.PositiveSmallIntegerField):
     # TODO:
     #  в contribute_to_class можно привязаться к модели и сделать <ModelClass>.<FieldName>_ENUM
     #  свой класс перечисления со свойством all
+    #  админковый виджет как для m2m
 
-    def __init__(self, enum, enum_name=None, *args, **kwargs):
+    def __init__(self, enum, *args, enum_name: str = None, **kwargs):
+        if isinstance(enum, list):
+            enum = IntFlag(enum_name, enum)
         self.enum = enum
+        self.enum_name = enum.__name__
         super().__init__(*args, **kwargs)
 
     def deconstruct(self):
         name, path, args, kwargs = super().deconstruct()
-        # TODO: замутить
+        # TODO: замутить работоспособно
+        #   либо списка во входном параметре не должно быть
+        #     и класс перечисления всегда предопределен
+        #   либо собирать класс перечисления на ходу
+        #     никакого переиспользования даже в пределах класса
+        #     и не оч понятно, как адекватно указывать default
         if isinstance(self.enum, list):
             kwargs['enum'] = self.enum
         else:
             kwargs['enum'] = [flag.name for flag in self.enum]
+        kwargs['enum_name'] = self.enum_name
         return name, path, args, kwargs
 
     def from_db_value(self, value, expression, connection):
