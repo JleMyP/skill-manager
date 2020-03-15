@@ -111,23 +111,28 @@ class ImportedResourceAdmin(VersionAdmin, PolymorphicParentModelAdmin):
     list_display = ('id', 'name', 'created_at', 'is_ignored', 'resource')
     list_filter = ('is_ignored', PolymorphicChildModelFilter)
     list_display_links = ('id', 'name')
-    search_fields = ('id', 'name')
-    date_hierarchy = 'created_at'
-    actions_on_bottom = True
-
-
-@admin.register(ImportedResourceRepo)
-class ImportedResourceRepoAdmin(VersionAdmin, PolymorphicChildModelAdmin):
-    base_model = ImportedResourceRepo
-    show_in_index = True
-
-    list_display = ('id', 'name', 'created_at', 'is_ignored', 'resource')
-    list_filter = ('is_ignored',)
-    list_display_links = ('id', 'name')
     readonly_fields = ('id', 'created_at')
     search_fields = ('id', 'name')
     date_hierarchy = 'created_at'
     actions_on_bottom = True
+    actions = ('ignore', 'unignore')
+
+    def ignore(self, request, queryset):
+        queryset.ignore()
+    ignore.short_description = 'Заигнорить'
+
+    def unignore(self, request, queryset):
+        queryset.unignore()
+    unignore.short_description = 'Разигнорить'
+    
+
+
+@admin.register(ImportedResourceRepo)
+class ImportedResourceRepoAdmin(ImportedResourceAdmin):
+    base_model = ImportedResourceRepo
+    show_in_index = True
+
+    list_filter = ('is_ignored',)
     inlines = (ResourceAdminInline,)
 
 
