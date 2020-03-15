@@ -1,6 +1,7 @@
 from django.contrib.postgres.fields import JSONField, ArrayField
 from django.db import models
-from polymorphic.models import PolymorphicModel
+from polymorphic.models import PolymorphicModel, PolymorphicManager
+from polymorphic.query import PolymorphicQuerySet
 
 from utils.models import (
     CreatedAtMixin,
@@ -8,6 +9,18 @@ from utils.models import (
 )
 
 __all__ = ['ImportedResource', 'ImportedResourceRepo']
+
+
+class ImportedResourceQuerySet(PolymorphicQuerySet):
+    def ignore(self):
+        return self.update(is_ignored=True)
+    ignore.queryset_only = True
+    ignore.alters_data = True
+
+    def unignore(self):
+        return self.update(is_ignored=False)
+    unignore.queryset_only = True
+    unignore.alters_data = True
 
 
 class ImportedResource(CreatedAtMixin, NameMixin, PolymorphicModel):
@@ -20,6 +33,8 @@ class ImportedResource(CreatedAtMixin, NameMixin, PolymorphicModel):
     is_ignored = models.BooleanField(
         verbose_name='В игноре', default=False,
     )
+
+    objects = PolymorphicManager.from_queryset(ImportedResourceQuerySet)()
 
     class Meta:
         verbose_name = 'Импортированный ресурс'
