@@ -1,6 +1,13 @@
 import json
 import re
-from typing import List, TypedDict, Optional
+import sys
+
+from typing import List, Optional
+
+if sys.version_info >= (3, 8):
+    from typing import TypedDict
+else:
+    from typing import Dict as TypedDict
 
 import requests
 from constance import config
@@ -12,21 +19,22 @@ from apps.main.models import (
     TagValue,
 )
 
-__all__ = ['import_data']
+__all__ = ['import_data', 'create_resources']
 
 API_STARS_URL = 'https://api.github.com/users/{0}/starred'
 LINK_REGEXP = re.compile(r'<[^>_]+[?&]page=(\d+)[^>]*>; rel="([^"]+)"')
 
 
 class GithubApiException(Exception):
-    pass
+    """Неуспешный ответ апи гитхаба."""
 
 
 class GithubUserNameNotSpecifiedException(Exception):
-    pass
+    """Не указан пользователь для импорта."""
 
 
 class GitRepo(TypedDict):
+    """Структура репозитория для упаковки ответа гитхаба."""
     name: str
     full_name: str
     url: str
@@ -37,7 +45,33 @@ class GitRepo(TypedDict):
     topics: List[str]
 
 
+def import_data(username: str = None) -> List[ImportedResourceRepo]:
+    """Скачивает и сохраняет репозитории указанного или дефолтного пользователя.
+
+    :param username: имя пользователя, чьи лайки качать.
+                     Если не указано - берется константа GIT_DEFAULT_USER.
+    :return: список моделей, сохраненных в базу.
+    :raises GithubUserNameNotSpecifiedException: не указано имя пользователя и константа пуста.
+    """
+    if not username:
+        username = config.GIT_DEFAULT_USER
+    if not username:
+        raise GithubUserNameNotSpecifiedException
+
+    data = get_data(username)
+    repos = save_imported_data(data)
+    return repos
+
+
 def get_data(username: str, start_page: int = 1, per_page: int = 100) -> List[GitRepo]:
+    """Скачивает список лайкнутых репозиториев пользователя.
+
+    :param username: имя пользователя, чьи лайки качать.
+    :param start_page: страница, с которой начать выгрузку. ну мало ли.
+    :param per_page: кол-во элементов на странице при скачивании.
+    :return: список репозиториев.
+    :raises GithubApiException: апи гитхаба вернуло неуспешный ответ.
+    """
     data = []
     params = {
         'page': start_page,
@@ -77,6 +111,11 @@ def get_data(username: str, start_page: int = 1, per_page: int = 100) -> List[Gi
 
 
 def save_imported_data(data: List[GitRepo]) -> List[ImportedResourceRepo]:
+    """Сохраняет скачанные репозитории в базу.
+
+    :param data: список репозиториев, которые сохранить.
+    :return: список моделей, сохраненных в базу.
+    """
     imported_resources = []
 
     for repo in data:
@@ -99,20 +138,30 @@ def save_imported_data(data: List[GitRepo]) -> List[ImportedResourceRepo]:
     return imported_resources
 
 
-def import_data(username: str = None) -> List[ImportedResourceRepo]:
-    if not username:
-        username = config.GIT_DEFAULT_USER
-    if not username:
-        raise GithubUserNameNotSpecifiedException
+def create_resources() -> List[Resource]:
+    """Создает ресурсы для всех репозиториев без такового и не в игноре.
 
-    data = get_data(username)
-    repo = save_imported_data(data)
-    return repo
+    :return: список созданных ресурсов.
+    """
+    qs = ImportedResourceRepo.objects.filter(
+        is_ignored=False,
+        resource=None,
+    )
+    resources = list(map(create_resource, qs))
+    return resources
 
 
-def create_resource_from_imported(repo: ImportedResourceRepo) -> Resource:
-    if repo.is_ignored or hasattr(repo, 'resource'):
-        return repo.resource
+def create_resource(repo: ImportedResourceRepo) -> Optional[Resource]:
+    """Создает или возвращает текущий ресурс для репозитория.
+
+    :param repo: импортированный ресурс (репозиторий).
+    :return: None, если импортированный ресурс в игноре, иначе - ресурс.
+    """
+    if repo.is_ignored:
+        return
+    exists = getattr(repo, 'resource', None)
+    if exists:
+        return exists
 
     rt_pk = config.GIT_IMPORT_RESOURCE_TYPE
     rt = ResourceType.objects.get(pk=rt_pk)
