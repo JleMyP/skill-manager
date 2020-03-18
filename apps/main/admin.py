@@ -1,6 +1,9 @@
 from autocompletefilter.admin import AutocompleteFilterMixin
 from autocompletefilter.filters import AutocompleteListFilter
 from django.contrib import admin
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django_object_actions import DjangoObjectActions
 from polymorphic.admin import (
     PolymorphicParentModelAdmin,
     PolymorphicChildModelAdmin,
@@ -23,6 +26,7 @@ from apps.main.models import (
     Task,
     VolumeType,
 )
+from apps.main.import_providers import github
 
 
 class FolderInlineAdmin(admin.TabularInline):
@@ -130,13 +134,49 @@ class ImportedResourceAdmin(ImportedResourceBaseAdmin,
 
 
 @admin.register(ImportedResourceRepo)
-class ImportedResourceRepoAdmin(ImportedResourceBaseAdmin,
+class ImportedResourceRepoAdmin(DjangoObjectActions,
+                                ImportedResourceBaseAdmin,
                                 PolymorphicChildModelAdmin):
     base_model = ImportedResourceRepo
     show_in_index = True
 
     list_filter = ('is_ignored',)
     inlines = (ResourceAdminInline,)
+
+    @staticmethod
+    def _redirect_to_list(params: dict) -> HttpResponseRedirect:
+        filters = params.get('_changelist_filters', '')
+        url = reverse('admin:main_importedresourcerepo_changelist')
+        return HttpResponseRedirect(url + '?' + filters)
+
+    def import_from_github(self, request, queryset):
+        imported_resources = github.import_data()
+        count = len(imported_resources)
+        self.message_user(request, f'Импортировано ресурсов: {count}')
+        return self._redirect_to_list(request.GET)
+    import_from_github.label = 'Импортировать из GitHub'
+
+    def create_resources(self, request, queryset):
+        resources = github.create_resources()
+        count = len(resources)
+        self.message_user(request, f'Создано ресурсов: {count}')
+        return self._redirect_to_list(request.GET)
+    create_resources.label = 'Создать недостающие'
+
+    def create_resource(self, request, obj: base_model):
+        resource = github.create_resource(obj)
+        if resource:
+            url = reverse('admin:main_resource_change',
+                          args=(resource.id,))
+        else:
+            url = reverse('admin:main_importedresourcerepo_change',
+                          args=(obj.id,))
+            self.message_user(request, 'Импортированный ресурс в игноре', 'WARNING')
+        return HttpResponseRedirect(url)
+    create_resource.label = 'Создать ресурс'
+
+    changelist_actions = ('import_from_github', 'create_resources')
+    change_actions = ('create_resource',)
 
 
 class TagValueAdminInline(admin.TabularInline):

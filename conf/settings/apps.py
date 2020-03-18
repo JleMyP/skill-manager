@@ -10,6 +10,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_filters',
     'autocompletefilter',
+    'django_object_actions',
     'reversion',
     'polymorphic',
     'markdownx',
