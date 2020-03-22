@@ -1,5 +1,6 @@
 from django.db import models
 from markdownx.models import MarkdownxField
+from mptt.models import MPTTModel, TreeForeignKey
 
 from utils.models import (
     CreatedAtMixin,
@@ -12,20 +13,22 @@ from utils.models import (
 __all__ = ['Skill']
 
 
-class Skill(NameMixin,
+class Skill(MPTTModel,
+            NameMixin,
             CreatedAtMixin,
             OrderedMixin,
             LikeMixin,
             IconMixin):
-    parent = models.ForeignKey(
+    parent = TreeForeignKey(
         verbose_name='Батька', to='self', on_delete=models.SET_NULL,
         null=True, blank=True,
     )
     description = MarkdownxField(
         verbose_name='Описание',
     )
-    folders = models.ManyToManyField(
-        verbose_name='Папки', to='Folder', blank=True,
+    folder = models.ForeignKey(
+        verbose_name='Папка', to='Folder', blank=True,
+        on_delete=models.PROTECT,
     )
     resources = models.ManyToManyField(
         verbose_name='Ресурсы', to='Resource', blank=True,

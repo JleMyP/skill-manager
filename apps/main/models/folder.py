@@ -1,4 +1,5 @@
 from django.db import models
+from mptt.models import MPTTModel, TreeForeignKey
 
 from utils.models import (
     CreatedAtMixin,
@@ -11,12 +12,13 @@ from utils.models import (
 __all__ = ['Folder']
 
 
-class Folder(NameMixin,
+class Folder(MPTTModel,
+             NameMixin,
              OrderedMixin,
              CreatedAtMixin,
              LikeMixin,
              IconMixin):
-    parent = models.ForeignKey(
+    parent = TreeForeignKey(
         verbose_name='Батя', to='self', on_delete=models.SET_NULL, null=True, blank=True,
     )
 

@@ -4,6 +4,8 @@ from django.contrib import admin
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django_object_actions import DjangoObjectActions
+from mptt.admin import MPTTModelAdmin
+
 from polymorphic.admin import (
     PolymorphicParentModelAdmin,
     PolymorphicChildModelAdmin,
@@ -36,9 +38,12 @@ class FolderInlineAdmin(admin.TabularInline):
 
 
 @admin.register(Folder)
-class FolderAdmin(VersionAdmin):
+class FolderAdmin(MPTTModelAdmin, AutocompleteFilterMixin, VersionAdmin):
     list_display = ('id', 'name', 'parent', 'created_at', 'order_num', 'like', 'icon')
     list_editable = ('order_num',)
+    list_filter = (
+        ('parent', AutocompleteListFilter),
+    )
     search_fields = ('id', 'name')
     inlines = (FolderInlineAdmin,)
     date_hierarchy = 'created_at'
@@ -63,7 +68,7 @@ class RemindAdmin(VersionAdmin):
 
 
 @admin.register(Resource)
-class ResourceAdmin(AutocompleteFilterMixin, VersionAdmin):
+class ResourceAdmin(MPTTModelAdmin, AutocompleteFilterMixin, VersionAdmin):
     list_display = ('id', 'name', 'parent', 'created_at', 'like', 'icon', 'type', 'volume_type',
                     'volume', 'planned_progress_points', 'difficulty_points')
     search_fields = ('id', 'name')
@@ -211,7 +216,7 @@ class TagValueAdmin(AutocompleteFilterMixin, VersionAdmin):
 
 
 @admin.register(Skill)
-class SkillAdmin(AutocompleteFilterMixin, VersionAdmin):
+class SkillAdmin(MPTTModelAdmin, AutocompleteFilterMixin, VersionAdmin):
     list_display = ('id', 'name', 'parent', 'created_at',
                     'planned_progress_points', 'difficulty_points')
     list_filter = (
@@ -224,10 +229,14 @@ class SkillAdmin(AutocompleteFilterMixin, VersionAdmin):
 
 
 @admin.register(Task)
-class TaskAdmin(VersionAdmin):
+class TaskAdmin(MPTTModelAdmin, AutocompleteFilterMixin, VersionAdmin):
     list_display = ('id', 'name', 'created_at', 'order_num', 'like', 'skill', 'project',
                     'planned_progress_points', 'difficulty_points', 'completed')
-    list_filter = ('completed', 'like')
+    list_filter = (
+        'completed',
+        'like',
+        ('parent', AutocompleteListFilter),
+    )
     list_editable = ('order_num',)
     search_fields = ('id',)
     date_hierarchy = 'created_at'

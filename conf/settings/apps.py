@@ -14,6 +14,7 @@ INSTALLED_APPS = [
     'reversion',
     'polymorphic',
     'markdownx',
+    'mptt',
 
     'apps.user',
     'apps.projects',

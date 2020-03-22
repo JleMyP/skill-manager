@@ -14,4 +14,5 @@ include(
     'rest.py',
     'constance.py',
     'markdown.py',
+    'mptt.py',
 )
