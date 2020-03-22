@@ -233,6 +233,14 @@ django-js-asset = "*"
 
 [[package]]
 category = "main"
+description = "A Django app for adding object tools for models in the admin"
+name = "django-object-actions"
+optional = false
+python-versions = "*"
+version = "2.0.0"
+
+[[package]]
+category = "main"
 description = "Pickled object field for Django"
 name = "django-picklefield"
 optional = false
@@ -848,7 +856,7 @@ dev = ["pytest", "coverage", "tox", "sphinx", "pallets-sphinx-themes", "sphinx-i
 watchdog = ["watchdog"]
 
 [metadata]
-content-hash = "7a759362f88b977636ddfa31354f4276db66a0b684fa1720ab77e9b11a0cd8dc"
+content-hash = "9f0d96747d6eaf6f5ddbe1a7096901783f2673af41800f35b10a7b4d457a17a1"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -963,6 +971,10 @@ django-markdownx = [
 django-mptt = [
     {file = "django-mptt-0.11.0.tar.gz", hash = "sha256:dfdb3af75ad27cdd4458b0544ec8574174f2b90f99bc2cafab6a15b4bc1895a8"},
     {file = "django_mptt-0.11.0-py2.py3-none-any.whl", hash = "sha256:90eb236eb4f1a92124bd7c37852bbe09c0d21158477cc237556d59842a91c509"},
+]
+django-object-actions = [
+    {file = "django-object-actions-2.0.0.tar.gz", hash = "sha256:bbf027873c2c5a7b976133630cd8976007b94ef609c09af124683e12f94ad01d"},
+    {file = "django_object_actions-2.0.0-py2.py3-none-any.whl", hash = "sha256:69b8c2e4ec57f10fe8f1457e0694b7f81abe486bdb31bd21d7bc39e4c4128538"},
 ]
 django-picklefield = [
     {file = "django-picklefield-2.1.1.tar.gz", hash = "sha256:67a5e156343e3b032cac2f65565f0faa81635a99c7da74b0f07a0f5db467b646"},
