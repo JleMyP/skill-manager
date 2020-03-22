@@ -10,14 +10,14 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('main', '0001_initial'),
-        ('project', '0001_initial'),
+        ('projects', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='task',
             name='project',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='tasks', to='project.Project', verbose_name='Проект'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='tasks', to='projects.Project', verbose_name='Проект'),
         ),
         migrations.AddField(
             model_name='task',

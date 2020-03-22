@@ -16,6 +16,6 @@ INSTALLED_APPS = [
     'markdownx',
 
     'apps.user',
-    'apps.project',
+    'apps.projects',
     'apps.main',
 ]

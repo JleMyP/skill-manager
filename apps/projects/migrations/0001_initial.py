@@ -23,14 +23,14 @@ class Migration(migrations.Migration):
                 ('like', models.BooleanField(default=False, verbose_name='Лайк')),
                 ('icon', models.CharField(blank=True, max_length=15, null=True, verbose_name='Иконка')),
                 ('description', models.TextField(verbose_name='Описание')),
-                ('resources', models.ManyToManyField(blank=True, related_name='project', to='main.Resource', verbose_name='Ресурсы')),
-                ('skills', models.ManyToManyField(blank=True, related_name='project', to='main.Skill', verbose_name='ЗУНы')),
-                ('tag_values', models.ManyToManyField(blank=True, related_name='project', to='main.TagValue', verbose_name='Метки со значениями')),
+                ('resources', models.ManyToManyField(blank=True, related_name='projects', to='main.Resource', verbose_name='Ресурсы')),
+                ('skills', models.ManyToManyField(blank=True, related_name='projects', to='main.Skill', verbose_name='ЗУНы')),
+                ('tag_values', models.ManyToManyField(blank=True, related_name='projects', to='main.TagValue', verbose_name='Метки со значениями')),
             ],
             options={
                 'verbose_name': 'Проект',
                 'verbose_name_plural': 'Проекты',
-                'default_related_name': 'project',
+                'default_related_name': 'projects',
             },
         ),
         migrations.CreateModel(
@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
                 ('order_num', models.PositiveIntegerField(default=0, verbose_name='Очередь')),
                 ('like', models.BooleanField(default=False, verbose_name='Лайк')),
                 ('description', models.TextField(verbose_name='Описание')),
-                ('project', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='project_variants', to='project.Project', verbose_name='Проект')),
+                ('project', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='project_variants', to='projects.Project', verbose_name='Проект')),
                 ('resources', models.ManyToManyField(blank=True, related_name='project_variants', to='main.Resource', verbose_name='Ресурсы')),
                 ('skills', models.ManyToManyField(blank=True, related_name='project_variants', to='main.Skill', verbose_name='ЗУНы')),
                 ('tag_values', models.ManyToManyField(blank=True, related_name='project_variants', to='main.TagValue', verbose_name='Метки со значениями')),
@@ -58,7 +58,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('url', models.URLField(verbose_name='Ссыль')),
-                ('project_variant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='project_links', to='project.ProjectVariant', verbose_name='Вариант проекта')),
+                ('project_variant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='project_links', to='projects.ProjectVariant', verbose_name='Вариант проекта')),
             ],
             options={
                 'verbose_name': 'Ссылка на проект',

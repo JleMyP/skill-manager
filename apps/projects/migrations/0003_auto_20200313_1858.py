@@ -7,7 +7,7 @@ import markdownx.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('project', '0002_auto_20200216_1848'),
+        ('projects', '0002_auto_20200216_1848'),
     ]
 
     operations = [

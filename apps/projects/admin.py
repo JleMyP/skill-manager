@@ -1,7 +1,7 @@
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
-from apps.project.models import (
+from apps.projects.models import (
     Project,
     ProjectLink,
     ProjectVariant,
