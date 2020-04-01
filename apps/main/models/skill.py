@@ -26,10 +26,6 @@ class Skill(MPTTModel,
     description = MarkdownxField(
         verbose_name='Описание',
     )
-    folder = models.ForeignKey(
-        verbose_name='Папка', to='Folder', blank=True,
-        on_delete=models.PROTECT,
-    )
     resources = models.ManyToManyField(
         verbose_name='Ресурсы', to='Resource', blank=True,
     )

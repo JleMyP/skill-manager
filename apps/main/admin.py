@@ -14,7 +14,6 @@ from polymorphic.admin import (
 from reversion.admin import VersionAdmin
 
 from apps.main.models import (
-    Folder,
     ImportedResource,
     ImportedResourceRepo,
     Note,
@@ -29,25 +28,6 @@ from apps.main.models import (
     VolumeType,
 )
 from apps.main.import_providers import github
-
-
-class FolderInlineAdmin(admin.TabularInline):
-    model = Folder
-    list_display = ('id', 'name', 'parent', 'created_at', 'order_num', 'like', 'icon')
-    extra = 0
-
-
-@admin.register(Folder)
-class FolderAdmin(MPTTModelAdmin, AutocompleteFilterMixin, VersionAdmin):
-    list_display = ('id', 'name', 'parent', 'created_at', 'order_num', 'like', 'icon')
-    list_editable = ('order_num',)
-    list_filter = (
-        ('parent', AutocompleteListFilter),
-    )
-    search_fields = ('id', 'name')
-    inlines = (FolderInlineAdmin,)
-    date_hierarchy = 'created_at'
-    actions_on_bottom = True
 
 
 @admin.register(Progress)

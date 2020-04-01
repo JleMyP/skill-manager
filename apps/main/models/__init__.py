@@ -1,4 +1,3 @@
-from .folder import Folder
 from .imported_resource import ImportedResource, ImportedResourceRepo
 from .note import Note
 from .progress import Progress
@@ -9,6 +8,6 @@ from .tag import Tag, TagValue
 from .task import Task
 
 __all__ = [
-    'Folder', 'ImportedResource', 'ImportedResourceRepo', 'Note', 'Progress', 'Remind',
+    'ImportedResource', 'ImportedResourceRepo', 'Note', 'Progress', 'Remind',
     'Resource', 'ResourceType', 'VolumeType', 'Skill', 'Tag', 'TagValue', 'Task',
 ]
