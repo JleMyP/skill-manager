@@ -15,6 +15,7 @@ INSTALLED_APPS = [
     'polymorphic',
     'markdownx',
     'mptt',
+    'debug_toolbar',
 
     'apps.user',
     'apps.projects',

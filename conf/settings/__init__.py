@@ -15,4 +15,5 @@ include(
     'constance.py',
     'markdown.py',
     'mptt.py',
+    'debug_toolbar.py',
 )
