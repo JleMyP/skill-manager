@@ -56,15 +56,15 @@ class TagValue(NameMixin,
         verbose_name='Значение по умолчанию', default=False,
     )
 
-    def save(self, *args, **kwargs):
-        if self._state.adding and self.is_default:
-            self.name = self.DEFAULT_NAME
-        super().save(*args, **kwargs)
-
     class Meta:
         verbose_name = 'Значение метки'
         verbose_name_plural = 'Значения меток'
         default_related_name = 'values'
+
+    def save(self, *args, **kwargs):
+        if self._state.adding and self.is_default:
+            self.name = self.DEFAULT_NAME
+        super().save(*args, **kwargs)
 
     def __str__(self):
         if self.is_default:

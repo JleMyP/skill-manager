@@ -1,4 +1,4 @@
-"""hack URL Configuration
+"""URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
@@ -19,6 +19,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework.schemas import get_schema_view
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
