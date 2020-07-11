@@ -17,6 +17,9 @@ INSTALLED_APPS = [
     'mptt',
     'debug_toolbar',
 
+    'health_check',
+    'health_check.db',
+
     'apps.user',
     'apps.projects',
     'apps.main',

@@ -16,4 +16,4 @@ COPY . .
 ENV PYTHONUNBUFFERED 1
 ARG PORT=8000
 ENV PORT=$PORT
-CMD python manage.py runserver 0.0.0.0:$PORT
+CMD python main.py
