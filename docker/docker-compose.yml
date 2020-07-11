@@ -1,0 +1,37 @@
+version: "3"
+services:
+  traefik:
+    image: traefik:v2.2
+    command: --api.insecure=true --providers.docker --accesslog --providers.docker.exposedbydefault=false
+    container_name: traefik
+    restart: unless-stopped
+    network_mode: host
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - 80:80
+      - 443:443 
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=HostRegexp(`{host:.+}`) || Host(`traefik.jlemyp.ru`)"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.services.traefik-traefik.loadbalancer.server.port=888"
+      - "traefik.http.routers.traefik.middlewares=auth"
+      - "traefik.http.middlewares.auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/"
+
+  backend:
+    image: skill-manager
+    network_mode: host
+    container_name: backend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`jlemyp.ru`)"
+      - "traefik.http.routers.backend.priority=100"
+      - "traefik.http.routers.backend.service=backend-s"
+      - "traefik.http.services.backend-s.loadbalancer.server.port=8000"
+      - "traefik.http.services.backend-s.loadbalancer.healthcheck.path=/ht/"
+      - "traefik.http.services.backend-s.loadbalancer.healthcheck.interval=3s"
+      - "traefik.http.services.backend-s.loadbalancer.healthcheck.timeout=20s"
