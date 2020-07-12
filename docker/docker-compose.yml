@@ -3,7 +3,6 @@ services:
   traefik:
     image: traefik:v2.2
     command: --api.insecure=true --providers.docker --accesslog --providers.docker.exposedbydefault=false
-    container_name: traefik
     restart: unless-stopped
     network_mode: host
     security_opt:
@@ -22,10 +21,35 @@ services:
       - "traefik.http.routers.traefik.middlewares=auth"
       - "traefik.http.middlewares.auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/"
 
+  loki:
+    image: grafana/loki:1.5.0
+    ports:
+      - "3100:3100"
+    network_mode: host
+    command: -config.file=/etc/loki/local-config.yaml
+
+  grafana:
+    image: grafana/grafana:master
+    network_mode: host
+    ports:
+      - "3000:3000"
+
   backend:
     image: skill-manager
     network_mode: host
-    container_name: backend
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://127.0.0.1:3100/loki/api/v1/push"
+        loki-pipeline-stages: |
+          - regex:
+              expression: '(?P<level>\w+): (?P<address>.+) - "(?P<method>.+) (?P<path>.+) (?P<proto>.+)" (?P<status>\d{3}) (?P<status_comment>.+)'
+          - labels:
+              level:
+              method:
+              status:
+    depends_on:
+      - loki
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.backend.rule=Host(`jlemyp.ru`)"
