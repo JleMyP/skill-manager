@@ -7,11 +7,11 @@
 
 клиенты:
 
-- mobile: xamarin [android] / flutter / kivy / qt
-- web: bootstrap + forms + jquery / react / расширение
-- desktop gui: wpf / qt / juce / kivy
+- mobile: xamarin [android] / flutter / qt
+- web: bootstrap + jquery / react / flutter / chrome расширение
+- desktop gui: wpf / qt / juce
 - cli (+ offline non-server (sqlite)): commands / gui
-- боты: vk, tg, discord, slack
+- боты: vk, tg, discord
 
 сервер:
 
@@ -120,3 +120,32 @@
     - проекты
     - визуализация
 - версионирование с просмотром истории конкретных элементов и последних изменений в целом
+
+
+## install
+
+```bash
+docker plugin install grafana/loki-docker-driver --alias loki --grant-all-permissions
+```
+
+## todo
+
+разбить compose на инфраструктурные и только приложение  
+инфрастуктура:
+- sentry
+- *portainer*
+- postgres
+- redis
+- nginx \[локальное хранилище или прокся в s3\]
+- logi
+- grafana
+- *dockprom*
+
+приложение:
+- бек
+- celery
+  - worker
+  - scheduler
+  - flower
+- redis
+- *rabbitmq*
