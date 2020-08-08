@@ -13,4 +13,4 @@ release:
   image: web
 
 run:
-  web: python nanage.py runserver 0.0.0.0:$PORT
+  web: python manage.py runserver 0.0.0.0:$PORT
