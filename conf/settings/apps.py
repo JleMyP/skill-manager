@@ -13,9 +13,6 @@ INSTALLED_APPS = [
     'django_object_actions',
     'reversion',
     'polymorphic',
-    'markdownx',
-    'mptt',
-    'debug_toolbar',
 
     'health_check',
     'health_check.db',
