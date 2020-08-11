@@ -147,7 +147,7 @@ def create_resources() -> List[Resource]:
         is_ignored=False,
         resource=None,
     )
-    resources = list(map(create_resource, qs))
+    resources = [res for res in map(create_resource, qs) if res]
     return resources
 
 
