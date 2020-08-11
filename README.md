@@ -65,6 +65,7 @@
 - вк закладки (https://vk.com/dev/fave.get)
 - хром закладки (json, buku, exported html)
 - ютуб каналы (хрен)
+- хабр закладки
 - степик (https://stepik.org/api/user-courses)
 - интуит
 - html с чем-нить
@@ -98,7 +99,6 @@
 
 ---
 
-для иерархических поисков можно в каждом ребенке хранить всю цепочку батек (array field)  
 боты - прослойка перед апи, имеет ключ, позволяющий действовать от любого юзера  
 весь текст с поддержкой markdown  
 доп инфа - pg hstore или json  
@@ -112,12 +112,10 @@
 
 вероятная реструктуризация / обновление:  
 - логические группы (мб выделить в приложения):
-    - пользователь / профиль
     - метки, папки и все для группировки и навигации
     - заметки
     - ресурсы изучения на базе заметок
     - задачи и их отслеживание
-    - проекты
     - визуализация
 - версионирование с просмотром истории конкретных элементов и последних изменений в целом
 
@@ -128,24 +126,36 @@
 docker plugin install grafana/loki-docker-driver --alias loki --grant-all-permissions
 ```
 
+to be continued...
+
+
 ## todo
+
+docker:
+- alpine
+- multistage
+- non-root
+
+починить картинки  
+gunicorn  
+настроить логирование  
 
 разбить compose на инфраструктурные и только приложение  
 инфрастуктура:
-- sentry
+- *sentry*
 - *portainer*
+- traefik
 - postgres
 - redis
+- *rabbitmq*
 - nginx \[локальное хранилище или прокся в s3\]
-- logi
+- loki
 - grafana
 - *dockprom*
 
 приложение:
 - бек
 - celery
-  - worker
-  - scheduler
-  - flower
-- redis
-- *rabbitmq*
+    - worker
+    - scheduler
+    - flower
