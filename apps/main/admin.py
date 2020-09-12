@@ -1,18 +1,20 @@
 from autocompletefilter.admin import AutocompleteFilterMixin
 from autocompletefilter.filters import AutocompleteListFilter
 from django.contrib import admin
+from django.db import models
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django_json_widget.widgets import JSONEditorWidget
 from django_object_actions import DjangoObjectActions
 from mptt.admin import MPTTModelAdmin
-
 from polymorphic.admin import (
-    PolymorphicParentModelAdmin,
     PolymorphicChildModelAdmin,
     PolymorphicChildModelFilter,
+    PolymorphicParentModelAdmin,
 )
 from reversion.admin import VersionAdmin
 
+from apps.main.import_providers import github
 from apps.main.models import (
     ImportedResource,
     ImportedResourceRepo,
@@ -27,7 +29,6 @@ from apps.main.models import (
     Task,
     VolumeType,
 )
-from apps.main.import_providers import github
 
 
 @admin.register(Progress)
@@ -100,6 +101,12 @@ class ImportedResourceBaseAdmin(VersionAdmin):
     date_hierarchy = 'created_at'
     actions_on_bottom = True
     actions = ('ignore', 'unignore')
+
+    formfield_overrides = {
+        models.JSONField: {
+            'widget': JSONEditorWidget,
+        },
+    }
 
     def ignore(self, request, queryset):
         queryset.ignore()

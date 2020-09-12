@@ -1,9 +1,7 @@
 from django.db import models
 from markdownx.models import MarkdownxField
 
-from utils.models import (
-    CreatedAtMixin,
-)
+from utils.models import CreatedAtMixin
 
 __all__ = ['Note']
 

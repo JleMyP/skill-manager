@@ -1,12 +1,9 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
-from polymorphic.models import PolymorphicModel, PolymorphicManager
+from polymorphic.models import PolymorphicManager, PolymorphicModel
 from polymorphic.query import PolymorphicQuerySet
 
-from utils.models import (
-    CreatedAtMixin,
-    NameMixin,
-)
+from utils.models import CreatedAtMixin, NameMixin
 
 __all__ = ['ImportedResource', 'ImportedResourceRepo']
 

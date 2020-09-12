@@ -31,6 +31,7 @@ django-object-actions = "^2.0.0"
 django-debug-toolbar = "^2.2"
 django-health-check = "^3.12.1"
 uvicorn = "^0.11.5"
+django-json-widget = "^1.0.1"
 
 [tool.poetry.dev-dependencies]
 Werkzeug = "^1.0"

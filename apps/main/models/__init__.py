@@ -2,7 +2,11 @@ from .imported_resource import ImportedResource, ImportedResourceRepo
 from .note import Note
 from .progress import Progress
 from .remind import Remind
-from .resource import Resource, ResourceType, VolumeType
+from .resource import (
+    Resource,
+    ResourceType,
+    VolumeType,
+)
 from .skill import Skill
 from .tag import Tag, TagValue
 from .task import Task

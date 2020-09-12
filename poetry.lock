@@ -231,6 +231,17 @@ version = "1.2.2"
 
 [[package]]
 category = "main"
+description = "Django json widget is an alternative widget that makes it easy to edit the jsonfield field of django."
+name = "django-json-widget"
+optional = false
+python-versions = "*"
+version = "1.0.1"
+
+[package.dependencies]
+future = "*"
+
+[[package]]
+category = "main"
 description = "An app to add a \"Log in as user\" button in the Django user admin page."
 name = "django-loginas"
 optional = false
@@ -453,6 +464,14 @@ version = "0.0.3"
 
 [package.dependencies]
 setuptools = "*"
+
+[[package]]
+category = "main"
+description = "Clean single-source support for Python 3 and 2"
+name = "future"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+version = "0.18.2"
 
 [[package]]
 category = "dev"
@@ -974,7 +993,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "9aae42f65aad27d1e01d4a3617423be3faee1e5549b6a7daa6a78b3e792e7709"
+content-hash = "f295fceba13e182e621d0b85d7232f4861e8d7e67bea44fa0f70581a9691a39a"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1094,6 +1113,9 @@ django-js-asset = [
     {file = "django-js-asset-1.2.2.tar.gz", hash = "sha256:c163ae80d2e0b22d8fb598047cd0dcef31f81830e127cfecae278ad574167260"},
     {file = "django_js_asset-1.2.2-py2.py3-none-any.whl", hash = "sha256:8ec12017f26eec524cab436c64ae73033368a372970af4cf42d9354fcb166bdd"},
 ]
+django-json-widget = [
+    {file = "django-json-widget-1.0.1.tar.gz", hash = "sha256:c582cf6284598ec2e601ac3b326784d59fa1be8df2967d27c74083e66bc75d4a"},
+]
 django-loginas = [
     {file = "django-loginas-0.3.8.tar.gz", hash = "sha256:0a6f956fdbb2184d8b33e7d71528dea1762f0507c7dcedfc9403996b0541c148"},
     {file = "django_loginas-0.3.8-py2.py3-none-any.whl", hash = "sha256:5179434a85eb0244f0d0a4a9f7d3e293fa907abc540e1a75f1a4d13c0d26b929"},
@@ -1163,6 +1185,9 @@ flake8-polyfill = [
 ]
 flake8-variables-names = [
     {file = "flake8_variables_names-0.0.3.tar.gz", hash = "sha256:d109f5a8fe8c20d64e165287330f1b0160b442d7f96e1527124ba1b63c438347"},
+]
+future = [
+    {file = "future-0.18.2.tar.gz", hash = "sha256:b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"},
 ]
 gitdb = [
     {file = "gitdb-4.0.5-py3-none-any.whl", hash = "sha256:91f36bfb1ab7949b3b40e23736db18231bf7593edada2ba5c3a174a7b23657ac"},

@@ -11,6 +11,7 @@ INSTALLED_APPS = [
     'django_filters',
     'autocompletefilter',
     'django_object_actions',
+    'django_json_widget',
     'reversion',
     'polymorphic',
 
