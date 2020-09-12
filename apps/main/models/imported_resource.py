@@ -1,4 +1,4 @@
-from django.contrib.postgres.fields import JSONField, ArrayField
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from polymorphic.models import PolymorphicModel, PolymorphicManager
 from polymorphic.query import PolymorphicQuerySet
@@ -27,7 +27,7 @@ class ImportedResource(CreatedAtMixin, NameMixin, PolymorphicModel):
     description = models.TextField(
         verbose_name='Описание', null=True, blank=True,
     )
-    raw_data = JSONField(
+    raw_data = models.JSONField(
         verbose_name='Сырые данные', null=True, blank=True,
     )
     is_ignored = models.BooleanField(

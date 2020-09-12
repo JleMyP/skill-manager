@@ -118,10 +118,10 @@ description = "A high-level Python Web framework that encourages rapid developme
 name = "django"
 optional = false
 python-versions = ">=3.6"
-version = "3.0.8"
+version = "3.1.1"
 
 [package.dependencies]
-asgiref = ">=3.2,<4.0"
+asgiref = ">=3.2.10,<3.3.0"
 pytz = "*"
 sqlparse = ">=0.2.2"
 
@@ -290,10 +290,10 @@ description = "Seamless polymorphic inheritance for Django models"
 name = "django-polymorphic"
 optional = false
 python-versions = "*"
-version = "2.1.2"
+version = "3.0.0"
 
 [package.dependencies]
-Django = ">=1.11"
+Django = ">=2.1"
 
 [[package]]
 category = "main"
@@ -974,7 +974,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "36a48db4653f8ec38833efe3b0f5b9ab68bf87611d6a3cbed16a8b3b034f87a1"
+content-hash = "9aae42f65aad27d1e01d4a3617423be3faee1e5549b6a7daa6a78b3e792e7709"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1055,8 +1055,8 @@ decorator = [
     {file = "decorator-4.4.2.tar.gz", hash = "sha256:e3a62f0520172440ca0dcc823749319382e377f37f140a0b99ef45fecb84bfe7"},
 ]
 django = [
-    {file = "Django-3.0.8-py3-none-any.whl", hash = "sha256:5457fc953ec560c5521b41fad9e6734a4668b7ba205832191bbdff40ec61073c"},
-    {file = "Django-3.0.8.tar.gz", hash = "sha256:31a5fbbea5fc71c99e288ec0b2f00302a0a92c44b13ede80b73a6a4d6d205582"},
+    {file = "Django-3.1.1-py3-none-any.whl", hash = "sha256:b5fbb818e751f660fa2d576d9f40c34a4c615c8b48dd383f5216e609f383371f"},
+    {file = "Django-3.1.1.tar.gz", hash = "sha256:59c8125ca873ed3bdae9c12b146fbbd6ed8d0f743e4cf5f5817af50c51f1fc2f"},
 ]
 django-autocompletefilter = [
     {file = "django-autocompletefilter-0.0.6.tar.gz", hash = "sha256:1f10a50e405bafea67abeaed23b44aee501b5af0d331c7a3772ace6dd4b66f37"},
@@ -1115,8 +1115,8 @@ django-picklefield = [
     {file = "django_picklefield-3.0.1-py3-none-any.whl", hash = "sha256:3c702a54fde2d322fe5b2f39b8f78d9f655b8f77944ab26f703be6c0ed335a35"},
 ]
 django-polymorphic = [
-    {file = "django-polymorphic-2.1.2.tar.gz", hash = "sha256:6e08a76c91066635ccb7ef3ebbe9a0ad149febae6b30be2579716ec16d3c6461"},
-    {file = "django_polymorphic-2.1.2-py2.py3-none-any.whl", hash = "sha256:0a25058e95e5e99fe0beeabb8f4734effe242d7b5b77dca416fba9fd3062da6a"},
+    {file = "django-polymorphic-3.0.0.tar.gz", hash = "sha256:9d886f19f031d26bb1391c055ed9be06fb226a04a4cec1842b372c58873b3caa"},
+    {file = "django_polymorphic-3.0.0-py2.py3-none-any.whl", hash = "sha256:73b75eb44ea302bd32820f8661e469509d245ce7f7ff09cd2ad149e5c42034ff"},
 ]
 django-reversion = [
     {file = "django-reversion-3.0.7.tar.gz", hash = "sha256:72fc53580a6b538f0cfff10f27f42333f67d79c406399289c94ec5a193cfb3e1"},
