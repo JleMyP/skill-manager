@@ -1,4 +1,3 @@
-import json
 import re
 import sys
 
@@ -129,7 +128,7 @@ def save_imported_data(data: List[GitRepo]) -> List[ImportedResourceRepo]:
                 'language': repo['language'],
                 'topics': repo['topics'],
                 'from_user': repo['from_user'],
-                'raw_data': json.dumps(repo),
+                'raw_data': repo,
             }
         )
         if created:
