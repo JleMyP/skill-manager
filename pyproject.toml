@@ -32,6 +32,9 @@ django-debug-toolbar = "^2.2"
 django-health-check = "^3.12.1"
 uvicorn = "^0.11.5"
 django-json-widget = "^1.0.1"
+serverless-wsgi = "^1.7.5"
+django-storages = "^1.10.1"
+boto3 = "^1.15.11"
 
 [tool.poetry.dev-dependencies]
 Werkzeug = "^1.0"

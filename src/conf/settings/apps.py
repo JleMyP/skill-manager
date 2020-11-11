@@ -14,6 +14,7 @@ INSTALLED_APPS = [
     'django_json_widget',
     'reversion',
     'polymorphic',
+    'storages',
 
     'health_check',
     'health_check.db',
