@@ -1,3 +1,5 @@
+#!/bin/bash
+
 poetry export -f requirements.txt --without-hashes -o requirements.txt
 zip pack -r src \
   -x static/\* \
@@ -10,6 +12,6 @@ yc serverless function version create \
   --memory 256m \
   --execution-timeout 3s \
   --source-path pack.zip \
-  --environment S3_SECRET_ACCESS_KEY=$S3_SECRET_ACCESS_KEY \
-  --environment S3_ACCESS_KEY_ID=$S3_ACCESS_KEY_ID \
-  --environment DATABASE_URL=$DATABASE_URL
+  --environment S3_SECRET_ACCESS_KEY="$S3_SECRET_ACCESS_KEY" \
+  --environment S3_ACCESS_KEY_ID="$S3_ACCESS_KEY_ID" \
+  --environment DATABASE_URL="$DATABASE_URL"
