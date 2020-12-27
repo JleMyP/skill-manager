@@ -8,4 +8,4 @@ __all__ = ['ImportedResourceSerializer']
 class ImportedResourceSerializer(serializers.ModelSerializer):
     class Meta:
         model = ImportedResource
-        fields = '__all__'
+        exclude = ('raw_data',)
