@@ -2,7 +2,7 @@
 name = "skill-manager"
 version = "0.1.0"
 description = ""
-authors = ["Tim <jlemyp96@gmail.com>"]
+authors = []
 
 [tool.poetry.dependencies]
 python = "^3.7"
@@ -15,7 +15,7 @@ pyyaml = "^5.1"
 uritemplate = "^3.0"
 django-loginas = "^0.3.6"
 django-cors-headers = "^3.1"
-django-constance = {version = "^2.4",extras = ["database"]}
+django-constance = {version = "^2.4", extras = ["database"]}
 djangorestframework-serializer-extensions = "^2.0.0"
 django-autocompletefilter = "^0.0.6"
 django-split-settings = "^1.0"
@@ -35,6 +35,7 @@ django-json-widget = "^1.0.1"
 serverless-wsgi = "^1.7.5"
 django-storages = "^1.10.1"
 boto3 = "^1.15.11"
+drf-spectacular = "^0.13.1"
 
 [tool.poetry.dev-dependencies]
 Werkzeug = "^1.0"

@@ -15,6 +15,7 @@ INSTALLED_APPS = [
     'reversion',
     'polymorphic',
     'storages',
+    'drf_spectacular',
 
     'health_check',
     'health_check.db',
