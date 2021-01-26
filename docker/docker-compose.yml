@@ -1,42 +1,8 @@
 version: "3"
+
 services:
-  traefik:
-    image: traefik:v2.2
-    command: --api.insecure=true --providers.docker --accesslog --providers.docker.exposedbydefault=false
-    restart: unless-stopped
-    network_mode: host
-    security_opt:
-      - no-new-privileges:true
-    ports:
-      - 80:80
-      - 443:443 
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=HostRegexp(`{host:.+}`) || Host(`traefik.jlemyp.ru`)"
-      - "traefik.http.routers.traefik.service=api@internal"
-      - "traefik.http.services.traefik-traefik.loadbalancer.server.port=888"
-      - "traefik.http.routers.traefik.middlewares=auth"
-      - "traefik.http.middlewares.auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/"
-
-  loki:
-    image: grafana/loki:1.5.0
-    ports:
-      - "3100:3100"
-    network_mode: host
-    command: -config.file=/etc/loki/local-config.yaml
-
-  grafana:
-    image: grafana/grafana:master
-    network_mode: host
-    ports:
-      - "3000:3000"
-
   backend:
     image: skill-manager
-    network_mode: host
     logging:
       driver: loki
       options:
@@ -48,11 +14,11 @@ services:
               level:
               method:
               status:
-    depends_on:
-      - loki
+#    depends_on:
+#      - loki
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=Host(`jlemyp.ru`)"
+      - "traefik.http.routers.backend.rule=Host(`skill-manager`)"
       - "traefik.http.routers.backend.priority=100"
       - "traefik.http.routers.backend.service=backend-s"
       - "traefik.http.services.backend-s.loadbalancer.server.port=8000"

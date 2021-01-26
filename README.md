@@ -7,22 +7,24 @@
 
 клиенты:
 
-- mobile: xamarin [android] / flutter / qt
+- mobile: flutter
 - web: bootstrap + jquery / react / flutter / chrome расширение
-- desktop gui: wpf / qt / juce
+- desktop gui: wpf / qt / juce / flutter
 - cli (+ offline non-server (sqlite)): commands / gui
-- боты: vk, tg, discord
+- боты: vk, tg
 
 сервер:
 
 - app: django / flask / fastapi / aiohttp / go
 - субд: pg, mongo, tarantool
-- serverless: zappa, ...
-- aws, yandex, heroku, firebase (уведомления)
+- iaas, heroku, firebase (уведомления)
 
-проекты / project manager  
+управление проектами  
 клиент-сервер  
 локальная база + синхронизация  
+- s3
+- scp
+- http
 
 графики:
 
@@ -60,7 +62,7 @@
 импорт-экспорт:
 
 - файл (свой + общие, типа excel)
-- проекты гитхаб / гитлаб (https://developer.github.com/v3/activity/starring/, https://api.github.com/users/JleMyP/starred)
+- проекты гитхаб / гитлаб (https://developer.github.com/v3/activity/starring/, https://api.github.com/user/starred)
 - карта ума
 - вк закладки (https://vk.com/dev/fave.get)
 - хром закладки (json, buku, exported html)
@@ -132,30 +134,10 @@ to be continued...
 ## todo
 
 docker:
-- alpine
+
 - multistage
 - non-root
 
 починить картинки  
 gunicorn  
 настроить логирование  
-
-разбить compose на инфраструктурные и только приложение  
-инфрастуктура:
-- *sentry*
-- *portainer*
-- traefik
-- postgres
-- redis
-- *rabbitmq*
-- nginx \[локальное хранилище или прокся в s3\]
-- loki
-- grafana
-- *dockprom*
-
-приложение:
-- бек
-- celery
-    - worker
-    - scheduler
-    - flower
