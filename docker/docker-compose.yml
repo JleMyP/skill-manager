@@ -18,8 +18,7 @@ services:
 #      - loki
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=Host(`skill-manager`)"
-      - "traefik.http.routers.backend.priority=100"
+      - "traefik.http.routers.backend.rule=Host(`jlemyp.ru`)"
       - "traefik.http.routers.backend.service=backend-s"
       - "traefik.http.services.backend-s.loadbalancer.server.port=8000"
       - "traefik.http.services.backend-s.loadbalancer.healthcheck.path=/ht/"
