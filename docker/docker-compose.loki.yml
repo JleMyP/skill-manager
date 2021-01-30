@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  backend:
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://loki:3100/loki/api/v1/push"
+        loki-pipeline-stages: |
+          - regex:
+              expression: '(?P<level>\w+): (?P<address>.+) - "(?P<method>.+) (?P<path>.+) (?P<proto>.+)" (?P<status>\d{3}) (?P<status_comment>.+)'
+          - labels:
+              level:
+              method:
+              status:
+    depends_on:
+      - loki
+    networks:
+      - default
+      - loki
+
+networks:
+  loki:
+    external: true
