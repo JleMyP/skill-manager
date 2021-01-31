@@ -36,6 +36,7 @@ serverless-wsgi = "^1.7.5"
 django-storages = "^1.10.1"
 boto3 = "^1.15.11"
 drf-spectacular = "^0.13.1"
+django-rest-polymorphic = "^0.1.9"
 
 [tool.poetry.dev-dependencies]
 Werkzeug = "^1.0"

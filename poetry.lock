@@ -327,6 +327,20 @@ python-versions = "*"
 Django = ">=2.1"
 
 [[package]]
+name = "django-rest-polymorphic"
+version = "0.1.9"
+description = "Polymorphic serializers for Django REST Framework."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+django = "*"
+django-polymorphic = "*"
+djangorestframework = "*"
+six = "*"
+
+[[package]]
 name = "django-reversion"
 version = "3.0.9"
 description = "An extension to the Django web framework that provides version control for model instances."
@@ -1119,7 +1133,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "f4013627a2911739fd0e310726e56fcdbe034b071bd7b732ab9795edb4ea9614"
+content-hash = "a4c8e008bc131f5f49c8dd4ed9fe5a710cac7f30e065777fbbd6054e30d8fc70"
 
 [metadata.files]
 appnope = [
@@ -1287,6 +1301,10 @@ django-picklefield = [
 django-polymorphic = [
     {file = "django-polymorphic-3.0.0.tar.gz", hash = "sha256:9d886f19f031d26bb1391c055ed9be06fb226a04a4cec1842b372c58873b3caa"},
     {file = "django_polymorphic-3.0.0-py2.py3-none-any.whl", hash = "sha256:73b75eb44ea302bd32820f8661e469509d245ce7f7ff09cd2ad149e5c42034ff"},
+]
+django-rest-polymorphic = [
+    {file = "django-rest-polymorphic-0.1.9.tar.gz", hash = "sha256:43d7f8c5b43a225fe792ac40e98d196d4c8d6872a796b61246085819b1b5f1c6"},
+    {file = "django_rest_polymorphic-0.1.9-py2.py3-none-any.whl", hash = "sha256:ae9dd7a104bd6d2faac3bb7cdc31d3c3c768a4bb25f75451e866d9fab66fb6eb"},
 ]
 django-reversion = [
     {file = "django-reversion-3.0.9.tar.gz", hash = "sha256:a5af55f086a3f9c38be2f049c251e06005b9ed48ba7a109473736b1fc95a066f"},

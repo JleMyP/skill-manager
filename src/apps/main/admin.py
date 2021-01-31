@@ -184,6 +184,7 @@ class TagAdmin(VersionAdmin):
     list_filter = ('like',)
     list_editable = ('order_num', 'like')
     search_fields = ('id', 'name')
+    ordering = ('order_num', 'name')
     date_hierarchy = 'created_at'
     inlines = (TagValueAdminInline,)
     actions_on_bottom = True
@@ -198,6 +199,7 @@ class TagValueAdmin(AutocompleteFilterMixin, VersionAdmin):
     )
     list_editable = ('order_num',)
     search_fields = ('id', 'name')
+    ordering = ('tag__order_num', 'tag__name', '-is_default', 'order_num', 'name')
     date_hierarchy = 'created_at'
     actions_on_bottom = True
 
