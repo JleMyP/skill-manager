@@ -32,6 +32,10 @@ class GithubUserNameNotSpecifiedException(Exception):
     """Не указан пользователь для импорта."""
 
 
+class GitResourceTypeNotExists(Exception):
+    """Не существует типа для ресурсов гита"""
+
+
 class GitRepo(TypedDict):
     """Структура репозитория для упаковки ответа гитхаба."""
     name: str
@@ -44,28 +48,35 @@ class GitRepo(TypedDict):
     topics: List[str]
 
 
-def import_data(username: str = None) -> List[ImportedResourceRepo]:
+def import_data(username: Optional[str] = None,
+                token: Optional[str] = None) -> List[ImportedResourceRepo]:
     """Скачивает и сохраняет репозитории указанного или дефолтного пользователя.
 
     :param username: имя пользователя, чьи лайки качать.
-                     Если не указано - берется константа GIT_DEFAULT_USER.
+                     Если не указано - берется константа GITHUB_DEFAULT_USER.
+    :param token: персональный токен GitHub.
+                  Если не указано - берется константа GITHUB_TOKEN.
     :return: список моделей, сохраненных в базу.
     :raises GithubUserNameNotSpecifiedException: не указано имя пользователя и константа пуста.
     """
     if not username:
-        username = config.GIT_DEFAULT_USER
+        username = config.GITHUB_DEFAULT_USER
+    if not token:
+        token = config.GITHUB_TOKEN
     if not username:
         raise GithubUserNameNotSpecifiedException
 
-    data = get_data(username)
+    data = get_data(username, token=token)
     repos = save_imported_data(data)
     return repos
 
 
-def get_data(username: str, start_page: int = 1, per_page: int = 100) -> List[GitRepo]:
+def get_data(username: str, start_page: int = 1, per_page: int = 100,
+             token: Optional[str] = None) -> List[GitRepo]:
     """Скачивает список лайкнутых репозиториев пользователя.
 
     :param username: имя пользователя, чьи лайки качать.
+    :param token: персональный токен.
     :param start_page: страница, с которой начать выгрузку. ну мало ли.
     :param per_page: кол-во элементов на странице при скачивании.
     :return: список репозиториев.
@@ -76,35 +87,40 @@ def get_data(username: str, start_page: int = 1, per_page: int = 100) -> List[Gi
         'page': start_page,
         'per_page': per_page,
     }
-    headers = {
+    session = requests.Session()
+    session.headers.update({
         'accept': 'application/vnd.github.mercy-preview+json',
-    }
+    })
+    if token:
+        session.headers['authorization'] = f'token {token}'
     url = API_STARS_URL.format(username)
-    while True:
-        resp = requests.get(url, params=params, headers=headers)
-        resp_data = resp.json()
-        if not resp.ok:
-            raise GithubApiException(resp_data['message'], resp_data.get('errors'))
 
-        for repo in resp_data:
-            data.append({
-                'name': repo['name'],
-                'full_name': repo['full_name'],
-                'url': repo['html_url'],
-                'description': repo['description'],
-                'homepage': repo['homepage'],
-                'language': repo['language'],
-                'topics': repo.get('topics', []),
-                'from_user': username,
-            })
+    with session:
+        while True:
+            resp = session.get(url, params=params)
+            resp_data = resp.json()
+            if not resp.ok:
+                raise GithubApiException(resp_data['message'], resp_data.get('errors'))
 
-        link_header = resp.headers['Link']
-        link_dict = {rel: page for page, rel in LINK_REGEXP.findall(link_header)}
+            for repo in resp_data:
+                data.append({
+                    'name': repo['name'],
+                    'full_name': repo['full_name'],
+                    'url': repo['html_url'],
+                    'description': repo['description'],
+                    'homepage': repo['homepage'],
+                    'language': repo['language'],
+                    'topics': repo.get('topics', []),
+                    'from_user': username,
+                })
 
-        if 'last' not in link_dict:
-            break
+            link_header = resp.headers['Link']
+            link_dict = {rel: page for page, rel in LINK_REGEXP.findall(link_header)}
 
-        params['page'] += 1
+            if 'last' not in link_dict:
+                break
+
+            params['page'] += 1
 
     return data
 
@@ -155,6 +171,7 @@ def create_resource(repo: ImportedResourceRepo) -> Optional[Resource]:
 
     :param repo: импортированный ресурс (репозиторий).
     :return: None, если импортированный ресурс в игноре, иначе - ресурс.
+    :raises GitResourceTypeNotExists: не указан id типа ресурса или указанный id не существует.
     """
     if repo.is_ignored:
         return
@@ -163,7 +180,10 @@ def create_resource(repo: ImportedResourceRepo) -> Optional[Resource]:
         return exists
 
     rt_pk = config.GIT_IMPORT_RESOURCE_TYPE
-    rt = ResourceType.objects.get(pk=rt_pk)
+    rt = ResourceType.objects.filter(pk=rt_pk).first()
+    if not rt:
+        raise GitResourceTypeNotExists
+
     resource = Resource.objects.create(
         type=rt,
         imported_resource=repo,
