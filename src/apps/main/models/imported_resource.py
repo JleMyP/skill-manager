@@ -1,5 +1,6 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from markdownx.models import MarkdownxField
 from polymorphic.models import PolymorphicManager, PolymorphicModel
 from polymorphic.query import PolymorphicQuerySet
 
@@ -72,6 +73,9 @@ class ImportedResourceRepo(ImportedResource):
     )
     from_user = models.CharField(
         verbose_name='Владелец закладки', max_length=255, null=True, blank=True,
+    )
+    readme = MarkdownxField(
+        verbose_name='README', null=True, blank=True,
     )
 
     class Meta:
