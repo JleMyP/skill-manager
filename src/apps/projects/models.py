@@ -74,5 +74,5 @@ class ProjectLink(models.Model):
 
     class Meta:
         verbose_name = 'Ссылка на проект'
-        verbose_name_plural = 'Ссылки на проект'
+        verbose_name_plural = 'Ссылки на проекты'
         default_related_name = 'project_links'
