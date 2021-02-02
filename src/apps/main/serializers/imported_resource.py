@@ -43,14 +43,13 @@ class ImportedResourcePolySerializer(PolymorphicSerializer):
     }
 
     def to_resource_type(self, model_or_instance):
-        ptype = getattr(model_or_instance, 'ptype')
+        ptype = getattr(model_or_instance, 'ptype', None)
         if ptype:
-            model_or_instance['resourcetype'] = apps.get_model(model_or_instance._meta.app_label,
-                                                               ptype)._meta.object_name
+            return apps.get_model(model_or_instance._meta.app_label, ptype)._meta.object_name
         return super().to_resource_type(model_or_instance)
 
     def to_representation(self, instance):
-        """группируем все специфичные поля в отдельный словарь"""
+        """Группируем все специфичные поля в отдельный словарь."""
         serialized = super().to_representation(instance)
         type_specific = {}
         parent_fields = [field.name for field in ImportedResource._meta.fields]

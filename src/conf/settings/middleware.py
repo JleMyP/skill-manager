@@ -17,5 +17,5 @@ class DisableCSRF:
         self.get_response = get_response
 
     def __call__(self, request):
-        setattr(request, "_dont_enforce_csrf_checks", True)
+        request._dont_enforce_csrf_checks = True
         return self.get_response(request)

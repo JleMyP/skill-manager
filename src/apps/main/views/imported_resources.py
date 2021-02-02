@@ -1,4 +1,5 @@
 from django.db.models import F
+from django.db.models.functions import Lower
 from rest_framework.viewsets import ModelViewSet
 
 from ..models import ImportedResource
@@ -16,6 +17,7 @@ class ImportedResourcesViewSet(ModelViewSet):
     def get_queryset(self):
         if self.action == 'list':
             return (self.model.objects.non_polymorphic()
-                                      .order_by('name')
-                                      .annotate(ptype=F('polymorphic_ctype__model')))
+                                      .annotate(ptype=F('polymorphic_ctype__model'),
+                                                lname=Lower('name'))
+                                      .order_by('lname'))
         return super().get_queryset()
