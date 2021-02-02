@@ -1,3 +1,4 @@
+import base64
 import re
 import sys
 
@@ -33,11 +34,12 @@ class GithubUserNameNotSpecifiedException(Exception):
 
 
 class GitResourceTypeNotExists(Exception):
-    """Не существует типа для ресурсов гита"""
+    """Не существует типа для ресурсов гита."""
 
 
 class GitRepo(TypedDict):
     """Структура репозитория для упаковки ответа гитхаба."""
+
     name: str
     full_name: str
     url: str
@@ -48,13 +50,27 @@ class GitRepo(TypedDict):
     topics: List[str]
 
 
+def create_session(token: Optional[str] = None) -> requests.Session:
+    """Создает и настраивает сессию для апи.
+
+    :param token: персональный токен гитхаба.
+    """
+    session = requests.Session()
+    session.headers.update({
+        'accept': 'application/vnd.github.mercy-preview+json',
+    })
+    if token:
+        session.headers['authorization'] = f'token {token}'
+    return session
+
+
 def import_data(username: Optional[str] = None,
                 token: Optional[str] = None) -> List[ImportedResourceRepo]:
     """Скачивает и сохраняет репозитории указанного или дефолтного пользователя.
 
     :param username: имя пользователя, чьи лайки качать.
                      Если не указано - берется константа GITHUB_DEFAULT_USER.
-    :param token: персональный токен GitHub.
+    :param token: персональный токен гихаба.
                   Если не указано - берется константа GITHUB_TOKEN.
     :return: список моделей, сохраненных в базу.
     :raises GithubUserNameNotSpecifiedException: не указано имя пользователя и константа пуста.
@@ -76,7 +92,7 @@ def get_data(username: str, start_page: int = 1, per_page: int = 100,
     """Скачивает список лайкнутых репозиториев пользователя.
 
     :param username: имя пользователя, чьи лайки качать.
-    :param token: персональный токен.
+    :param token: персональный токен гитхаба.
     :param start_page: страница, с которой начать выгрузку. ну мало ли.
     :param per_page: кол-во элементов на странице при скачивании.
     :return: список репозиториев.
@@ -87,12 +103,7 @@ def get_data(username: str, start_page: int = 1, per_page: int = 100,
         'page': start_page,
         'per_page': per_page,
     }
-    session = requests.Session()
-    session.headers.update({
-        'accept': 'application/vnd.github.mercy-preview+json',
-    })
-    if token:
-        session.headers['authorization'] = f'token {token}'
+    session = create_session(token)
     url = API_STARS_URL.format(username)
 
     with session:
@@ -153,20 +164,24 @@ def save_imported_data(data: List[GitRepo]) -> List[ImportedResourceRepo]:
     return imported_resources
 
 
-def create_resources() -> List[Resource]:
+def create_resources(token: Optional[str] = None) -> List[Resource]:
     """Создает ресурсы для всех репозиториев без такового и не в игноре.
 
+    :param token: персональный токен гитхаба.
     :return: список созданных ресурсов.
     """
     qs = ImportedResourceRepo.objects.filter(
         is_ignored=False,
         resource=None,
     )
-    resources = [res for res in map(create_resource, qs) if res]
+    session = create_session(token=token)
+    resources = [create_resource(res, session=session) for res in qs]
+    resources = [res for res in resources if res]
     return resources
 
 
-def create_resource(repo: ImportedResourceRepo) -> Optional[Resource]:
+def create_resource(repo: ImportedResourceRepo,
+                    session: Optional[requests.Session] = None) -> Optional[Resource]:
     """Создает или возвращает текущий ресурс для репозитория.
 
     :param repo: импортированный ресурс (репозиторий).
@@ -184,11 +199,22 @@ def create_resource(repo: ImportedResourceRepo) -> Optional[Resource]:
     if not rt:
         raise GitResourceTypeNotExists
 
+    if not session:
+        session = create_session()
+
+    owner, name = repo.name.split('/')
+    # TODO: завернуть в rate limitter
+    resp = session.get(f'https://api.github.com/repos/{owner}/{name}/readme')
+    readme_data = resp.json()
+    # TODO: учет кодировки из ответа
+    readme = base64.decodebytes(readme_data['content'].encode()).decode()
+
     resource = Resource.objects.create(
         type=rt,
         imported_resource=repo,
         name=repo.name,
         description=repo.description,
+        text=readme,
         link=repo.url,
     )
 
