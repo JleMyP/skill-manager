@@ -70,7 +70,7 @@ def import_data(username: Optional[str] = None,
 
     :param username: имя пользователя, чьи лайки качать.
                      Если не указано - берется константа GITHUB_DEFAULT_USER.
-    :param token: персональный токен гихаба.
+    :param token: персональный токен гитхаба.
                   Если не указано - берется константа GITHUB_TOKEN.
     :return: список моделей, сохраненных в базу.
     :raises GithubUserNameNotSpecifiedException: не указано имя пользователя и константа пуста.
@@ -185,6 +185,7 @@ def create_resource(repo: ImportedResourceRepo,
     """Создает или возвращает текущий ресурс для репозитория.
 
     :param repo: импортированный ресурс (репозиторий).
+    :param session: преднастроенная сессия.
     :return: None, если импортированный ресурс в игноре, иначе - ресурс.
     :raises GitResourceTypeNotExists: не указан id типа ресурса или указанный id не существует.
     """
@@ -203,7 +204,7 @@ def create_resource(repo: ImportedResourceRepo,
         session = create_session()
 
     owner, name = repo.name.split('/')
-    # TODO: завернуть в rate limitter
+    # TODO: завернуть в rate limiter
     resp = session.get(f'https://api.github.com/repos/{owner}/{name}/readme')
     readme_data = resp.json()
     # TODO: учет кодировки из ответа
