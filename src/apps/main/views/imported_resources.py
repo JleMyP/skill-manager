@@ -1,5 +1,6 @@
 from django.db.models import F
 from django.db.models.functions import Lower
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from ..models import ImportedResource
@@ -13,6 +14,7 @@ class ImportedResourcesViewSet(ModelViewSet):
     queryset = ImportedResource.objects.all()
     serializer_class = ImportedResourcePolySerializer
     filterset_fields = ('is_ignored',)
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         if self.action == 'list':

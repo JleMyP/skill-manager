@@ -1,3 +1,4 @@
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from ..models import Tag
@@ -11,3 +12,4 @@ class TagsViewSet(ModelViewSet):
     queryset = model.objects.all()
     serializer_class = TagSerializer
     filterset_fields = ('like',)
+    permission_classes =(IsAuthenticated,)
