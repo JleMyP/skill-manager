@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:13-alpine
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_DB: skill-manager
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db:/var/lib/postgresql/data/pgdata
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+
+volumes:
+  db: {}

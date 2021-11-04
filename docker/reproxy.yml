@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  backend:
+    networks:
+      - default
+      - proxy
+    labels:
+      reproxy.server: '*'
+      reproxy.port: 8000
+      # reptoxy.route: /
+      reproxy.route: '^/(.*)'
+      # reproxy.dst: /
+      # reproxy.dst: '/$$1'
+      reproxy.ping: '/'
+
+networks:
+  proxy:
+    external: true

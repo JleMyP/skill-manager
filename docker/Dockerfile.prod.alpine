@@ -21,6 +21,11 @@ FROM python:3.8-alpine
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+RUN apk add --no-cache libpq libjpeg-turbo
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
 RUN --mount=from=builder,source=/wheels,target=/wheels \
   pip install -r /wheels/r.txt -f /wheels
 

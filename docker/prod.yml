@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  backend:
+    image: skill-manager
+    restart: unless-stopped
+    environment:
+      PORT: 8000
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m

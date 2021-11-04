@@ -1,8 +1,0 @@
-version: "3"
-
-services:
-  backend:
-    image: skill-manager
-    restart: unless-stopped
-    ports:
-      - 8000:8000
