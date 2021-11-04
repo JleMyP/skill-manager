@@ -46,7 +46,6 @@ isort = "^4.3.21"
 flake8-isort = "^2.8.0"
 bandit = "^1.6.2"
 flake8-bandit = "^2.1.2"
-pep8-naming = "^0.9.1"
 flake8-variables-names = "^0.0.3"
 flake8-bugbear = "^20.1.4"
 coverage = {version = "^5.0.3", extras = ["toml"]}
@@ -60,8 +59,8 @@ force_grid_wrap = 3
 skip_glob = "**/migrations/*"
 
 [tool.coverage.run]
-omit = [ "main/migrations/*" ]
-source = [ "." ]
+omit = [ "**/migrations/*" ]
+source = [ "src" ]
 
 [build-system]
 requires = ["poetry>=1.0.0"]

@@ -1,0 +1,17 @@
+openapi: 3.0.0
+
+info:
+  title: Skill manager
+  version: 1.0.0
+
+paths:
+  /{path+}:
+    x-yc-apigateway-any-method:
+      parameters:
+      - in: path
+        name: path
+        required: false
+        type: string
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        function_id: $FUNC_ID
