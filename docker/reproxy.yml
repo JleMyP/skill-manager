@@ -7,12 +7,12 @@ services:
       - proxy
     labels:
       reproxy.server: '*'
-      reproxy.port: 8000
+      reproxy.port: ${PORT:-8000}
       # reptoxy.route: /
       reproxy.route: '^/(.*)'
       # reproxy.dst: /
       # reproxy.dst: '/$$1'
-      reproxy.ping: '/'
+      reproxy.ping: '/ht/'
 
 networks:
   proxy:

@@ -1,9 +1,10 @@
 #!/bin/bash
 
-set -ex
+set -e
 
 if [ "$1" = 'update' ]; then
-  exec python manage.py migrate
+  python manage.py migrate
+  python manage.py collectstatic
 elif [ "$1" = 'server' ]; then
   exec python main.py
 elif [ "$1" = 'scheduler' ]; then

@@ -5,7 +5,9 @@ services:
     image: skill-manager
     restart: unless-stopped
     environment:
-      PORT: 8000
+      PORT: ${PORT:-8000}
+      DEBUG: ${DEBUG:-false}
+      DATABASE_URL: ${DATABASE_URL?}
     logging:
       driver: json-file
       options:

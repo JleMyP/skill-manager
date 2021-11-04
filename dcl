@@ -1,8 +1,8 @@
 #!/bin/bash
 
-docker-compose \
+docker compose \
   -p skill-manager \
-  --project-dir $(pwd) \
+  --project-directory $(pwd) \
   --env-file src/conf/settings/.env \
-  -f docker/docker-compose.local.yml \
+  -f docker/local.yml \
   $@
