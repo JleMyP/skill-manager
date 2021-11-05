@@ -1,0 +1,32 @@
+name: release
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_BUILDKIT: 1
+    steps:
+      - uses: actions/checkout@v2
+      - uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          dockerfile: docker/Dockerfile.prod
+          registry: ghcr.io
+          name: JleMyP/skill-manager
+          tag_names: true
+          cache: true
+      - uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          dockerfile: docker/Dockerfile.prod.alpine
+          registry: ghcr.io
+          name: JleMyP/skill-manager
+          tags: "alpine"
+          tag_names: true
+          cache: true
