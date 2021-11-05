@@ -2,4 +2,5 @@
 .github/
 docker/
 !docker/boot.sh
+!docker/wait-for-it.sh
 db.sqlite3

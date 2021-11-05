@@ -4,6 +4,8 @@ services:
   backend:
     image: skill-manager
     restart: unless-stopped
+    networks:
+      - default
     environment:
       PORT: ${PORT:-8000}
       DEBUG: ${DEBUG:-false}

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ex
+set -e
 
 poetry export -f requirements.txt --without-hashes -o requirements.txt
 zip func -r src \

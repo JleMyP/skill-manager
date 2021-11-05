@@ -3,13 +3,12 @@ version: "3"
 services:
   backend:
     networks:
-      - default
       - traefik
     labels:
       traefik.enable: "true"
       traefik.http.routers.backend.rule: Host(`${PROJ_HOST:-jlemyp.ru}`)"
       traefik.http.routers.backend.service: backend-s
-      traefik.http.services.backend-s.loadbalancer.server.port: 8000
+      traefik.http.services.backend-s.loadbalancer.server.port: ${PORT:-8000}
       traefik.http.services.backend-s.loadbalancer.healthcheck.path: /ht/
       traefik.http.services.backend-s.loadbalancer.healthcheck.interval: 3s
       traefik.http.services.backend-s.loadbalancer.healthcheck.timeout: 20s

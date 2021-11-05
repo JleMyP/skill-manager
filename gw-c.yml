@@ -7,8 +7,8 @@ paths:
   /{path+}:
     x-yc-apigateway-any-method:
       x-yc-apigateway-integration:
-        type: cloud_functions
-        function_id: $FUNC_ID
+        type: serverless_containers
+        container_id: $CONTAINER_ID
         service_account_id: $SA_ID
       parameters:
       - name: path

@@ -19,5 +19,5 @@ COPY docker/boot.sh .
 ARG PORT=8000
 ENV PORT=$PORT
 
-ENTRYPOINT ["boot.sh"]
+ENTRYPOINT ["/app/boot.sh"]
 CMD ["server"]

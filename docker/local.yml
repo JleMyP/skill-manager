@@ -5,6 +5,9 @@ services:
     image: skill-manager
     build:
       context: .
+    environment:
+      PORT: ${PORT:-8000}
+      DEBUG: true
+      DATABASE_URL: ${DATABASE_URL?}
     network_mode: host
-    restart: unless-stopped
-    command: python manage.py runserver_plus 0.0.0.0:8000
+    command: python manage.py runserver_plus 0.0.0.0:$$PORT
