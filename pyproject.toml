@@ -2,6 +2,9 @@
 name = "skill-manager"
 version = "0.1.0"
 description = ""
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/JleMyP/skill-manager"
 authors = []
 
 [tool.poetry.dependencies]
@@ -33,8 +36,6 @@ djangorestframework-serializer-extensions = "^2.0.0"
 django-rest-polymorphic = "^0.1.9"
 drf-spectacular = "^0.13.1"
 
-pyyaml = "^5.1"
-uritemplate = "^3.0"
 requests = "^2.22.0"
 psycopg2-binary = "^2.8.4"
 mdv = "^1.7.4"
@@ -45,13 +46,23 @@ boto3 = "^1.15.11"
 [tool.poetry.dev-dependencies]
 Werkzeug = "^1.0"
 ipython = "^7.7"
+isort = "^4.3"
 flake8 = "^3.7.9"
+flakehell = "^0.9.0"
 flake8-isort = "^2.8.0"
 flake8-bandit = "^2.1.2"
 flake8-variables-names = "^0.0.3"
 flake8-bugbear = "^20.1.4"
 flake8-builtins = "^1.4.2"
+flake8-annotations-complexity = "^0.0.6"
+flake8-annotations = "^2.7.0"
+django-stubs = "1.8.0"
+djangorestframework-stubs = "^1.4.0"
 coverage = {version = "^5.0.3", extras = ["toml"]}
+types-Markdown = "^3.3.6"
+types-PyYAML = "^6.0.0"
+types-pytz = "^2021.3.0"
+types-requests = "^2.25.11"
 
 [tool.isort]
 line_length = 100
@@ -59,6 +70,22 @@ multi_line_output = 3
 include_trailing_comma = true
 force_grid_wrap = 3
 skip_glob = "**/migrations/*"
+
+[tool.flakehell]
+exclude = [".git", "__pycache__", "migrations"]
+max_line_length = 100
+format = "grouped"
+show_source = true
+
+[tool.flakehell.plugins]
+pyflakes = ["+*", "-F403", "-F405"]
+pycodestyle = ["+*", "-W503"]
+flake8-annotations = ["+*", "-ANN002", "-ANN003", "-ANN101"]
+"flake8-*" = ["+*"]
+mccabe = ["+*"]
+
+[tool.flakehell.exceptions."src/apps/main/import_providers/github.py"]
+flake8-isort = ["-I001", "-I003", "-I004"]
 
 [tool.coverage.run]
 omit = [ "**/migrations/*" ]

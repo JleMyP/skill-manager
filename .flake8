@@ -1,4 +1,0 @@
-[flake8]
-ignore = F403, F405, W503, I002
-exclude = .git, __pycache__, migrations
-max_line_length = 100
