@@ -2,6 +2,7 @@
 
 [![CodeFactor](https://www.codefactor.io/repository/github/jlemyp/skill-manager/badge)](https://www.codefactor.io/repository/github/jlemyp/skill-manager) 
 ![lint](https://github.com/JleMyP/skill-manager/workflows/lint/badge.svg?branch=master)
+![release](https://github.com/JleMyP/skill-manager/workflows/release/badge.svg?branch=master)
 
 прообразы - nimbus note, mindly, buku  
 
