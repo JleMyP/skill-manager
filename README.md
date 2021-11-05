@@ -11,7 +11,7 @@
 - web: bootstrap + jquery / react / flutter / chrome расширение
 - desktop gui: wpf / qt / juce / flutter
 - cli (+ offline non-server (sqlite)): commands / gui
-- боты: vk, tg
+- боты: vk / tg
 
 сервер:
 
@@ -24,7 +24,7 @@
 локальная база + синхронизация:
 
 - s3
-- scp
+- sftp
 - http
 
 графики:
@@ -130,11 +130,12 @@ docker:
 
 - non-root
 - healthckecks
+- multi-arch
 
 тех часть:
 
 - идемпотентность
-- версионирование в сериализаторах
+- версионирование в сериализаторах (?)
 - gunicorn
 - celery
 - сокеты
@@ -157,5 +158,4 @@ deploy:
 - ya containers
 - ya service token
 - ya functions:
-  - simplify gateway
   - creating function
