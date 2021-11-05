@@ -6,16 +6,16 @@ from polymorphic.query import PolymorphicQuerySet
 
 from utils.models import CreatedAtMixin, NameMixin
 
-__all__ = ['ImportedResource', 'ImportedResourceRepo']
+__all__ = ['ImportedResource', 'ImportedResourceRepo', 'ImportedResourceQuerySet']
 
 
 class ImportedResourceQuerySet(PolymorphicQuerySet):
-    def ignore(self):
+    def ignore(self) -> int:
         return self.update(is_ignored=True)
     ignore.queryset_only = True
     ignore.alters_data = True
 
-    def unignore(self):
+    def unignore(self) -> int:
         return self.update(is_ignored=False)
     unignore.queryset_only = True
     unignore.alters_data = True
@@ -39,14 +39,14 @@ class ImportedResource(CreatedAtMixin, NameMixin, PolymorphicModel):
         verbose_name_plural = 'Импортированные ресурсы'
         default_related_name = 'imported_resources'
 
-    def ignore(self):
+    def ignore(self) -> None:
         if self.is_ignored:
             return
 
         self.is_ignored = True
         self.save(update_fields=('is_ignored',))
 
-    def unignore(self):
+    def unignore(self) -> None:
         if not self.is_ignored:
             return
 

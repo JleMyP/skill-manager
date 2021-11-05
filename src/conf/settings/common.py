@@ -1,6 +1,8 @@
+import typing
 from pathlib import Path
 
 import environ
+from django.http import HttpRequest, HttpResponse
 
 env = environ.Env(
     DEBUG=(bool, False),
@@ -102,9 +104,9 @@ INSTALLED_APPS = [
 
 
 class DisableCSRF:
-    def __init__(self, get_response):
+    def __init__(self, get_response: typing.Callable[[HttpRequest], HttpResponse]) -> None:
         self.get_response = get_response
 
-    def __call__(self, request):
+    def __call__(self, request: HttpRequest) -> HttpResponse:
         request._dont_enforce_csrf_checks = True
         return self.get_response(request)

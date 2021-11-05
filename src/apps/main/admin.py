@@ -2,7 +2,11 @@ from autocompletefilter.admin import AutocompleteFilterMixin
 from autocompletefilter.filters import AutocompleteListFilter
 from django.contrib import admin
 from django.db import models
-from django.http import HttpResponseRedirect
+from django.http import (
+    HttpRequest,
+    HttpResponseRedirect,
+    QueryDict,
+)
 from django.urls import reverse
 from django_json_widget.widgets import JSONEditorWidget
 from django_object_actions import DjangoObjectActions
@@ -14,9 +18,10 @@ from polymorphic.admin import (
 )
 from reversion.admin import VersionAdmin
 
-from apps.main.import_providers import github
-from apps.main.models import (
+from .import_providers import github
+from .models import (
     ImportedResource,
+    ImportedResourceQuerySet,
     ImportedResourceRepo,
     Note,
     Progress,
@@ -108,11 +113,11 @@ class ImportedResourceBaseAdmin(VersionAdmin):
         },
     }
 
-    def ignore(self, request, queryset):
+    def ignore(self, _request: HttpRequest, queryset: ImportedResourceQuerySet) -> None:
         queryset.ignore()
     ignore.short_description = 'Заигнорить'
 
-    def unignore(self, request, queryset):
+    def unignore(self, _request: HttpRequest, queryset: ImportedResourceQuerySet) -> None:
         queryset.unignore()
     unignore.short_description = 'Разигнорить'
 
@@ -136,26 +141,28 @@ class ImportedResourceRepoAdmin(DjangoObjectActions,
     inlines = (ResourceAdminInline,)
 
     @staticmethod
-    def _redirect_to_list(params: dict) -> HttpResponseRedirect:
+    def _redirect_to_list(params: QueryDict) -> HttpResponseRedirect:
         filters = params.get('_changelist_filters', '')
         url = reverse('admin:main_importedresourcerepo_changelist')
         return HttpResponseRedirect(url + '?' + filters)
 
-    def import_from_github(self, request, queryset):
+    def import_from_github(self, request: HttpRequest,
+                           _queryset: models.QuerySet) -> HttpResponseRedirect:
         imported_resources = github.import_data()
         count = len(imported_resources)
         self.message_user(request, f'Импортировано ресурсов: {count}')
-        return self._redirect_to_list(request.GET)
+        return self._redirect_to_list(request.GET)  # type: ignore
     import_from_github.label = 'Импортировать из GitHub'
 
-    def create_resources(self, request, queryset):
+    def create_resources(self, request: HttpRequest,
+                         _queryset: models.QuerySet) -> HttpResponseRedirect:
         resources = github.create_resources()
         count = len(resources)
         self.message_user(request, f'Создано ресурсов: {count}')
-        return self._redirect_to_list(request.GET)
+        return self._redirect_to_list(request.GET)  # type: ignore
     create_resources.label = 'Создать недостающие'
 
-    def create_resource(self, request, obj: base_model):
+    def create_resource(self, request: HttpRequest, obj: base_model) -> HttpResponseRedirect:
         resource = github.create_resource(obj)
         if resource:
             url = reverse('admin:main_resource_change',
@@ -244,6 +251,6 @@ class NoteAdmin(AutocompleteFilterMixin, VersionAdmin):
     date_hierarchy = 'created_at'
     actions_on_bottom = True
 
-    def short_content(self, obj):
+    def short_content(self, obj: Note) -> str:
         return obj.description[:50]
     short_content.short_description = 'Короткое содержание'

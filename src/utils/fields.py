@@ -1,4 +1,10 @@
 from enum import IntFlag
+from typing import (
+    Any,
+    Optional,
+    Type,
+    Union,
+)
 
 from django.db import models
 from django.db.models import Lookup
@@ -18,7 +24,7 @@ class IntFlagField(models.PositiveSmallIntegerField):
         COLORS = IntFlag('Colors', 'RED GREEN BLUE')
         colors = IntFlagField(enum=COLORS, default=COLORS.RED)
 
-    имеющюе красный. зеленый и синий - не важно
+    имеющие красный. зеленый и синий - не важно
     SomeModel.objects.filter(colors__has_bit=SomeModel.COLORS.RED)
 
     имеющие и красный и зеленый. синий - не важно
@@ -33,14 +39,15 @@ class IntFlagField(models.PositiveSmallIntegerField):
     #  свой класс перечисления со свойством all
     #  админковый виджет как для m2m
 
-    def __init__(self, enum, *args, enum_name: str = None, **kwargs):
+    def __init__(self, enum: Union[list, Type[IntFlag]], *args, enum_name: Optional[str] = None,
+                 **kwargs) -> None:
         if isinstance(enum, list):
             enum = IntFlag(enum_name, enum)
         self.enum = enum
         self.enum_name = enum.__name__
         super().__init__(*args, **kwargs)
 
-    def deconstruct(self):
+    def deconstruct(self) -> Any:
         name, path, args, kwargs = super().deconstruct()
         # TODO: замутить работоспособно
         #   либо списка во входном параметре не должно быть
@@ -55,11 +62,12 @@ class IntFlagField(models.PositiveSmallIntegerField):
         kwargs['enum_name'] = self.enum_name
         return name, path, args, kwargs
 
-    def from_db_value(self, value, expression, connection):
+    def from_db_value(self, value: Optional[int], _expression: Any,
+                      _connection: Any) -> Optional[IntFlag]:
         if value is not None:
             return self.enum(value)
 
-    def to_python(self, value):
+    def to_python(self, value: Any) -> Optional[IntFlag]:
         value = super().to_python(value)
         if isinstance(value, self.enum):
             return value
@@ -71,7 +79,7 @@ class IntFlagField(models.PositiveSmallIntegerField):
 class HasBitLookup(Lookup):
     lookup_name = 'has_bit'
 
-    def as_sql(self, compiler, connection):
+    def as_sql(self, compiler: Any, connection: Any) -> Any:
         lhs, lhs_params = self.process_lhs(compiler, connection)
         rhs, rhs_params = self.process_rhs(compiler, connection)
         return f'{lhs} & {rhs} = {rhs}', rhs_params + rhs_params
@@ -81,7 +89,7 @@ class HasBitLookup(Lookup):
 class AnyBitLookup(Lookup):
     lookup_name = 'any_bit'
 
-    def as_sql(self, compiler, connection):
+    def as_sql(self, compiler: Any, connection: Any) -> Any:
         lhs, lhs_params = self.process_lhs(compiler, connection)
         rhs, rhs_params = self.process_rhs(compiler, connection)
         return f'{lhs} & {rhs} > 0', rhs_params + rhs_params

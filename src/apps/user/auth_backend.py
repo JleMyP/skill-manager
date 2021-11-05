@@ -1,15 +1,24 @@
+from typing import (
+    Any,
+    Optional,
+    Type,
+)
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
+from django.contrib.auth.models import AbstractUser
 
 __all__ = ['CustomAuthBackend']
 
-user_model = get_user_model()
+
+user_model: Type[AbstractUser] = get_user_model()  # type: ignore
 
 
 class CustomAuthBackend(ModelBackend):
     """Авторизация по адресу почты."""
 
-    def authenticate(self, request, username=None, password=None, **kwargs):
+    def authenticate(self, _request: Any, username: Optional[str] = None,
+                     password: Optional[str] = None, **kwargs) -> user_model:
         try:
             user = user_model.objects.get(email=username)
         except user_model.DoesNotExist:

@@ -21,6 +21,7 @@ class Tag(NameMixin,
           IconMixin):
     TARGET_TYPE = IntFlag('Tag.TARGET_TYPE', 'FOLDER RESOURCE SKILL')
     ANY_TARGET = TARGET_TYPE.FOLDER | TARGET_TYPE.RESOURCE | TARGET_TYPE.SKILL
+    values: 'models.QuerySet[TagValue]'
 
     color = ColorField(
         verbose_name='Цвет', null=True, blank=True,
@@ -34,7 +35,7 @@ class Tag(NameMixin,
         verbose_name_plural = 'Метки'
         default_related_name = 'tags'
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         is_new = self._state.adding
         super().save(*args, **kwargs)
         if is_new:
@@ -61,12 +62,12 @@ class TagValue(NameMixin,
         verbose_name_plural = 'Значения меток'
         default_related_name = 'values'
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         if self._state.adding and self.is_default:
             self.name = self.DEFAULT_NAME
         super().save(*args, **kwargs)
 
-    def __str__(self):
+    def __str__(self) -> str:
         if self.is_default:
             return str(self.tag)
         return f'{self.tag.name} : {self.name}'

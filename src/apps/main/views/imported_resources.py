@@ -1,4 +1,4 @@
-from django.db.models import F
+from django.db.models import F, QuerySet
 from django.db.models.functions import Lower
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
@@ -16,7 +16,7 @@ class ImportedResourcesViewSet(ModelViewSet):
     filterset_fields = ('is_ignored',)
     permission_classes = (IsAuthenticated,)
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         if self.action == 'list':
             return (self.model.objects.non_polymorphic()
                                       .annotate(ptype=F('polymorphic_ctype__model'),

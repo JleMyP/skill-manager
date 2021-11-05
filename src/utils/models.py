@@ -20,17 +20,17 @@ class NameMixin(models.Model):
     class Meta:
         abstract = True
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
 
 class OrderedManager(models.Manager):
     @property
-    def ordered_desc(self):
+    def ordered_desc(self) -> models.QuerySet:
         return self.get_queryset().order_by('-order_num')
 
     @property
-    def ordered_asc(self):
+    def ordered_asc(self) -> models.QuerySet:
         return self.get_queryset().order_by('order_num')
 
 

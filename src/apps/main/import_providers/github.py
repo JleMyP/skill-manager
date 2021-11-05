@@ -11,7 +11,7 @@ else:
 import requests
 from constance import config
 
-from apps.main.models import (
+from ..models import (
     ImportedResourceRepo,
     Resource,
     ResourceType,

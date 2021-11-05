@@ -1,3 +1,4 @@
+import typing
 from collections import OrderedDict
 
 from django.apps import apps
@@ -22,8 +23,8 @@ class ImportedResourceRepoSerializer(serializers.ModelSerializer):
         exclude = ('raw_data',)
 
 
-class DetailsedSerializer(serializers.Serializer):
-    def __init__(self, *args, **kwargs):
+class DetailedSerializer(serializers.Serializer):
+    def __init__(self, *args, **kwargs) -> None:
         only = kwargs.pop('only', ())
         exclude = kwargs.pop('exclude', ())
         super().__init__(*args, kwargs)
@@ -42,13 +43,14 @@ class ImportedResourcePolySerializer(PolymorphicSerializer):
         ImportedResourceRepo: ImportedResourceRepoSerializer,
     }
 
-    def to_resource_type(self, model_or_instance):
+    def to_resource_type(self, model_or_instance: typing.Union[type, ImportedResource]) -> str:
         ptype = getattr(model_or_instance, 'ptype', None)
         if ptype:
-            return apps.get_model(model_or_instance._meta.app_label, ptype)._meta.object_name
+            model = apps.get_model(model_or_instance._meta.app_label, ptype)
+            return model._meta.object_name  # type: ignore
         return super().to_resource_type(model_or_instance)
 
-    def to_representation(self, instance):
+    def to_representation(self, instance: ImportedResource) -> dict:
         """Группируем все специфичные поля в отдельный словарь."""
         serialized = super().to_representation(instance)
         type_specific = {}

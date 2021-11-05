@@ -24,7 +24,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
         fields = ('username', 'email', 'password')
         extra_kwargs = {'password': {'write_only': True}}
 
-    def validate_password(self, value):
+    def validate_password(self, value: str) -> str:
         validate_password(value)
         return make_password(value)
 
@@ -44,6 +44,6 @@ class CustomTokenObtainSerializer(TokenObtainPairSerializer):
     refresh = serializers.CharField(read_only=True)
     access = serializers.CharField(read_only=True)
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.fields[self.username_field] = serializers.CharField(required=False, write_only=True)

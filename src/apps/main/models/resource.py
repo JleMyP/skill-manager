@@ -72,7 +72,7 @@ class Resource(MPTTModel,
         verbose_name_plural = 'Ресурсы'
         default_related_name = 'resources'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'({self.type.name}) {self.name}'
 
 

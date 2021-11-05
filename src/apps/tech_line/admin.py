@@ -1,7 +1,7 @@
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
-from apps.tech_line.models import TechLine, TechLineElement
+from .models import TechLine, TechLineElement
 
 
 class ElementAdminInline(VersionAdmin, admin.TabularInline):

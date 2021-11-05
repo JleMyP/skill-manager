@@ -6,7 +6,7 @@ import uvicorn
 from uvicorn.config import LOGGING_CONFIG
 
 
-def health_check(record):
+def health_check(record: any) -> bool:
     return not record.scope['path'].startswith('/ht')
 
 
