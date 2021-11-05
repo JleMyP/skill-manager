@@ -23,7 +23,6 @@ if env('S3_ACCESS_KEY_ID'):
     AWS_S3_FILE_OVERWRITE = False
     AWS_LOCATION = 'static'
     AWS_LOCATION_MEDIA = 'media'
-    AWS_QUERYSTRING_AUTH = False
     AWS_S3_ENDPOINT_URL = 'https://storage.yandexcloud.net'
     AWS_ACCESS_KEY_ID = env('S3_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = env('S3_SECRET_ACCESS_KEY')

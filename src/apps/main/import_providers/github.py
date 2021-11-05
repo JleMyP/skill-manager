@@ -1,7 +1,6 @@
 import base64
 import re
 import sys
-
 from typing import List, Optional
 
 if sys.version_info >= (3, 8):

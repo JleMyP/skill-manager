@@ -12,4 +12,4 @@ class TagsViewSet(ModelViewSet):
     queryset = model.objects.all()
     serializer_class = TagSerializer
     filterset_fields = ('like',)
-    permission_classes =(IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)

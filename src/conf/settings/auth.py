@@ -1,6 +1,5 @@
 from .common import DEBUG
 
-
 if DEBUG:
     AUTH_PASSWORD_VALIDATORS = []
 else:

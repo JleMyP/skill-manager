@@ -1,13 +1,6 @@
 from datetime import timedelta
 
-from .apps import INSTALLED_APPS
 from .common import SECRET_KEY
-
-
-INSTALLED_APPS += [
-    'rest_framework',
-    'rest_framework_serializer_extensions',
-]
 
 REST_FRAMEWORK = {
     'NON_FIELD_ERRORS_KEY': 'non_field_errors',
