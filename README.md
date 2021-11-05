@@ -1,8 +1,11 @@
 # skill-manager
 
 [![CodeFactor](https://www.codefactor.io/repository/github/jlemyp/skill-manager/badge)](https://www.codefactor.io/repository/github/jlemyp/skill-manager) 
-![lint](https://github.com/JleMyP/skill-manager/workflows/lint/badge.svg?branch=master)
-![release](https://github.com/JleMyP/skill-manager/workflows/release/badge.svg?branch=master)
+![lint](https://img.shields.io/github/workflow/status/JleMyP/skill-manager/lint/master?label=lint)
+![build](https://img.shields.io/github/workflow/status/JleMyP/skill-manager/release)
+![code factor](https://img.shields.io/codefactor/grade/github/JleMyP/skill-manager)
+![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/JleMyP/skill-manager)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/JleMyP/skill-manager)
 
 прообразы - nimbus note, mindly, buku  
 
