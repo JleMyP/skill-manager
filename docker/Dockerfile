@@ -4,14 +4,17 @@ ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update
 RUN apt-get install -y gcc make git libffi-dev libssl-dev
-RUN CRYPTOGRAPHY_DONT_BUILD_RUST=1 pip install "poetry>=1.0"
+
+ARG CRYPTOGRAPHY_DONT_BUILD_RUST=1
+
+RUN pip install "poetry>=1.0"
 
 WORKDIR /app
 COPY pyproject.toml .
 COPY poetry.lock .
 
-RUN poetry config virtualenvs.create false \
-  && CRYPTOGRAPHY_DONT_BUILD_RUST=1 poetry install --no-dev --no-interaction
+RUN poetry config virtualenvs.create false
+RUN poetry install --no-dev --no-interaction
 
 COPY src .
 COPY docker/boot.sh .

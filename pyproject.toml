@@ -43,6 +43,13 @@ uvicorn = "^0.11.5"
 serverless-wsgi = "^1.7.5"
 boto3 = "^1.15.11"
 
+structlog = "^21.2.0"
+opentelemetry-api = "^1.7.1"
+opentelemetry-sdk = "^1.7.1"
+opentelemetry-exporter-otlp = "^1.7.1"
+opentelemetry-instrumentation-django = "^0.26b1"
+opentelemetry-instrumentation-asgi = "^0.26b1"
+
 [tool.poetry.dev-dependencies]
 Werkzeug = "^1.0"
 ipython = "^7.7"
@@ -58,11 +65,11 @@ flake8-annotations-complexity = "^0.0.6"
 flake8-annotations = "^2.7.0"
 django-stubs = "1.8.0"
 djangorestframework-stubs = "^1.4.0"
-coverage = {version = "^5.0.3", extras = ["toml"]}
 types-Markdown = "^3.3.6"
 types-PyYAML = "^6.0.0"
 types-pytz = "^2021.3.0"
 types-requests = "^2.25.11"
+coverage = {version = "^5.0.3", extras = ["toml"]}
 
 [tool.isort]
 line_length = 100

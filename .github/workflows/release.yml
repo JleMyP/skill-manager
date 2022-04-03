@@ -17,7 +17,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: docker/Dockerfile.prod
           registry: ghcr.io
-          name: JleMyP/skill-manager
+          name: ${{ github.repository }}
           tag_names: true
           cache: true
       - uses: elgohr/Publish-Docker-Github-Action@master
@@ -26,7 +26,6 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: docker/Dockerfile.prod.alpine
           registry: ghcr.io
-          name: JleMyP/skill-manager
-          tags: "alpine"
-          tag_names: true
+          name: ${{ github.repository }}
+          tags: "${GITHUB_HEAD_REF}-alpine"
           cache: true

@@ -4,12 +4,12 @@ services:
   backend:
     image: skill-manager
     restart: unless-stopped
-    networks:
-      - default
     environment:
       PORT: ${PORT:-8000}
       DEBUG: ${DEBUG:-false}
       DATABASE_URL: ${DATABASE_URL?}
+      JSON_LOG: 1
+      OTLP_ENDPOINT: "grpc://tempo:4317"
     logging:
       driver: json-file
       options:

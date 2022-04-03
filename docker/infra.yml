@@ -1,0 +1,48 @@
+version: "3"
+
+# docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions
+
+services:
+  tempo:
+    image: grafana/tempo
+    command: ["-storage.trace.backend=local", "-storage.trace.local.path=/var/tempo"]
+    ports:
+    - "8081:80"
+    - "14268:14268"  # jaeger ingest
+    - "4317:4317"  # otlp grpc
+    - "4318:4318"  # otlp http
+    - "9411:9411"   # zipkin
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://localhost:3100/api/prom/push"
+
+  grafana:
+    image: grafana/grafana
+    volumes:
+    - ./docker/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+    environment:
+    - GF_AUTH_ANONYMOUS_ENABLED=true
+    - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    - GF_AUTH_DISABLE_LOGIN_FORM=true
+    ports:
+    - "3000:3000"
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://localhost:3100/api/prom/push"
+
+  loki:
+    image: grafana/loki:2.4.1
+    command: -config.file=/etc/loki/local-config.yaml
+    ports:
+    - "3100:3100"
+    volumes:
+      - loki:/loki
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://localhost:3100/api/prom/push"
+
+volumes:
+  loki:

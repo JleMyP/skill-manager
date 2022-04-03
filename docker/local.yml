@@ -9,5 +9,6 @@ services:
       PORT: ${PORT:-8000}
       DEBUG: true
       DATABASE_URL: ${DATABASE_URL?}
-    network_mode: host
-    command: python manage.py runserver_plus 0.0.0.0:$$PORT
+    ports:
+      - "8000:8000"
+    command: python manage.py runserver_plus 0.0.0.0:${PORT:-8000}

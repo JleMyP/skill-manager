@@ -5,7 +5,10 @@
 FROM python:3.8-alpine as builder
 
 RUN apk add gcc make musl-dev libffi-dev openssl-dev postgresql-dev libjpeg-turbo-dev zlib-dev
-RUN CRYPTOGRAPHY_DONT_BUILD_RUST=1 pip install "poetry>=1.0"
+
+ARG CRYPTOGRAPHY_DONT_BUILD_RUST=1
+
+RUN pip install "poetry>=1.0"
 
 WORKDIR /app
 COPY pyproject.toml .

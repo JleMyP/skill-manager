@@ -5,19 +5,22 @@ services:
     logging:
       driver: loki
       options:
-        loki-url: "http://loki:3100/loki/api/v1/push"
+        loki-url: "http://localhost:3100/loki/api/v1/push"
         loki-pipeline-stages: |
-          - regex:
-              expression: '(?P<level>\w+): (?P<address>.+) - "(?P<method>.+) (?P<path>.+) (?P<proto>.+)" (?P<status>\d{3}) (?P<status_comment>.+)'
+          - json:
+              expressions:
+                event: event
+                timestamp: timestamp
+                request_id: request_id
+                logger: logger
+                level: level
+                method: method
+                code: code
+                path: path
+                exception: exception
           - labels:
+              logger:
               level:
               method:
-              status:
-    depends_on:
-      - loki
-    networks:
-      - loki
-
-networks:
-  loki:
-    external: true
+              code:
+              path:
