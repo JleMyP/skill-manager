@@ -2,7 +2,7 @@
 
 # build: DOCKER_BUILDKIT=1 docker build ...
 
-FROM python:3.8-alpine as builder
+FROM python:3.9-alpine as builder
 
 RUN apk add gcc make musl-dev libffi-dev openssl-dev postgresql-dev libjpeg-turbo-dev zlib-dev
 
@@ -19,9 +19,9 @@ RUN mkdir /wheels \
   && pip wheel -r /wheels/r.txt -w /wheels
 
 
-FROM python:3.8-alpine
+FROM python:3.9-alpine
 
-RUN apk add --no-cache libpq libjpeg-turbo
+RUN apk add --no-cache libpq libjpeg-turbo curl
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -33,8 +33,16 @@ WORKDIR /app
 COPY src .
 COPY docker/boot.sh .
 
+RUN addgroup -S app && adduser -S app -G app
+USER app
+
 ARG PORT=8000
 ENV PORT=$PORT
 
+HEALTHCHECK \
+  --interval=10s \
+  --timeout=5s \
+  --start-period=20s \
+  CMD curl --fail --silent --show-error localhost:$PORT/ht/ || exit 1
 ENTRYPOINT ["/app/boot.sh"]
 CMD ["server"]

@@ -2,10 +2,17 @@
 
 # build: DOCKER_BUILDKIT=1 docker build ...
 
-FROM python:3.8-slim as builder
+FROM python:3.9-slim as builder
 
-RUN apt-get update \
-  && apt-get -y --no-install-recommends install gcc make libffi-dev libssl-dev
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends \
+  gcc \
+  make \
+  libffi-dev \
+  libssl-dev \
+  libpq-dev \
+  libuv1-dev \
+  libc-dev
 
 # disable build for non x86 images
 ARG CRYPTOGRAPHY_DONT_BUILD_RUST=1
@@ -21,20 +28,32 @@ RUN mkdir /wheels \
   && pip wheel -r /wheels/r.txt -w /wheels
 
 
-FROM python:3.8-slim
+FROM python:3.9-slim
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 RUN --mount=from=builder,source=/wheels,target=/wheels \
   pip install -r /wheels/r.txt -f /wheels
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends curl \
+  && apt-get clean autoclean \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}
 
 WORKDIR /app
 COPY src .
 COPY docker/boot.sh .
 
+RUN addgroup --system app && adduser --system --group app
+USER app
+
 ARG PORT=8000
 ENV PORT=$PORT
 
+HEALTHCHECK \
+  --interval=10s \
+  --timeout=5s \
+  --start-period=20s \
+  CMD curl --fail --silent --show-error localhost:$PORT/ht/ || exit 1
 ENTRYPOINT ["/app/boot.sh"]
 CMD ["server"]

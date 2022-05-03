@@ -8,7 +8,7 @@ repository = "https://github.com/JleMyP/skill-manager"
 authors = []
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.9"
 
 django = "^3.0.0"
 django-reversion = "^3.0"
@@ -42,13 +42,13 @@ mdv = "^1.7.4"
 uvicorn = "^0.11.5"
 serverless-wsgi = "^1.7.5"
 boto3 = "^1.15.11"
-
 structlog = "^21.2.0"
-opentelemetry-api = "^1.7.1"
-opentelemetry-sdk = "^1.7.1"
-opentelemetry-exporter-otlp = "^1.7.1"
-opentelemetry-instrumentation-django = "^0.26b1"
-opentelemetry-instrumentation-asgi = "^0.26b1"
+
+opentelemetry-api = {version = "^1.7.1", optional = true}
+opentelemetry-sdk = {version = "^1.7.1", optional = true}
+opentelemetry-exporter-otlp = {version = "^1.7.1", optional = true}
+opentelemetry-instrumentation-django = {version = "^0.26b1", optional = true}
+opentelemetry-instrumentation-asgi = {version = "^0.26b1", optional = true}
 
 [tool.poetry.dev-dependencies]
 Werkzeug = "^1.0"
@@ -71,6 +71,15 @@ types-pytz = "^2021.3.0"
 types-requests = "^2.25.11"
 coverage = {version = "^5.0.3", extras = ["toml"]}
 
+[tool.poetry.extras]
+tracing = [
+  "opentelemetry-api",
+  "opentelemetry-sdk",
+  "opentelemetry-exporter-otlp",
+  "opentelemetry-instrumentation-django",
+  "opentelemetry-instrumentation-asgi",
+]
+
 [tool.isort]
 line_length = 100
 multi_line_output = 3
@@ -85,14 +94,24 @@ format = "grouped"
 show_source = true
 
 [tool.flakehell.plugins]
-pyflakes = ["+*", "-F403", "-F405"]
-pycodestyle = ["+*", "-W503"]
-flake8-annotations = ["+*", "-ANN002", "-ANN003", "-ANN101"]
+pyflakes = [
+  "+*",
+  "-F403",  # wildcard import
+  "-F405",  # undefined name from wildcard import
+]
+pycodestyle = [
+  "+*",
+  "-W503",  # line break before binary operator
+]
+flake8-annotations = [
+  "+*",
+  "-ANN002",  # annotation for *args
+  "-ANN003",  # annotation for **kwargs
+  "-ANN101",  # annotation for self
+  "-ANN102",  # annotation for cls methods
+]
 "flake8-*" = ["+*"]
 mccabe = ["+*"]
-
-[tool.flakehell.exceptions."src/apps/main/import_providers/github.py"]
-flake8-isort = ["-I001", "-I003", "-I004"]
 
 [tool.coverage.run]
 omit = [ "**/migrations/*" ]

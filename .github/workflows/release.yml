@@ -4,11 +4,13 @@ on:
     tags:
       - 'v*.*.*'
 
+env:
+  DOCKER_BUILDKIT: 1
+
+
 jobs:
-  image:
+  slim:
     runs-on: ubuntu-latest
-    env:
-      DOCKER_BUILDKIT: 1
     steps:
       - uses: actions/checkout@v2
       - uses: elgohr/Publish-Docker-Github-Action@master
@@ -20,6 +22,9 @@ jobs:
           name: ${{ github.repository }}
           tag_names: true
           cache: true
+  alpine:
+    runs-on: ubuntu-latest
+    steps:
       - uses: elgohr/Publish-Docker-Github-Action@master
         with:
           username: ${{ github.actor }}

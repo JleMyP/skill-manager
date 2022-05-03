@@ -7,20 +7,20 @@
 ![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/JleMyP/skill-manager)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/JleMyP/skill-manager)
 
-прообразы - nimbus note, mindly, buku  
+прообразы - nimbus note, mindly, buku, notion, joplin, astral, hackmd  
 
 клиенты:
 
 - mobile: flutter
-- web: bootstrap + jquery / react / flutter / chrome расширение
-- desktop gui: wpf / qt / juce / flutter
+- web: bootstrap + jquery / react / **flutter** / chrome расширение
+- desktop gui: wpf / qt / juce / **flutter**
 - cli (+ offline non-server (sqlite)): commands / gui
 - боты: vk / tg
 
 сервер:
 
-- app: django / fastapi / go
-- субд: pg / mongo / tarantool / ydb
+- app: **django** / fastapi / go
+- субд: **pg** / mongo / tarantool / ydb
 - iaas, heroku, firebase (уведомления)
 
 управление проектами  
@@ -67,20 +67,20 @@
 импорт-экспорт:
 
 - файл (свой + общие, типа excel)
-- проекты гитхаб / гитлаб (https://developer.github.com/v3/activity/starring/, https://api.github.com/user/starred)
+- звезды гитхаб / гитлаб [тык1](https://developer.github.com/v3/activity/starring/), [тык2](https://api.github.com/user/starred)
 - карта ума
 - вк закладки (https://vk.com/dev/fave.get)
 - хром закладки (json, buku, exported html)
-- ютуб каналы (хрен)
+- ютуб каналы (youtubedl)
 - хабр закладки
-- степик (https://stepik.org/api/user-courses)
+- [степик](https://stepik.org/api/user-courses)
 - интуит
 - html с чем-нить
 - буфер сырых данных для последующего разбора
 
 визуализация:
 
-- рисование карты ума (https://pythonhaven.wordpress.com/2009/12/09/generating_graphs_with_pydot/, https://github.com/pydot/pydot)
+- рисование карты ума [pydot1](https://pythonhaven.wordpress.com/2009/12/09/generating_graphs_with_pydot/), [pydot2](https://github.com/pydot/pydot), plantuml
 
 интеграция проектов и гита:
 
