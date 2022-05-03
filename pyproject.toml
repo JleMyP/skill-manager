@@ -43,6 +43,8 @@ uvicorn = "^0.11.5"
 serverless-wsgi = "^1.7.5"
 boto3 = "^1.15.11"
 structlog = "^21.2.0"
+markdownify = "^0.11.2"
+readability-lxml = "^0.8.1"
 
 opentelemetry-api = {version = "^1.7.1", optional = true}
 opentelemetry-sdk = {version = "^1.7.1", optional = true}

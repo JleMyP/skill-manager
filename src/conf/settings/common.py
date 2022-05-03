@@ -1,11 +1,11 @@
 import logging
 import typing
-from pathlib import Path
 import uuid
+from pathlib import Path
 
 import environ
-from django.http import HttpRequest, HttpResponse
 import structlog
+from django.http import HttpRequest, HttpResponse
 
 env = environ.Env(
     DEBUG=(bool, False),
@@ -121,7 +121,7 @@ class DisableCSRF:
 
 
 class LogRequest:
-    def __init__(self, get_response: typing.Callable[[HttpRequest], HttpResponse]):
+    def __init__(self, get_response: typing.Callable[[HttpRequest], HttpResponse]) -> None:
         self.get_response = get_response
 
     def __call__(self, request: HttpRequest) -> HttpResponse:
@@ -159,7 +159,7 @@ class TracerWrapper:
         print(self.__class__._middleware)
 
     @classmethod
-    def _prepare_tracer(cls, get_response: typing.Callable[[HttpRequest], HttpResponse]):
+    def _prepare_tracer(cls, get_response: typing.Callable[[HttpRequest], HttpResponse]) -> None:
         if cls._tracer_configured:
             return
 
@@ -222,7 +222,8 @@ processors = [
     add_uvicorn_scope,
 ]
 
-renderer = structlog.processors.JSONRenderer() if env('JSON_LOG') else structlog.dev.ConsoleRenderer()
+renderer = (structlog.processors.JSONRenderer() if env('JSON_LOG')
+            else structlog.dev.ConsoleRenderer())
 
 LOGGING = {
     'version': 1,

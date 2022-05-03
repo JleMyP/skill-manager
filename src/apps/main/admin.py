@@ -146,13 +146,13 @@ class ImportedResourceRepoAdmin(DjangoObjectActions,
         url = reverse('admin:main_importedresourcerepo_changelist')
         return HttpResponseRedirect(url + '?' + filters)
 
-    def import_from_github(self, request: HttpRequest,
-                           _queryset: models.QuerySet) -> HttpResponseRedirect:
-        imported_resources = github.import_data()
+    def import_stars_from_github(self, request: HttpRequest,
+                                 _queryset: models.QuerySet) -> HttpResponseRedirect:
+        imported_resources = github.import_stars()
         count = len(imported_resources)
         self.message_user(request, f'Импортировано ресурсов: {count}')
-        return self._redirect_to_list(request.GET)  # type: ignore
-    import_from_github.label = 'Импортировать из GitHub'
+        return self._redirect_to_list(request.GET)
+    import_stars_from_github.label = 'Импортировать звезды из GitHub'
 
     def create_resources(self, request: HttpRequest,
                          _queryset: models.QuerySet) -> HttpResponseRedirect:
